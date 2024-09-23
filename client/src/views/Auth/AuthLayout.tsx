@@ -6,9 +6,8 @@ import {
     Link,
     Stack,
     Text,
-    useColorModeValue,
 } from '@chakra-ui/react';
-import Logo from './Logo';
+import Logo from '../../layout/Logo';
 
 interface AuthLayoutProps {
     children: React.ReactNode;

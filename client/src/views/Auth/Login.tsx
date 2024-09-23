@@ -1,7 +1,7 @@
 import React from 'react'
-import AuthLayout from './AuthLayout'
 import { Stack } from '@chakra-ui/react'
-import LoginComponent from '../strapi/components/auth/LoginComponent'
+import AuthLayout from './AuthLayout'
+import LoginComponent from '../../strapi/components/auth/LoginComponent'
 
 const Login = () => {
     return (

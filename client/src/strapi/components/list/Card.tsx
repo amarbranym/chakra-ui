@@ -9,6 +9,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ renderItem }) => {
     const { data } = useStrapiListContext();
+    console.log("users", data)
     if (!data || data.length === 0) {
         return null; // Or return a fallback UI if necessary
     }
@@ -17,7 +18,7 @@ const Card: React.FC<CardProps> = ({ renderItem }) => {
         <>
         {data.map((item, index) => (
             <React.Fragment key={item.id || index}>
-                {renderItem(item.attributes)}
+                {renderItem(item)}
             </React.Fragment>
         ))}
         </>

@@ -1,9 +1,7 @@
 import React from 'react';
 import { useStrapiListContext } from '../../providers/StrapiListProvider';
 import { Button, Stack, Text } from '@chakra-ui/react';
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
-
-
+import { FiArrowLeft, FiArrowRight, } from 'react-icons/fi';
 
 const Pagination = () => {
     const { currentPage = 1, setCurrentPage = () => { }, totalPage = 1 } = useStrapiListContext()
@@ -80,14 +78,14 @@ const Pagination = () => {
     };
 
     return (
-        <Stack direction="row" gap="1" >
+        <Stack direction="row" gap="2" >
             <Button colorScheme='blue' variant={currentPage === 1 ? "solid" : "outline"} size="sm" leftIcon={<FiArrowLeft />} onClick={handlePreviousPage} disabled={currentPage === 1} >
                 Prev
             </Button>
             {pages.map((page, index) =>
                 typeof page === 'number' ? (
                     <Button
-                    colorScheme='blue'
+                        colorScheme='blue'
                         key={index}
                         size="sm"
                         variant={currentPage === page ? 'solid' : 'outline'}
@@ -96,13 +94,13 @@ const Pagination = () => {
                         {page}
                     </Button>
                 ) : (
-                    <Text key={index} fontSize="sm">
+                    <Text key={index} fontSize="lg" letterSpacing="1px" fontStyle="bold">
                         {page}
                     </Text>
                 )
             )}
 
-            <Button colorScheme='blue' size="sm" variant={currentPage ===totalPage ?"solid":"outline"} rightIcon={<FiArrowRight />} disabled={currentPage === totalPage} onClick={handleNextPage}>Next</Button>
+            <Button colorScheme='blue' size="sm" variant={currentPage === totalPage ? "solid" : "outline"} rightIcon={<FiArrowRight />} disabled={currentPage === totalPage} onClick={handleNextPage}>Next</Button>
         </Stack>
     );
 }

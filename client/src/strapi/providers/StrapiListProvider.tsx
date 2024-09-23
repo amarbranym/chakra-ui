@@ -19,12 +19,21 @@ const StrapiListContext = createContext<StrapiListContextProps | undefined>(unde
 
 export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?: string, query?: string }> = ({ children, collectionName, query }) => {
     const [data, setData] = useState<any[]>([]);
-    const {baseURL} = useStrapiContext()
+    const { baseURL, accessToken } = useStrapiContext()
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [filterQuery, setFilterQuery] = useState<any[]>([])
     const [totalPage, setTotalPage] = useState<number>(1)
 
     const handleGetDocument = async () => {
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`, // Pass the token here
+            },
+            credentials: 'include',
+        }
+
         try {
             const filterParams = filterQuery
                 .map(
@@ -33,11 +42,18 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
                 )
                 .join('');
 
-            const list = await apiFetch(baseURL + 
-                `/${collectionName}?${query}&pagination[page]=${currentPage}&pagination[pageSize]=6${filterParams}`
+            const list = await apiFetch(baseURL +
+                `/${collectionName}?${query}&pagination[page]=${currentPage}&pagination[pageSize]=6${filterParams}`, options
             );
+            if (collectionName === "users") {
+                setData(list)
 
-            setData(list?.data)
+            } else {
+
+                setData(list?.data)
+            }
+
+
             setTotalPage(list?.meta?.pagination?.pageCount);
         } catch (err) {
             console.error('Error fetching candidate list:', err);

@@ -7,7 +7,6 @@ import { Box, Button, Input, Popover, PopoverBody, PopoverContent, PopoverTrigge
 // import { CloseButton, Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
 import {
     FiPlus,
-
 } from 'react-icons/fi'
 import { IoClose } from "react-icons/io5";
 interface FiltersProps {

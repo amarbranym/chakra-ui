@@ -6,14 +6,15 @@ interface StrapiContextProps {
     baseURL: string;
     apiKey: string;
     isAuthenticated?: boolean;
+    accessToken?:string
 }
 
 const StrapiContext = createContext<StrapiContextProps | undefined>(undefined);
 
-export const StrapiAdmin: React.FC<{ children: ReactNode, baseURL?: string, apiKey?: string, allowUser:any }> = ({ children, baseURL = "http://localhost:1337/api", apiKey = "" , allowUser}) => {
+export const StrapiAdmin: React.FC<{ children: ReactNode, baseURL?: string, apiKey?: string, allowUser: any }> = ({ children, baseURL = "http://localhost:1337/api", apiKey = "", allowUser }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [currentRole, setCurrentRole] = useState("public");
-
+    const [accessToken, setAccessToken] = useState<string>("")
 
     const handleUser = async (id: string | number, token: string) => {
         try {
@@ -37,6 +38,7 @@ export const StrapiAdmin: React.FC<{ children: ReactNode, baseURL?: string, apiK
 
     const checkAuthStatus = async () => {
         const token = localStorage.getItem("jwt");
+        setAccessToken(token || "")
 
         if (token) {
             setIsAuthenticated(true);
@@ -60,7 +62,7 @@ export const StrapiAdmin: React.FC<{ children: ReactNode, baseURL?: string, apiK
 
 
     return (
-        <StrapiContext.Provider value={{ baseURL, apiKey, isAuthenticated }}>
+        <StrapiContext.Provider value={{ baseURL, apiKey, isAuthenticated, accessToken }}>
             {children}
         </StrapiContext.Provider>
     );

@@ -128,7 +128,7 @@ export const StrapiFormProvider: React.FC<{
     }
   }
 
-
+  console.log("data", data)
   return (
     <StrapiFormContext.Provider value={{ data, setData, handleData, setSchema, submit: handleSubmit }}>
       {children({ submit: handleSubmit })}

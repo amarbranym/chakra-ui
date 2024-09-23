@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactNode } from 'react'
 import {
   IconButton,
@@ -20,28 +21,18 @@ import {
   Avatar,
 } from '@chakra-ui/react'
 import {
-  FiHome,
   FiMenu,
   FiSearch,
-  FiUsers
 } from 'react-icons/fi'
-import { MdOutlineContacts } from "react-icons/md";
-import { BiBuilding } from "react-icons/bi";
 import { IconType } from 'react-icons'
-import StrapiCMS from './icons/StrapiCMS'
+import StrapiCMS from '../strapi/icons/StrapiCMS'
+import { NavLink, Outlet } from 'react-router-dom';
+import { nav } from '../config/nav';
 
-interface LinkItemProps {
-  name: string
-  icon: IconType
-}
-const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Companies', icon: BiBuilding },
-  { name: 'Contacts', icon: MdOutlineContacts },
-  { name: 'User', icon: FiUsers },
-]
 
-export default function Dashboard({ children }: { children?: React.ReactNode }) {
+
+
+export default function Dashboard() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Box minH="100vh" bg='gray.200' overflow="hidden"   >
@@ -72,9 +63,7 @@ export default function Dashboard({ children }: { children?: React.ReactNode }) 
             <Avatar name='Oshigaki Kisame' src='https://bit.ly/broken-link' size="md" />
           </HStack>
           <Box my="4" p="4" bg="white" rounded="4" minH="93%" >
-            {
-              children
-            }
+            <Outlet />
           </Box>
         </Box>
       </Box>
@@ -100,8 +89,9 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Stack>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+
+      {nav.filter((config) => config.isParent !== false).map((link: any) => (
+        <NavItem href={link.route} key={link.name} icon={link.icon} >
           {link.name}
         </NavItem>
       ))}
@@ -111,41 +101,47 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
 interface NavItemProps extends FlexProps {
   icon: IconType
-  children: ReactNode
+  children: ReactNode,
+  href: any
 }
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ href = "", icon, children, ...rest }: NavItemProps) => {
   return (
-    <Box
-      as="a"
-      href="#"
+    <NavLink
+      to={href}
       style={{ textDecoration: 'none' }}
-      _focus={{ boxShadow: 'none' }}>
-      <Flex
-        align="center"
-        p="2"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: 'blue.400',
-          color: 'white',
-        }}
-        fontWeight={"bold"}
-        {...rest}>
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: 'white',
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    </Box>
+
+    >
+      {({ isActive }) => (
+        <Flex
+          align="center"
+          p="2"
+          mx="4"
+          my="1"
+          borderRadius="lg"
+          role="group"
+          cursor="pointer"
+          bg={isActive ? "blue.400" : "transparent"}  // Active state bg color
+          color={isActive ? "white" : "black"}
+          _hover={{
+            bg: 'blue.400',
+            color: 'white',
+          }}
+          fontWeight={"bold"}
+          {...rest}>
+          {icon && (
+            <Icon
+              mr="4"
+              fontSize="16"
+              _groupHover={{
+                color: 'white',
+              }}
+              as={icon}
+            />
+          )}
+          {children}
+        </Flex>
+      )}
+    </NavLink>
   )
 }
 

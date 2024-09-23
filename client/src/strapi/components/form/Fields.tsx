@@ -1,65 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Field, useField } from "formik";
-// import SelectField from "./SelectField";
-// import StrapiField from "./StrapiField";
+import FormInput from "./FormInput";
+import FormTextarea from "./FormTextarea";
+import FormSelect from "./FormSelect";
+import StrapiField from "./StrapiField";
 
-const Form_Input = ({ ...props }: any) => {
-  const [field, meta] = useField(props?.name);
+const Fields = ({ ...props }: any) => {
   return (
     <>
-      {["text", "number", "date"].includes(props?.type) && (<><Field
-        {...field}
-        {...props}
-        className="input-text"
-      />
-        {
-          meta.touched && meta.error && <div className="error">{meta.error}</div>
-        }</>)
+      {["text", "number", "date", "email"].includes(props?.type) && (<FormInput {...props} />)}
 
-      }
+      {["textarea"].includes(props.type) && <FormTextarea {...props} />}
 
+      {['select'].includes(props.type) && <FormSelect {...props} />}
 
-      {["email"].includes(props.type) && (
-        <div className="relative  rounded-md shadow-sm">
-          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-            {/* <EnvelopeIcon aria-hidden="true" className="h-5 w-5 text-gray-400" /> */}
-          </div>
-          <Field
-            {...field}
-            {...props}
-            placeholder="you@example.com"
-            className="input-email"
-          />
-        </div>)
-      }
-      {
-        ["textarea"].includes(props.type) && <textarea
-          {...props}
-          {...field}
-          className="input-text"
-        />
-      }
-
-
-      {/* {
-        ["select"].includes(props.type) && (<><SelectField {...props} /> {
-          meta.touched && meta.error && <div className="text-red-500 text-sm mt-1">{meta.error}</div>
-        } </>)
-
-      }
-       {
-        ["ref:strapi"].includes(props.type) && (
-          <StrapiField
-            {
-            ...props
-            }
-          />
-        )
-      } */}
-
+      {['ref:strapi'].includes(props.type) && <StrapiField {...props} />}
     </>
   );
 };
 
-export default Form_Input;
+export default Fields;
