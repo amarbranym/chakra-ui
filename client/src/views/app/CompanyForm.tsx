@@ -3,7 +3,7 @@ import React from 'react'
 import BasicForm from '../../strapi/components/form/BasicForm'
 import { AddressSchema, ContactSchema, experienceSchema, otherDetailSchema, personalSchema, qualificationSchema } from '../../example'
 import { StrapiFormProvider } from '../../strapi/providers/StrapiFormProvider'
-import {  Button, Container, Grid, GridItem, Heading, HStack,  Stack,  VStack, } from '@chakra-ui/react'
+import { Button, Container, Grid, GridItem, Heading, HStack, Stack, VStack, } from '@chakra-ui/react'
 import BorderCard from '../../layout/BorderCard'
 import RepeatableForm from '../../strapi/components/form/RepeatableForm'
 import { useOutletContext } from 'react-router-dom'
@@ -18,7 +18,7 @@ const CompanyForm = () => {
         <Container maxW='container.xl' mb="20" >
             <StrapiFormProvider
                 collectionName="students"
-                slug="60"
+                // slug="58"
                 query="populate=experience.Company.Contact,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,IndustriesPreference"
             >
                 {({ submit, isLoading }) => (
@@ -38,13 +38,19 @@ const CompanyForm = () => {
                                     <BasicForm fieldsSchema={AddressSchema} name="Address" type='Component' />
                                 </BorderCard>
                                 <BorderCard>
-                                    <RepeatableForm fieldsSchema={ContactSchema} name="Contacts" />
+                                    <RepeatableForm render={(values: any) => <>
+                                        {values.CountryCode} years of experience as {values.Type} in {values.Number}
+                                    </>} fieldsSchema={ContactSchema} name="Contacts" />
                                 </BorderCard>
                                 <BorderCard>
-                                    <RepeatableForm fieldsSchema={experienceSchema} name="experience" />
+                                    <RepeatableForm render={(values: any) => <>
+                                        {values.Duration} years of experience as {values.Designation} in {values.company}
+                                    </>} fieldsSchema={experienceSchema} name="experience" />
                                 </BorderCard>
                                 <BorderCard>
-                                    <RepeatableForm fieldsSchema={qualificationSchema} name="qualification" />
+                                    <RepeatableForm render={(values: any) => <>
+                                        {values.qualification} years of experience as {values.school} 
+                                    </>} fieldsSchema={qualificationSchema} name="qualification" />
                                 </BorderCard>
                                 <BorderCard>
                                     <BasicForm fieldsSchema={otherDetailSchema} name="otherDetails" />
@@ -53,10 +59,9 @@ const CompanyForm = () => {
                         </GridItem>
                         <GridItem colSpan={{ base: 6, lg: 2 }} >
                             <VStack gap="4">
-                                
-                                <StatusPlugin/>
-                                <RegistrationPlugin/>
-                                <ViewPlugin/>
+                                <StatusPlugin />
+                                <RegistrationPlugin />
+                                <ViewPlugin />
 
                             </VStack>
                         </GridItem>

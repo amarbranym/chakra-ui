@@ -70,7 +70,8 @@ export const StrapiFormProvider: React.FC<{
           if (field.type === "ref:strapi") {
             if (field?.multiple) {
               obj[`${field.name}`] = {
-                connect: data[`${field.name}`]?.map((value: any) => ({ id: value["id"] }))
+                connect: data[`${field.name}`]?.filter((value:any) => value.type !== "disconnect").map((value: any) => ({ id: value["id"] })),
+                disconnect: data[`${field.name}`]?.filter((value:any) => value.type === "disconnect").map((value: any) => ({ id: value["id"] })),
               }
             }
             else {

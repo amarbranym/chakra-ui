@@ -24,6 +24,7 @@ const StrapiField = ({ ...props }: any) => {
             if (!props.multiple) {
                 setSearchValue(meta?.value.label)
             }
+            setFieldValue(props.name, meta?.value)
         }
     }, [props.name, meta.value, props.multiple])
 
@@ -35,6 +36,7 @@ const StrapiField = ({ ...props }: any) => {
         const options = data?.data?.map((item: any) => ({
             label: item.attributes[props.rules.field],
             value: item.attributes[props.rules.field],
+            type: "connect",
             id: item.id
         })) || [];
         setValues(options);
@@ -65,7 +67,7 @@ const StrapiField = ({ ...props }: any) => {
     const isSelected = (option: any) => {
         if (!meta.value) return false;
         return props?.multiple
-            ? meta.value.some((val: any) => val.value === option.value)
+            ? meta.value.some((val: any) => (val.value === option.value && val.type !== "disconnect"))
             : meta.value.value === option.value;
     };
 
@@ -89,7 +91,15 @@ const StrapiField = ({ ...props }: any) => {
 
     const onTagRemove = (e: any, option: any) => {
         e.stopPropagation();
-        setFieldValue(props.name, meta.value.filter((val: any) => val.id !== option.id));
+        setFieldValue(props.name, meta.value.map((val: any) => {
+            if(val.id === option.id){
+                return {
+                    ...val,
+                    type: "disconnect"
+                }
+            }
+            else return val
+        }));
     };
 
     const handleSave = async () => {
@@ -117,7 +127,7 @@ const StrapiField = ({ ...props }: any) => {
                 props?.multiple && (
                     <HStack wrap="wrap" gap="2" mb='2'>
                         {
-                            meta?.value?.map((tag: any, index: any) => (
+                            meta?.value?.map((tag: any, index: any) => tag.type !== "disconnect" && (
                                 <Badge key={index} display="flex" gap="1" alignItems="center" >
                                     {tag.label}
                                     <IconButton aria-label='' bg="transparent" _hover={{ bg: "transparent" }} size="xs" onClick={(e) => onTagRemove(e, tag)} type="button" icon={<SmallCloseIcon />} />
