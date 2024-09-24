@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useField, useFormikContext } from 'formik';
 import { apiFetch } from '../../utils/service';
 import { useStrapiContext } from '../../providers/StrapiAdmin';
-import { Box, Button, Input, InputGroup, InputRightElement, List, ListItem, Stack, } from '@chakra-ui/react';
-import { ChevronDownIcon, SmallAddIcon } from '@chakra-ui/icons'
+import { Badge, Box, Button, HStack, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Stack, } from '@chakra-ui/react';
+import { ChevronDownIcon, SmallAddIcon, SmallCloseIcon } from '@chakra-ui/icons'
 
 
 const StrapiField = ({ ...props }: any) => {
@@ -113,26 +113,22 @@ const StrapiField = ({ ...props }: any) => {
 
     return (
         <Box ref={inputRef} position='relative' >
-            {/* {
+            {
                 props?.multiple && (
-                    <div className='flex gap-2 mb-2 flex-wrap'>
+                    <HStack wrap="wrap" gap="2" mb='2'>
                         {
                             meta?.value?.map((tag: any, index: any) => (
-                                <span key={index} className="inline-flex items-center gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                                <Badge key={index} display="flex" gap="1" alignItems="center" >
                                     {tag.label}
-                                    <button onClick={(e) => onTagRemove(e, tag)} type="button" className="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-gray-500/20">
-                                        <span className="sr-only">Remove</span>
-                                        <svg viewBox="0 0 14 14" className="h-3.5 w-3.5 stroke-gray-600/50 group-hover:stroke-gray-600/75">
-                                            <path d="M4 4l6 6m0-6l-6 6" />
-                                        </svg>
-                                        <span className="absolute -inset-1" />
-                                    </button>
-                                </span>
+                                    <IconButton aria-label='' bg="transparent" _hover={{ bg: "transparent" }} size="xs" onClick={(e) => onTagRemove(e, tag)} type="button" icon={<SmallCloseIcon />} />
+
+
+                                </Badge>
                             ))
                         }
-                    </div>
+                    </HStack>
                 )
-            } */}
+            }
 
             <InputGroup onClick={handleInputClick}>
                 <Input
@@ -157,7 +153,7 @@ const StrapiField = ({ ...props }: any) => {
                         )) :
                             <ListItem py={{ base: "2" }} onClick={handleSave}  >
                                 <Stack>
-                                    <Button colorScheme='blue'  leftIcon={<SmallAddIcon />} size='sm' type='button' variant="ghost" mx="auto"  >add item</Button>
+                                    <Button colorScheme='blue' leftIcon={<SmallAddIcon />} size='sm' type='button' variant="ghost" mx="auto"  >add item</Button>
                                 </Stack>
                             </ListItem>
                     }

@@ -105,12 +105,7 @@ export const apiFetch = async (
     const response = await fetch(url, {
       ...options,
     });
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
     const data = await response.json();
-
     if (onSuccess) onSuccess(data);
     // if (message) toast.success(message);
 

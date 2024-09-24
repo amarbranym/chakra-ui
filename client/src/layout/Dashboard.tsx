@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import {
   IconButton,
   Box,
@@ -14,26 +14,39 @@ import {
   BoxProps,
   FlexProps,
   Stack,
-  HStack,
-  InputGroup,
-  InputLeftElement,
-  Input,
-  Avatar,
+  Container,
 } from '@chakra-ui/react'
 import {
   FiMenu,
-  FiSearch,
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import StrapiCMS from '../strapi/icons/StrapiCMS'
-import { NavLink, Outlet } from 'react-router-dom';
+import { matchRoutes, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { nav } from '../config/nav';
+import Header from './Header'
+import BreadCrumbComponent from './BreadCrumb'
 
 
 
 
 export default function Dashboard() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const location = useLocation()
+
+  const [page, setPage] = useState<any>();
+
+  useEffect(() => {
+    const matchedRoutes = matchRoutes(nav.map((item) => ({ path: item.route, element: item.component })), location)
+
+    const path = matchedRoutes ? matchedRoutes[0].route.path : "";
+
+    const currentPage = nav.filter((item: any) => item.route === path)
+
+    setPage(currentPage)
+
+  }, [location])
+  console.log("page", page)
   return (
     <Box minH="100vh" bg='gray.200' overflow="hidden"   >
       <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
@@ -50,20 +63,19 @@ export default function Dashboard() {
       </Drawer>
       {/* mobilenav */}
       <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} >
+      <Box ml={{ base: 0, md: 60 }} position="relative" >
         <Box w="full" h="100vh" p="4" pl={{ base: '4', md: "0" }}  >
-          <HStack justify='space-between'   >
-            <InputGroup maxW="605px" >
-              <InputLeftElement pointerEvents='none'>
-                <FiSearch color='gray.300' />
-              </InputLeftElement>
-              <Input type='text' bg="white" rounded="4" placeholder='Search' variant="outline" size="md" />
-            </InputGroup>
-
-            <Avatar name='Oshigaki Kisame' src='https://bit.ly/broken-link' size="md" />
-          </HStack>
-          <Box my="4" p="4" bg="white" rounded="4" minH="93%" >
-            <Outlet />
+          <Header />
+          <Box my="4" p="4" bg="white" rounded="4" overflowX="auto" h='full' >
+            <Stack mb='6'>
+              {
+                page && page[0].isParent === true ? <BreadCrumbComponent /> :
+                  <Container maxW={"container.xl"}>
+                    <BreadCrumbComponent />
+                  </Container>
+              }
+            </Stack>
+            <Outlet context={page && page[0]} />
           </Box>
         </Box>
       </Box>

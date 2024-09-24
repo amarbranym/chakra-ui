@@ -22,7 +22,7 @@ export const StrapiFormProvider: React.FC<{
   slug?: string;
   query?: string;
 }> = ({ children, collectionName, slug, query }) => {
-
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [data, setData] = useState<any>({});
   const { baseURL } = useStrapiContext()
   const handleData = (key: string, values: any) => {
@@ -52,6 +52,7 @@ export const StrapiFormProvider: React.FC<{
   }, [slug])
 
   const handleSubmit = async () => {
+    setIsLoading(true)
     let isValid: boolean = false
     const transformData = (schema: FormData[], name: string, data: any) => {
       const obj: any = {}
@@ -123,15 +124,18 @@ export const StrapiFormProvider: React.FC<{
         `/${url}`,
         options
       );
+      setIsLoading(false)
+
     } else {
       isValid = false
+      setIsLoading(false)
+
     }
   }
-
-  console.log("data", data)
+console.log("data", data)
   return (
     <StrapiFormContext.Provider value={{ data, setData, handleData, setSchema, submit: handleSubmit }}>
-      {children({ submit: handleSubmit })}
+      {children({ submit: handleSubmit, isLoading })}
     </StrapiFormContext.Provider>
   );
 };
