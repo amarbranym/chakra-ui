@@ -36,13 +36,16 @@ const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "
         if (field?.required) {
             validationSchemaFields[`${field.name}`] = Yup.string().required(`${field.label || field.name} is required`);
         }
+        if (field?.name === "MinSalary" && field?.type === "number") {
+            validationSchemaFields[`${field.name}`] = Yup.number().min(field?.rules?.min, `${field.label || field.name} must be at least ${field?.rules?.min}`);
+        }
     });
 
     const validationSchema = Yup.object().shape(validationSchemaFields);
 
     return (
         <Box>
-          {type === "Component" && <HStack pb="6" justify="space-between" alignItems="center">
+            {type === "Component" && <HStack pb="6" justify="space-between" alignItems="center">
                 <Heading fontSize="sm" textTransform="capitalize" >{name}</Heading>
             </HStack>}
             <Formik

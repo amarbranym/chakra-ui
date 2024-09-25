@@ -11,18 +11,18 @@ import StatusPlugin from '../../plugins/livepreview/StatusPlugin'
 import RegistrationPlugin from '../../plugins/livepreview/RegistrationPlugin'
 import ViewPlugin from '../../plugins/livepreview/ViewPlugin'
 import { BiSave } from 'react-icons/bi'
-import { companySchema } from '../../config/schema/companySchema'
 import { phoneNumberSchema } from '../../config/schema/phoneNumberSchema'
+import { contactsSchema } from '../../config/schema/contactsSchema'
 
-const CompanyForm = () => {
+const ContactForm = () => {
     const context = useOutletContext<any>();
     const { id } = useParams()
     return (
         <Container maxW='container.xl' mb="20" >
             <StrapiFormProvider
-                collectionName="companies"
+                collectionName="contacts"
                 slug={id}
-                query="populate=Industry,City,Contact"
+                query="populate=Phone,Companies"
             >
                 {({ submit, isLoading }) => (
                     <Grid templateColumns="repeat(6, 1fr)" gap="6" >
@@ -35,7 +35,7 @@ const CompanyForm = () => {
                         <GridItem colSpan={{ base: 6, lg: 4 }}>
                             <Stack gap="4">
                                 <BorderCard  >
-                                    <BasicForm fieldsSchema={companySchema} name="personalDetails"   />
+                                    <BasicForm fieldsSchema={contactsSchema} name="contactdetails" />
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
@@ -43,7 +43,7 @@ const CompanyForm = () => {
                                         return (<span>
                                             {values.CountryCode} years of experience as {values.Type.value} in {values.Number}
                                         </span>)
-                                    }} fieldsSchema={phoneNumberSchema} name="Contact" />
+                                    }} fieldsSchema={phoneNumberSchema} name="Phone" />
                                 </BorderCard>
                             </Stack>
                         </GridItem>
@@ -62,4 +62,4 @@ const CompanyForm = () => {
     )
 }
 
-export default CompanyForm
+export default ContactForm

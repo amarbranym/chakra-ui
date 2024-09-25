@@ -46,7 +46,6 @@ export default function Dashboard() {
     setPage(currentPage)
 
   }, [location])
-  console.log("page", page)
   return (
     <Box minH="100vh" bg='gray.200' overflow="hidden"   >
       <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
@@ -69,9 +68,9 @@ export default function Dashboard() {
           <Box my="4" p="4" bg="white" rounded="4" overflowX="auto" h='full' >
             <Stack mb='6'>
               {
-                page && page[0].isParent === true ? <BreadCrumbComponent /> :
+                page && page[0].isParent === true ? <BreadCrumbComponent page={page && page[0]} /> :
                   <Container maxW={"container.xl"}>
-                    <BreadCrumbComponent />
+                    <BreadCrumbComponent page={page && page[0]}  />
                   </Container>
               }
             </Stack>

@@ -28,8 +28,9 @@ const FormSelect = ({ ...props }: any) => {
             }
             onChange={handleChange}
             isInvalid={meta.touched && !!meta.error}
+        // placeholder='Choose here'
         >
-            <option disabled selected>Choose here</option>
+            <option value={""} disabled >Choose here</option>
             {
                 props?.rules?.options?.map((item: any) => (
                     <option key={item.value}>{item.label}</option>

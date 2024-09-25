@@ -11,18 +11,17 @@ import StatusPlugin from '../../plugins/livepreview/StatusPlugin'
 import RegistrationPlugin from '../../plugins/livepreview/RegistrationPlugin'
 import ViewPlugin from '../../plugins/livepreview/ViewPlugin'
 import { BiSave } from 'react-icons/bi'
-import { companySchema } from '../../config/schema/companySchema'
-import { phoneNumberSchema } from '../../config/schema/phoneNumberSchema'
+import { candidatesSchema, vacancySchema } from '../../config/schema/vacancySchema'
 
-const CompanyForm = () => {
+const VacancyForm = () => {
     const context = useOutletContext<any>();
     const { id } = useParams()
     return (
         <Container maxW='container.xl' mb="20" >
             <StrapiFormProvider
-                collectionName="companies"
+                collectionName="vacancies"
                 slug={id}
-                query="populate=Industry,City,Contact"
+                query="populate=Designation,Company,Candidates,Candidates.Student"
             >
                 {({ submit, isLoading }) => (
                     <Grid templateColumns="repeat(6, 1fr)" gap="6" >
@@ -35,15 +34,15 @@ const CompanyForm = () => {
                         <GridItem colSpan={{ base: 6, lg: 4 }}>
                             <Stack gap="4">
                                 <BorderCard  >
-                                    <BasicForm fieldsSchema={companySchema} name="personalDetails"   />
+                                    <BasicForm fieldsSchema={vacancySchema} name="vacancydetails" />
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
                                         console.log(values)
                                         return (<span>
-                                            {values.CountryCode} years of experience as {values.Type.value} in {values.Number}
+                                            vacancies
                                         </span>)
-                                    }} fieldsSchema={phoneNumberSchema} name="Contact" />
+                                    }} fieldsSchema={candidatesSchema} name="Candidates" />
                                 </BorderCard>
                             </Stack>
                         </GridItem>
@@ -62,4 +61,4 @@ const CompanyForm = () => {
     )
 }
 
-export default CompanyForm
+export default VacancyForm

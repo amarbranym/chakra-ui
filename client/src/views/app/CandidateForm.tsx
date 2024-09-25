@@ -11,18 +11,18 @@ import StatusPlugin from '../../plugins/livepreview/StatusPlugin'
 import RegistrationPlugin from '../../plugins/livepreview/RegistrationPlugin'
 import ViewPlugin from '../../plugins/livepreview/ViewPlugin'
 import { BiSave } from 'react-icons/bi'
-import { companySchema } from '../../config/schema/companySchema'
+import { addressSchema, experienceSchema, otherDetailSchema, personalSchema, qualificationSchema } from '../../config/schema/candidateSchemas'
 import { phoneNumberSchema } from '../../config/schema/phoneNumberSchema'
 
-const CompanyForm = () => {
+const CandidateForm = () => {
     const context = useOutletContext<any>();
     const { id } = useParams()
     return (
         <Container maxW='container.xl' mb="20" >
             <StrapiFormProvider
-                collectionName="companies"
+                collectionName="students"
                 slug={id}
-                query="populate=Industry,City,Contact"
+                query="populate=experience.Company.Contact,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,IndustriesPreference"
             >
                 {({ submit, isLoading }) => (
                     <Grid templateColumns="repeat(6, 1fr)" gap="6" >
@@ -35,7 +35,10 @@ const CompanyForm = () => {
                         <GridItem colSpan={{ base: 6, lg: 4 }}>
                             <Stack gap="4">
                                 <BorderCard  >
-                                    <BasicForm fieldsSchema={companySchema} name="personalDetails"   />
+                                    <BasicForm fieldsSchema={personalSchema} name="personalDetails" />
+                                </BorderCard>
+                                <BorderCard>
+                                    <BasicForm fieldsSchema={addressSchema} name="Address" type='Component' />
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
@@ -43,7 +46,26 @@ const CompanyForm = () => {
                                         return (<span>
                                             {values.CountryCode} years of experience as {values.Type.value} in {values.Number}
                                         </span>)
-                                    }} fieldsSchema={phoneNumberSchema} name="Contact" />
+                                    }} fieldsSchema={phoneNumberSchema} name="Contacts" />
+                                </BorderCard>
+                                <BorderCard>
+                                    <RepeatableForm render={(values: any) => {
+                                        console.log(values)
+                                        return (<span>
+                                            {values.Duration} years of experience as {values.Designation.value} in {values.Company.value}
+                                        </span>)
+                                    }} fieldsSchema={experienceSchema} name="experience" />
+                                </BorderCard>
+                                <BorderCard>
+                                    <RepeatableForm render={(values: any) => {
+                                        console.log(values)
+                                        return (<span>
+                                            {values.qualification.value} years of experience as {values.school.value}
+                                        </span>)
+                                    }} fieldsSchema={qualificationSchema} name="qualification" />
+                                </BorderCard>
+                                <BorderCard>
+                                    <BasicForm fieldsSchema={otherDetailSchema} name="otherDetails" />
                                 </BorderCard>
                             </Stack>
                         </GridItem>
@@ -52,6 +74,7 @@ const CompanyForm = () => {
                                 <StatusPlugin />
                                 <RegistrationPlugin />
                                 <ViewPlugin />
+
                             </VStack>
                         </GridItem>
                     </Grid>
@@ -62,4 +85,4 @@ const CompanyForm = () => {
     )
 }
 
-export default CompanyForm
+export default CandidateForm

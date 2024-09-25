@@ -14,7 +14,7 @@ const StrapiField = ({ ...props }: any) => {
     const [showMenu, setShowMenu] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>("");
     const [values, setValues] = useState<any[]>([]);
-
+    console.log("meta", meta)
     useEffect(() => {
         setFieldValue(props.name, props?.multiple ? [] : null);
     }, [])
@@ -22,12 +22,11 @@ const StrapiField = ({ ...props }: any) => {
     useEffect(() => {
         if (meta.value) {
             if (!props.multiple) {
-                setSearchValue(meta?.value.label)
+                setSearchValue(meta?.value?.label)
             }
-            setFieldValue(props.name, meta?.value)
+            setFieldValue(props.name, meta?.value);
         }
     }, [props.name, meta.value, props.multiple])
-
 
 
     const handleGetDocument = async () => {
@@ -92,7 +91,7 @@ const StrapiField = ({ ...props }: any) => {
     const onTagRemove = (e: any, option: any) => {
         e.stopPropagation();
         setFieldValue(props.name, meta.value.map((val: any) => {
-            if(val.id === option.id){
+            if (val.id === option.id) {
                 return {
                     ...val,
                     type: "disconnect"
@@ -120,25 +119,9 @@ const StrapiField = ({ ...props }: any) => {
         //     model: props.rules.model
         // });
     };
-
+    console.log(searchValue)
     return (
         <Box ref={inputRef} position='relative' >
-            {
-                props?.multiple && (
-                    <HStack wrap="wrap" gap="2" mb='2'>
-                        {
-                            meta?.value?.map((tag: any, index: any) => tag.type !== "disconnect" && (
-                                <Badge key={index} display="flex" gap="1" alignItems="center" >
-                                    {tag.label}
-                                    <IconButton aria-label='' bg="transparent" _hover={{ bg: "transparent" }} size="xs" onClick={(e) => onTagRemove(e, tag)} type="button" icon={<SmallCloseIcon />} />
-
-
-                                </Badge>
-                            ))
-                        }
-                    </HStack>
-                )
-            }
 
             <InputGroup onClick={handleInputClick}>
                 <Input
@@ -156,19 +139,38 @@ const StrapiField = ({ ...props }: any) => {
             {
                 showMenu &&
                 <List maxH={"20rem"} bg="white" rounded="8px" position="absolute" w='full' zIndex={11} shadow="md" mt="2" overflowX="auto" >
-                    {
-                        values?.length > 0 ? values?.map((item: any, index: any) => (
-                            <ListItem px={{ base: "6" }} py={{ base: "2" }} _hover={{ bg: "gray.200" }} bg={isSelected(item) && "gray.200"} key={index + 1} onClick={() => onItemClick(item)}>{item.label}</ListItem>
+                    <>
+                        {
+                            values?.length > 0 ? values?.map((item: any, index: any) => (
+                                <ListItem px={{ base: "6" }} py={{ base: "2" }} _hover={{ bg: "gray.200" }} bg={isSelected(item) && "gray.200"} key={index + 1} onClick={() => onItemClick(item)}>{item.label}</ListItem>
 
-                        )) :
-                            <ListItem py={{ base: "2" }} onClick={handleSave}  >
-                                <Stack>
-                                    <Button colorScheme='blue' leftIcon={<SmallAddIcon />} size='sm' type='button' variant="ghost" mx="auto"  >add item</Button>
-                                </Stack>
-                            </ListItem>
-                    }
+                            )) :
+                                <ListItem py={{ base: "2" }} onClick={handleSave}  >
+                                    <Stack>
+                                        <Button colorScheme='blue' leftIcon={<SmallAddIcon />} size='sm' type='button' variant="ghost" mx="auto"  >add item</Button>
+                                    </Stack>
+                                </ListItem>
+                        }
+                    </>
                 </List>
             }
+
+
+            {
+                props?.multiple && (
+                    <HStack wrap="wrap" gap="2" mt='2'>
+                        {
+                            meta && meta?.value?.map((tag: any, index: any) => tag.type !== "disconnect" && (
+                                <Badge key={index} display="flex" gap="1" alignItems="center" >
+                                    {tag.label}
+                                    <IconButton aria-label='' bg="transparent" _hover={{ bg: "transparent" }} size="xs" onClick={(e) => onTagRemove(e, tag)} type="button" icon={<SmallCloseIcon />} />
+                                </Badge>
+                            ))
+                        }
+                    </HStack>
+                )
+            }
+
         </Box >
 
     )

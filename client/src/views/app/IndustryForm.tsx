@@ -5,24 +5,22 @@ import BasicForm from '../../strapi/components/form/BasicForm'
 import { StrapiFormProvider } from '../../strapi/providers/StrapiFormProvider'
 import { Button, Container, Grid, GridItem, Heading, HStack, Stack, VStack, } from '@chakra-ui/react'
 import BorderCard from '../../layout/BorderCard'
-import RepeatableForm from '../../strapi/components/form/RepeatableForm'
 import { useOutletContext, useParams } from 'react-router-dom'
 import StatusPlugin from '../../plugins/livepreview/StatusPlugin'
 import RegistrationPlugin from '../../plugins/livepreview/RegistrationPlugin'
 import ViewPlugin from '../../plugins/livepreview/ViewPlugin'
 import { BiSave } from 'react-icons/bi'
-import { companySchema } from '../../config/schema/companySchema'
-import { phoneNumberSchema } from '../../config/schema/phoneNumberSchema'
+import { industrySchema } from '../../config/schema/industrySchema'
 
-const CompanyForm = () => {
+const IndustryForm = () => {
     const context = useOutletContext<any>();
     const { id } = useParams()
     return (
         <Container maxW='container.xl' mb="20" >
             <StrapiFormProvider
-                collectionName="companies"
+                collectionName="industries"
                 slug={id}
-                query="populate=Industry,City,Contact"
+                query="populate=*"
             >
                 {({ submit, isLoading }) => (
                     <Grid templateColumns="repeat(6, 1fr)" gap="6" >
@@ -35,16 +33,9 @@ const CompanyForm = () => {
                         <GridItem colSpan={{ base: 6, lg: 4 }}>
                             <Stack gap="4">
                                 <BorderCard  >
-                                    <BasicForm fieldsSchema={companySchema} name="personalDetails"   />
+                                    <BasicForm fieldsSchema={industrySchema} name="industrydetails" />
                                 </BorderCard>
-                                <BorderCard>
-                                    <RepeatableForm render={(values: any) => {
-                                        console.log(values)
-                                        return (<span>
-                                            {values.CountryCode} years of experience as {values.Type.value} in {values.Number}
-                                        </span>)
-                                    }} fieldsSchema={phoneNumberSchema} name="Contact" />
-                                </BorderCard>
+                               
                             </Stack>
                         </GridItem>
                         <GridItem colSpan={{ base: 6, lg: 2 }} >
@@ -62,4 +53,4 @@ const CompanyForm = () => {
     )
 }
 
-export default CompanyForm
+export default IndustryForm

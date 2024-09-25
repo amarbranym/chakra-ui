@@ -1,19 +1,15 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react'
 import React from 'react'
+// import { Link } from 'react-router-dom'
 
-const BreadCrumbComponent = () => {
+const BreadCrumbComponent = ({ page }: any) => {
     return (
         <Breadcrumb>
             <BreadcrumbItem>
-                <BreadcrumbLink href='#'>Home</BreadcrumbLink>
+                <BreadcrumbLink >Home</BreadcrumbLink>
             </BreadcrumbItem>
-
-            <BreadcrumbItem>
-                <BreadcrumbLink href='#'>Companies</BreadcrumbLink>
-            </BreadcrumbItem>
-
             <BreadcrumbItem isCurrentPage>
-                <BreadcrumbLink href='#'>All Companies</BreadcrumbLink>
+                <BreadcrumbLink>{page?.name}</BreadcrumbLink>
             </BreadcrumbItem>
         </Breadcrumb>
     )

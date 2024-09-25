@@ -5,7 +5,7 @@ import Filters from '../../strapi/components/list/Filters';
 import Empty from '../../strapi/components/list/Empty';
 import Pagination from '../../strapi/components/list/Pagination';
 import Card from '../../strapi/components/list/Card';
-import { userSchema } from '../../example';
+import { companySchema } from '../../config/schema/companySchema';
 
 const Users = () => {
   return (
@@ -17,7 +17,7 @@ const Users = () => {
                     Users
                 </Heading>
                 <Stack py={{ base: "4" }}>
-                    <Filters fieldSchema={[...userSchema]} />
+                    <Filters fieldSchema={[...companySchema]} />
                 </Stack>
                 <Stack border="1px solid" borderColor="gray.100" rounded="md">
                     <Table>

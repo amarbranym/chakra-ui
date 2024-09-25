@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useStrapiContext } from './StrapiAdmin';
 import { apiFetch, populateData } from '../utils/service';
-import { FormData } from '../../example';
+import { FormData } from '../../config/schema/formTypes';
 interface StrapiFormContextProps {
   data: any;
   setData: React.Dispatch<React.SetStateAction<any>>;
@@ -70,6 +70,8 @@ export const StrapiFormProvider: React.FC<{
           if (field.type === "ref:strapi") {
             if (field?.multiple) {
               obj[`${field.name}`] = {
+                // connect: data[`${field.name}`]?.map((value: any) => ({ id: value["id"] }))
+
                 connect: data[`${field.name}`]?.filter((value:any) => value.type !== "disconnect").map((value: any) => ({ id: value["id"] })),
                 disconnect: data[`${field.name}`]?.filter((value:any) => value.type === "disconnect").map((value: any) => ({ id: value["id"] })),
               }
@@ -133,7 +135,7 @@ export const StrapiFormProvider: React.FC<{
 
     }
   }
-console.log("data", data)
+  console.log("data", data)
   return (
     <StrapiFormContext.Provider value={{ data, setData, handleData, setSchema, submit: handleSubmit }}>
       {children({ submit: handleSubmit, isLoading })}

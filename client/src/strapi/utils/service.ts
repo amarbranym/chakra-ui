@@ -1,5 +1,6 @@
 /* eslint-disable prefer-const */
-import { FormData } from "../../example";
+
+import { FormData } from "../../config/schema/formTypes";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const convertRef = (refData: any, field: any) => {
@@ -40,7 +41,7 @@ export const populateData = (view: any[], initialData?: any) => {
                 field.rules?.field
               );
             } else {
-              obj[`${name}`][`${field.name}`] = initialData[`${field.name}`];
+              obj[`${name}`][`${field.name}`] = convertRef(initialData[`${field.name}`], field.rules?.field);
             }
           } else {
             obj[`${name}`][`${field.name}`] = initialData[`${field.name}`];
@@ -92,6 +93,7 @@ export const populateData = (view: any[], initialData?: any) => {
       }
     }
   }
+  console.log(obj)
   return obj;
 };
 

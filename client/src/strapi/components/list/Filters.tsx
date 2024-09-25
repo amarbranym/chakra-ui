@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react'
 import { useStrapiListContext } from '../../providers/StrapiListProvider'
-import { filterOprators } from '../../../example'
 import { v4 as uuidv4 } from 'uuid';
 import { Box, Button, Input, Popover, PopoverBody, PopoverContent, PopoverTrigger, Select, Stack, VStack } from '@chakra-ui/react';
 // import { CloseButton, Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
@@ -9,6 +8,7 @@ import {
     FiPlus,
 } from 'react-icons/fi'
 import { IoClose } from "react-icons/io5";
+import { filterOprators } from '../../../config/schema/filterOprators';
 interface FiltersProps {
     fieldSchema?: any[]
 }
