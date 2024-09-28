@@ -38,7 +38,6 @@ const SignupCompnent = () => {
             }
             setLoader(false)
             const responseData = await response.json();
-            console.log(responseData.jwt)
             localStorage.setItem('jwt', responseData.jwt);
         } catch (error) {
             console.error('Signup error', error);

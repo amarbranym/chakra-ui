@@ -41,7 +41,10 @@ export const populateData = (view: any[], initialData?: any) => {
                 field.rules?.field
               );
             } else {
-              obj[`${name}`][`${field.name}`] = convertRef(initialData[`${field.name}`], field.rules?.field);
+              obj[`${name}`][`${field.name}`] = convertRef(
+                initialData[`${field.name}`],
+                field.rules?.field
+              );
             }
           } else {
             obj[`${name}`][`${field.name}`] = initialData[`${field.name}`];
@@ -93,24 +96,21 @@ export const populateData = (view: any[], initialData?: any) => {
       }
     }
   }
-  console.log(obj)
   return obj;
 };
 
 export const apiFetch = async (
   url: string,
   options: any = {},
-  message?: string,
-  onSuccess?: (data: any) => void
+  onSuccess?: (data: any, method: string) => void
 ) => {
   try {
     const response = await fetch(url, {
       ...options,
     });
     const data = await response.json();
-    if (onSuccess) onSuccess(data);
-    // if (message) toast.success(message);
 
+    if (onSuccess) onSuccess(response, options);
     return data;
   } catch (error) {
     console.error("Fetch error:", error);

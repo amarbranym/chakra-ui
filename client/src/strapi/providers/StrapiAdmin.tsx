@@ -48,7 +48,6 @@ export const StrapiAdmin: React.FC<{ children: ReactNode, baseURL?: string, apiK
             const role = await handleUser(id, token)
 
             if (role) setCurrentRole(role?.role?.type);
-            console.log("user", role)
         } else {
             setIsAuthenticated(false);
             setCurrentRole("public");

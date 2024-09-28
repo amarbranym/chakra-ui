@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useField, useFormikContext } from 'formik';
 import { apiFetch } from '../../utils/service';
 import { useStrapiContext } from '../../providers/StrapiAdmin';
-import { Badge, Box, Button, HStack, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Stack, } from '@chakra-ui/react';
+import { Badge, Box, Button, HStack, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Stack, Text, } from '@chakra-ui/react';
 import { ChevronDownIcon, SmallAddIcon, SmallCloseIcon } from '@chakra-ui/icons'
 
 
@@ -14,7 +14,7 @@ const StrapiField = ({ ...props }: any) => {
     const [showMenu, setShowMenu] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>("");
     const [values, setValues] = useState<any[]>([]);
-    console.log("meta", meta)
+
     useEffect(() => {
         setFieldValue(props.name, props?.multiple ? [] : null);
     }, [])
@@ -36,14 +36,14 @@ const StrapiField = ({ ...props }: any) => {
             label: item.attributes[props.rules.field],
             value: item.attributes[props.rules.field],
             type: "connect",
-            id: item.id
+            id: item?.id
         })) || [];
         setValues(options);
     }
 
     useEffect(() => {
         handleGetDocument()
-    }, [searchValue]);
+    }, [searchValue, showMenu]);
 
     const inputRef = useRef<any>(null);
 
@@ -82,7 +82,6 @@ const StrapiField = ({ ...props }: any) => {
         } else {
             newValue = option;
         }
-
         setFieldValue(props.name, newValue);
         setSearchValue(props?.multiple ? "" : option.label);
         setShowMenu(false);
@@ -103,8 +102,6 @@ const StrapiField = ({ ...props }: any) => {
 
     const handleSave = async () => {
         const payload = { [props.rules.field]: searchValue }
-
-
         const options = {
             method: 'POST',
             headers: {
@@ -113,16 +110,25 @@ const StrapiField = ({ ...props }: any) => {
             body: JSON.stringify({ data: payload }),
             credentials: 'include',
         };
-        await apiFetch(baseURL + `/${props.rules.model}`, options)
+        const { data } = await apiFetch(baseURL + `/${props.rules.model}`, options)
+        const sortData = {
+            label: data?.attributes[props.rules.field],
+            value: data?.attributes[props.rules.field],
+            type: "connect",
+            id: data?.id
+        };
+        setFieldValue(props.name, sortData);
+        setShowMenu(s => !s)
+
+        console.log("res", data)
         // await createDocumentOption({
         //     data: { [props.rules.field]: searchValue },
         //     model: props.rules.model
         // });
     };
-    console.log(searchValue)
-    return (
-        <Box ref={inputRef} position='relative' >
 
+    return (
+        <Box ref={inputRef} position='relative'  >
             <InputGroup onClick={handleInputClick}>
                 <Input
                     size="md"
@@ -138,11 +144,11 @@ const StrapiField = ({ ...props }: any) => {
             </InputGroup>
             {
                 showMenu &&
-                <List maxH={"20rem"} bg="white" rounded="8px" position="absolute" w='full' zIndex={11} shadow="md" mt="2" overflowX="auto" >
+                <List maxH="20rem" bg="white" rounded="8px" position="absolute" w='full' zIndex={999999} shadow="md" mt="2" overflowX="auto" >
                     <>
                         {
                             values?.length > 0 ? values?.map((item: any, index: any) => (
-                                <ListItem px={{ base: "6" }} py={{ base: "2" }} _hover={{ bg: "gray.200" }} bg={isSelected(item) && "gray.200"} key={index + 1} onClick={() => onItemClick(item)}>{item.label}</ListItem>
+                                <ListItem px={{ base: "3" }} alignItems={"center"} display={"flex"} py={{ base: "2" }} _hover={{ bg: "gray.100" }} bg={isSelected(item) && "gray.200"} key={index + 1} onClick={() => onItemClick(item)}><Text fontSize={"sm"} color="gray.500" mr="4" fontWeight={"700"}>{item.id}</Text>{item.label}</ListItem>
 
                             )) :
                                 <ListItem py={{ base: "2" }} onClick={handleSave}  >

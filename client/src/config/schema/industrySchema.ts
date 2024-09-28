@@ -7,7 +7,7 @@ export const industrySchema: FormData[] = [
     label: "Name",
     required: true,
     rules: {
-      min: 5,
+      min: 2,
       max: 80,
     },
     help: "",

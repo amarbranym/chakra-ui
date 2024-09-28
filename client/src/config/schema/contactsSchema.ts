@@ -7,7 +7,7 @@ export const contactsSchema: FormData[] = [
     label: "Name",
     required: true,
     rules: {
-      min: 5,
+      min: 3,
       max: 80,
     },
     help: "",
@@ -19,10 +19,6 @@ export const contactsSchema: FormData[] = [
     type: "text",
     label: "Email",
     required:true,
-    rules: {
-      min: 5,
-      max: 80,
-    },
     help: "",
     cols: 6,
     row: 1,
@@ -43,11 +39,11 @@ export const contactsSchema: FormData[] = [
   {
     name: "Designation",
     type: "text",
-    label: "Designation",
     rules: {
-      min: 5,
-      max: 80,
+      min: 3,
+      max: 50,
     },
+    label: "Designation",
     help: "",
     cols: 6,
     row: 1,

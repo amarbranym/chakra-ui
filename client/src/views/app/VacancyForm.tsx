@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
+import React, { useState } from 'react'
 import BasicForm from '../../strapi/components/form/BasicForm'
 import { StrapiFormProvider } from '../../strapi/providers/StrapiFormProvider'
 import { Button, Container, Grid, GridItem, Heading, HStack, Stack, VStack, } from '@chakra-ui/react'
@@ -12,16 +12,61 @@ import RegistrationPlugin from '../../plugins/livepreview/RegistrationPlugin'
 import ViewPlugin from '../../plugins/livepreview/ViewPlugin'
 import { BiSave } from 'react-icons/bi'
 import { candidatesSchema, vacancySchema } from '../../config/schema/vacancySchema'
+import { apiFetch, populateData } from '../../strapi/utils/service'
 
 const VacancyForm = () => {
     const context = useOutletContext<any>();
-    const { id } = useParams()
+    const { id } = useParams();
+
+    const query = "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference"
+
+
+    const handleUpdate = async (id: string, Candidates: any, Company: any) => {
+        const { DateOfHiring, SalaryNegotiation, Status } = Candidates;
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                data: {
+                    Company, DateOfHiring, SalaryNegotiation, Status
+                }
+            }),
+            credentials: 'include',
+        };
+        await apiFetch("http://localhost:1337/api" + `/students/${id}?`, options);
+
+    }
+
+    const handleSave = async (values: any) => {
+        const { data } = JSON.parse(values)
+
+        const promises = data?.Candidates && data?.Candidates.map(async (candidate: any) => {
+            const studentId = candidate.Student?.connect[0]?.id; 
+            console.log(studentId)
+            if (studentId) {
+                try {
+                    const result = await handleUpdate(studentId, candidate, data?.Company);
+                    return result; 
+                } catch (error) {
+                    console.error(`Error fetching document for student ID ${studentId}:`, error);
+                }
+            } else {
+                console.warn("No student ID found for candidate:", candidate);
+            }
+        });
+
+
+    };
+
     return (
         <Container maxW='container.xl' mb="20" >
             <StrapiFormProvider
                 collectionName="vacancies"
                 slug={id}
                 query="populate=Designation,Company,Candidates,Candidates.Student"
+                onSave={handleSave}
             >
                 {({ submit, isLoading }) => (
                     <Grid templateColumns="repeat(6, 1fr)" gap="6" >
@@ -38,9 +83,8 @@ const VacancyForm = () => {
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
-                                        console.log(values)
                                         return (<span>
-                                            vacancies
+                                            {values.Student.label} is {values.Status}
                                         </span>)
                                     }} fieldsSchema={candidatesSchema} name="Candidates" />
                                 </BorderCard>

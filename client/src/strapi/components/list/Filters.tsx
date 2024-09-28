@@ -18,10 +18,10 @@ const Filters: React.FC<FiltersProps> = ({ fieldSchema }) => {
 
     const fields = fieldSchema?.filter((item) => ["text", "textarea", "email", "ref:strapi", "number", "date", "select"].includes(item.type))
 
-
     const [queryData, setQueryData] = useState<any>({
         operatorFields: "",
-        operator: ""
+        operator: "",
+        owned: ""
     })
 
 
@@ -29,7 +29,7 @@ const Filters: React.FC<FiltersProps> = ({ fieldSchema }) => {
         const { name, value } = e.target;
         if (name === "operatorFields") {
             setSelectedField(JSON.parse(value))
-            setQueryData({ ...queryData, [name]: JSON.parse(value).name })
+            setQueryData({ ...queryData, [name]: JSON.parse(value).name, owned: JSON.parse(value)?.rules?.field || "" })
         } else if (name === "operator") {
             setQueryData({ ...queryData, [name]: JSON.parse(value).value, "operatorName": JSON.parse(value).label })
 

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Form, Formik } from 'formik'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useStrapiFormContext } from '../../providers/StrapiFormProvider';
 import FormFields from './FormFields';
 import { Box, Grid, Heading, HStack } from '@chakra-ui/react';
@@ -15,7 +15,7 @@ interface BasicFromProps {
 }
 const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "Basic" }) => {
 
-    const { setSchema, data, handleData } = useStrapiFormContext();
+    const { setSchema, initialData:data, handleData } = useStrapiFormContext();
 
     const formValue = Object.hasOwn(data, name) ? data[name] : {}
 
@@ -23,25 +23,64 @@ const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "
         setSchema({ type, schema: fieldsSchema, name })
     }, [fieldsSchema, name])
 
-    const initialValues: { [key: string]: any } = {};
-    const validationSchemaFields: { [key: string]: any } = {};
+    const { initialValues, validationSchemaFields } = useMemo(() => {
 
-    fieldsSchema.forEach((field: any) => {
-        if (field?.multiple) {
-            initialValues[`${field.name}`] = formValue[`${field.name}`] ? formValue[`${field.name}`] : [];
-        }
-        else {
-            initialValues[`${field.name}`] = formValue[`${field.name}`] ? formValue[`${field.name}`] : '';
-        }
-        if (field?.required) {
-            validationSchemaFields[`${field.name}`] = Yup.string().required(`${field.label || field.name} is required`);
-        }
-        if (field?.name === "MinSalary" && field?.type === "number") {
-            validationSchemaFields[`${field.name}`] = Yup.number().min(field?.rules?.min, `${field.label || field.name} must be at least ${field?.rules?.min}`);
-        }
-    });
+        const newInitialValues: { [key: string]: any } = {};
+        const newValidationSchemaFields: { [key: string]: any } = {};
 
-    const validationSchema = Yup.object().shape(validationSchemaFields);
+        fieldsSchema.forEach((field: any) => {
+            const fieldName = field?.name;
+
+            if (field?.multiple) {
+                newInitialValues[fieldName] = formValue[fieldName] ? formValue[fieldName] : [];
+            } else {
+                newInitialValues[fieldName] = formValue[fieldName] ? formValue[fieldName] : '';
+            }
+
+            let fieldValidation: any = Yup.mixed();
+
+            switch (field?.type) {
+                case 'text':
+                    fieldValidation = Yup.string()
+                        .min(field?.rules?.min, `${field?.label} must be at least ${field?.rules?.min}`)
+                        .max(field?.rules?.max, `${field?.label} must be at most ${field?.rules?.max}`);
+                    break;
+
+                case 'email':
+                    fieldValidation = Yup.string().email(`Please enter a valid ${field?.label}`);
+                    break;
+
+                case 'number':
+                    fieldValidation = Yup.number()
+                        .min(field?.rules?.min, `${field?.label} must be at least ${field?.rules?.min}`)
+                        .max(field?.rules?.max, `${field?.label} must be at most ${field?.rules?.max}`);
+                    break;
+
+                case 'ref:strapi':
+                    fieldValidation = Yup.object().shape({
+                        id: Yup.string(),
+                        value: Yup.string(),
+                        label: Yup.string(),
+                    });
+                    break;
+
+                case 'select':
+                    fieldValidation = Yup.string();
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (field?.required) {
+                fieldValidation = fieldValidation.required(`${field?.label} is required`);
+            }
+
+            newValidationSchemaFields[fieldName] = fieldValidation;
+        });
+        return { initialValues: newInitialValues, validationSchemaFields: newValidationSchemaFields };
+    }, [fieldsSchema, formValue])
+    const validationSchema = useMemo(() => Yup.object().shape(validationSchemaFields), [validationSchemaFields]);
 
     return (
         <Box>
@@ -54,6 +93,7 @@ const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "
                 onSubmit={() => { }}
                 validate={(values: any) => { handleData(name, values) }}
                 validationSchema={validationSchema}
+
             >
                 <Form>
                     <Grid templateColumns="repeat(12, 1fr)" templateRows="repeat(1,1fr)" gap="4" >

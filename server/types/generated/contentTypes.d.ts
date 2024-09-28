@@ -1152,6 +1152,16 @@ export interface ApiStudentStudent extends Schema.CollectionType {
     Address: Attribute.Component<'contact.address'>;
     Profile: Attribute.Media<'images'>;
     Documents: Attribute.Component<'student.document', true>;
+    Company: Attribute.Relation<
+      'api::student.student',
+      'oneToOne',
+      'api::company.company'
+    >;
+    SalaryNegotiation: Attribute.Integer;
+    Status: Attribute.Enumeration<
+      ['Hired', 'Rejected', 'In Probation', 'In Process']
+    >;
+    DateOfHiring: Attribute.Date;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

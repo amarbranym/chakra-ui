@@ -28,9 +28,11 @@ export const phoneNumberSchema: FormData[] = [
     name: "Number",
     type: "text",
     label: "Number",
+    required: false,
+
     rules: {
-      min: 5,
-      max: 80,
+      min: 10,
+      max: 10,
     },
     help: "",
     cols: 6,
@@ -40,6 +42,7 @@ export const phoneNumberSchema: FormData[] = [
     name: "Type",
     type: "select",
     label: "Type",
+    required: false,
 
     rules: {
       options: [

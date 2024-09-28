@@ -5,6 +5,8 @@ export const vacancySchema: FormData[] = [
     name: "Title",
     type: "text",
     label: "Title",
+    required: false,
+
     rules: {
       min: 5,
       max: 80,
@@ -17,8 +19,10 @@ export const vacancySchema: FormData[] = [
     name: "Seats",
     type: "number",
     label: "Seats",
+    required: false,
+
     rules: {
-      min: 5,
+      min: 1,
       max: 80,
     },
     help: "",
@@ -32,7 +36,7 @@ export const vacancySchema: FormData[] = [
     required: true,
     rules: {
       min: 5000,
-      max: 80,
+      max:50000
     },
     help: "",
     cols: 6,
@@ -42,6 +46,8 @@ export const vacancySchema: FormData[] = [
     name: "Status",
     type: "select",
     label: "Status",
+    required: false,
+
     rules: {
       options: [
         { label: "Open", value: "Open" },
@@ -57,6 +63,8 @@ export const vacancySchema: FormData[] = [
     name: "Designation",
     type: "ref:strapi",
     label: "Designation",
+    required: false,
+
     rules: {
       model: "designations",
       field: "Name",
@@ -69,6 +77,8 @@ export const vacancySchema: FormData[] = [
     name: "Company",
     type: "ref:strapi",
     label: "Company",
+    required: false,
+
     rules: {
       model: "companies",
       field: "Name",
@@ -81,9 +91,11 @@ export const vacancySchema: FormData[] = [
     name: "Notes",
     type: "textarea",
     label: "Notes",
+    required: false,
+
     rules: {
       min: 5,
-      max: 80,
+      max: 300,
     },
     help: "",
     cols: 12,
@@ -97,9 +109,11 @@ export const candidatesSchema: FormData[] = [
     name: "Student",
     type: "ref:strapi",
     label: "Student",
+    required: false,
+
     rules: {
-      model: "companies",
-      field: "Name",
+      model: "students",
+      field: "FirstName",
     },
     help: "",
     cols: 6,
@@ -109,9 +123,10 @@ export const candidatesSchema: FormData[] = [
     name: "SalaryNegotiation",
     type: "number",
     label: "SalaryNegotiation",
+    required: false,
     rules: {
-      min: 500,
-      max: 80,
+      min: 5000,
+      max: 50000,
     },
     help: "",
     cols: 6,
@@ -121,6 +136,8 @@ export const candidatesSchema: FormData[] = [
     name: "Status",
     type: "select",
     label: "Status",
+    required: false,
+
     rules: {
       options: [
         { label: "Hired", value: "Hired" },
@@ -135,12 +152,10 @@ export const candidatesSchema: FormData[] = [
   },
   {
     name: "DateOfHiring",
+    required: false,
+
     type: "date",
     label: "DateOfHiring",
-    rules: {
-      min: 500,
-      max: 80,
-    },
     help: "",
     cols: 6,
     row: 1,

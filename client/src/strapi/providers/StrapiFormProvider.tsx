@@ -4,29 +4,36 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useStrapiContext } from './StrapiAdmin';
 import { apiFetch, populateData } from '../utils/service';
 import { FormData } from '../../config/schema/formTypes';
+import toast from 'react-hot-toast';
 interface StrapiFormContextProps {
   data: any;
   setData: React.Dispatch<React.SetStateAction<any>>;
   handleData: any;
   isLoading?: boolean;
+  initialData: any;
   submit?: () => void;
+  onSave?: () => void;
   setSchema: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const StrapiFormContext = createContext<StrapiFormContextProps | undefined>(undefined);
 
 export const StrapiFormProvider: React.FC<{
-  children: (props: { submit: () => void; isLoading?: boolean }) => React.ReactNode;
+  children: (props: { submit: () => void; isLoading?: boolean, data?: any }) => React.ReactNode;
   submit?: (result: { data: any; success: boolean }) => void;
   collectionName: string;
   slug?: string;
   query?: string;
-}> = ({ children, collectionName, slug, query }) => {
+  onSave?: (value: any) => void;
+}> = ({ children, collectionName, slug, query, onSave }) => {
+
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [initialData, setInitialData] = useState<any>({});
   const [data, setData] = useState<any>({});
   const { baseURL } = useStrapiContext()
   const handleData = (key: string, values: any) => {
     setData((prevData: any) => ({ ...prevData, [key]: values }));
+    // setInitialData((prevData: any) => ({ ...prevData, [key]: values }));
   };
 
   const [schemaFields, setSchemaFields] = useState<any[]>([]);
@@ -40,8 +47,15 @@ export const StrapiFormProvider: React.FC<{
   const handleGetDocument = async () => {
     const result = await apiFetch(baseURL +
       `/${collectionName}/${slug}?${query}`);
-    const poulateResult = populateData(schemaFields, result?.data?.attributes);
-    setData(poulateResult)
+    if (collectionName === "users") {
+      const poulateResult = populateData(schemaFields, result);
+      setInitialData(poulateResult)
+
+    } else {
+      const poulateResult = populateData(schemaFields, result?.data?.attributes);
+      setInitialData(poulateResult)
+      setData(poulateResult)
+    }
   }
 
 
@@ -50,6 +64,18 @@ export const StrapiFormProvider: React.FC<{
       handleGetDocument()
     }
   }, [slug])
+
+
+  const onSuccess = async (res: any, options: any = {},) => {
+    const message = `${collectionName} successfully ${options?.method === "PUT" ? "updated" : "created"}`
+    if (res?.ok) {
+      if (onSave) {
+        await onSave(options?.body);
+      }
+      toast.success(message || "");
+    }
+  }
+
 
   const handleSubmit = async () => {
     setIsLoading(true)
@@ -70,10 +96,8 @@ export const StrapiFormProvider: React.FC<{
           if (field.type === "ref:strapi") {
             if (field?.multiple) {
               obj[`${field.name}`] = {
-                // connect: data[`${field.name}`]?.map((value: any) => ({ id: value["id"] }))
-
-                connect: data[`${field.name}`]?.filter((value:any) => value.type !== "disconnect").map((value: any) => ({ id: value["id"] })),
-                disconnect: data[`${field.name}`]?.filter((value:any) => value.type === "disconnect").map((value: any) => ({ id: value["id"] })),
+                connect: data[`${field.name}`]?.filter((value: any) => value.type !== "disconnect").map((value: any) => ({ id: value["id"] })),
+                disconnect: data[`${field.name}`]?.filter((value: any) => value.type === "disconnect").map((value: any) => ({ id: value["id"] })),
               }
             }
             else {
@@ -119,13 +143,13 @@ export const StrapiFormProvider: React.FC<{
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ data: submissionData }),
+        body: collectionName === "users" ? JSON.stringify(submissionData) : JSON.stringify({ data: submissionData }),
         credentials: 'include',
       };
       const url = slug ? `${collectionName}/${slug}` : `${collectionName}`
       await apiFetch(baseURL +
         `/${url}`,
-        options
+        options, onSuccess
       );
       setIsLoading(false)
 
@@ -135,10 +159,9 @@ export const StrapiFormProvider: React.FC<{
 
     }
   }
-  console.log("data", data)
   return (
-    <StrapiFormContext.Provider value={{ data, setData, handleData, setSchema, submit: handleSubmit }}>
-      {children({ submit: handleSubmit, isLoading })}
+    <StrapiFormContext.Provider value={{ data, initialData, setData, handleData, setSchema, submit: handleSubmit }}>
+      {children({ submit: handleSubmit, isLoading, data })}
     </StrapiFormContext.Provider>
   );
 };

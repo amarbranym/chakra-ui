@@ -2,9 +2,9 @@ import { BiBuilding } from "react-icons/bi";
 import CompaniesList from "../views/app/CompaniesList";
 import CandidatesList from "../views/app/CandidatesList";
 import ContactsList from "../views/app/ContactsList";
-import Users from "../views/app/Users";
 import App from "../App";
 import { FiHome, FiUsers } from "react-icons/fi";
+import { PiStudent } from "react-icons/pi";
 import { MdOutlineContacts } from "react-icons/md";
 import CandidateForm from "../views/app/CandidateForm";
 import CompanyForm from "../views/app/CompanyForm";
@@ -13,7 +13,10 @@ import IndustryForm from "../views/app/IndustryForm";
 import IndustriesList from "../views/app/IndustriesList";
 import VacancyForm from "../views/app/VacancyForm";
 import VacanciesList from "../views/app/VacanciesList";
-
+import UsersList from "../views/app/UsersList";
+import UserForm from "../views/app/UserForm";
+import { LiaIndustrySolid } from "react-icons/lia";
+import { TbDeviceTabletSearch } from "react-icons/tb";
 export const nav = [
   {
     name: "Home",
@@ -36,7 +39,6 @@ export const nav = [
     route: "/company/:id",
     component: CompanyForm,
     title: "Company",
-    icon: BiBuilding,
     isParent: false,
   },
   {
@@ -44,7 +46,6 @@ export const nav = [
     route: "/company/create",
     component: CompanyForm,
     title: "Company",
-    icon: BiBuilding,
     isParent: false,
   },
   {
@@ -67,7 +68,7 @@ export const nav = [
     component: CandidatesList,
     title: "Candidates",
     isParent: true,
-    icon: BiBuilding,
+    icon: PiStudent,
   },
   {
     name: "Contacts",
@@ -99,7 +100,7 @@ export const nav = [
     component: IndustriesList,
     title: "Industries",
     isParent: true,
-    icon: MdOutlineContacts,
+    icon: LiaIndustrySolid,
   },
   {
     name: "Industry",
@@ -123,7 +124,7 @@ export const nav = [
     title: "Vacancies",
     component: VacanciesList,
     isParent: true,
-    icon: MdOutlineContacts,
+    icon: TbDeviceTabletSearch,
   },
   {
     name: "Vacancy",
@@ -144,9 +145,23 @@ export const nav = [
   {
     name: "Users",
     route: "/users",
-    component: Users,
+    component: UsersList,
     title: "Users",
     isParent: true,
     icon: FiUsers,
+  },
+  {
+    name: "User",
+    route: "/user/:id",
+    component: UserForm,
+    title: "User",
+    isParent: false,
+  },
+  {
+    name: "User",
+    route: "/user/create",
+    component: UserForm,
+    title: "User",
+    isParent: false,
   },
 ];

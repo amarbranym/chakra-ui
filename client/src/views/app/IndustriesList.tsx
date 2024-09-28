@@ -6,9 +6,9 @@ import Filters from '../../strapi/components/list/Filters'
 import Empty from '../../strapi/components/list/Empty'
 import Pagination from '../../strapi/components/list/Pagination'
 import Card from '../../strapi/components/list/Card'
-import { companySchema } from '../../config/schema/companySchema'
 import { Link, useOutletContext } from 'react-router-dom'
 import { AddIcon } from '@chakra-ui/icons'
+import { industrySchema } from '../../config/schema/industrySchema'
 
 const IndustriesList = () => {
     const context = useOutletContext<any>()
@@ -22,7 +22,7 @@ const IndustriesList = () => {
                 <Button as={Link} variant="solid" colorScheme='blue' size="md" leftIcon={<AddIcon />} to={`/industry/create`} >Create new entry</Button>
             </HStack>
             <Stack py={{ base: "4" }}>
-                <Filters fieldSchema={[...companySchema]} />
+                <Filters fieldSchema={[...industrySchema]} />
             </Stack>
             <Stack border="1px solid" borderColor="gray.100" rounded="md">
                 <Table>

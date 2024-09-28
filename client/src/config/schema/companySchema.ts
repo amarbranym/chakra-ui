@@ -5,11 +5,11 @@ export const companySchema: FormData[] = [
     name: "Name",
     type: "text",
     label: "Name",
-    required: true,
     rules: {
-      min: 5,
-      max: 80,
+      min: 3,
+      max: 50,
     },
+    required: true,
     help: "",
     cols: 12,
     row: 1,
@@ -18,6 +18,8 @@ export const companySchema: FormData[] = [
     name: "City",
     type: "ref:strapi",
     label: "City",
+    required: false,
+
     rules: {
       model: "cities",
       field: "Name",
@@ -30,6 +32,8 @@ export const companySchema: FormData[] = [
     name: "Industry",
     type: "ref:strapi",
     label: "Industry",
+    required: false,
+
     rules: {
       model: "industries",
       field: "Name",
@@ -42,9 +46,10 @@ export const companySchema: FormData[] = [
     name: "Address",
     type: "textarea",
     label: "Address",
+    required: false,
     rules: {
-      min: 5,
-      max: 80,
+      min: 3,
+      max: 300,
     },
     help: "",
     cols: 12,

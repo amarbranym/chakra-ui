@@ -94,6 +94,26 @@
       "type": "component",
       "repeatable": true,
       "component": "student.document"
+    },
+    "Company": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company.company"
+    },
+    "SalaryNegotiation": {
+      "type": "integer"
+    },
+    "Status": {
+      "type": "enumeration",
+      "enum": [
+        "Hired",
+        "Rejected",
+        "In Probation",
+        "In Process"
+      ]
+    },
+    "DateOfHiring": {
+      "type": "date"
     }
   }
 }
