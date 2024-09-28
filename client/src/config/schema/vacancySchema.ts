@@ -36,7 +36,20 @@ export const vacancySchema: FormData[] = [
     required: true,
     rules: {
       min: 5000,
-      max:50000
+      max: 50000,
+    },
+    help: "",
+    cols: 6,
+    row: 1,
+  },
+  {
+    name: "MaxSalary",
+    type: "number",
+    label: "MaxSalary",
+    required: true,
+    rules: {
+      min: 5000,
+      max: 50000,
     },
     help: "",
     cols: 6,
@@ -53,6 +66,8 @@ export const vacancySchema: FormData[] = [
         { label: "Open", value: "Open" },
         { label: "Closed", value: "Closed" },
         { label: "Filled", value: "Filled" },
+        { label: "Interview", value: "Interview" },
+        { label: "Laid Off", value: "Laid Off" },
       ],
     },
     help: "",

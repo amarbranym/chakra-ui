@@ -4,7 +4,8 @@
   "info": {
     "singularName": "vacany",
     "pluralName": "vacancies",
-    "displayName": "Vacancies"
+    "displayName": "Vacancies",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -49,6 +50,9 @@
     },
     "Title": {
       "type": "string"
+    },
+    "MaxSalary": {
+      "type": "integer"
     }
   }
 }

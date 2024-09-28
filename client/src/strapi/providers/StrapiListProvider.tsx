@@ -14,6 +14,8 @@ interface StrapiListContextProps {
     setTotalPage?: React.Dispatch<React.SetStateAction<number>>;
     currentPage?: number;
     totalPage?: number;
+    setSearchQuery?: React.Dispatch<React.SetStateAction<string>>;
+    searchQuery?: string
 }
 const StrapiListContext = createContext<StrapiListContextProps | undefined>(undefined);
 
@@ -22,7 +24,8 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
     const { baseURL, accessToken } = useStrapiContext()
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [filterQuery, setFilterQuery] = useState<any[]>([])
-    const [totalPage, setTotalPage] = useState<number>(1)
+    const [totalPage, setTotalPage] = useState<number>(1);
+    const [searchQuery, setSearchQuery] = useState<string>("")
 
     const handleGetDocument = async () => {
         const options = {
@@ -41,9 +44,10 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
                         `&filters[${q.operatorFields}]${q.owned && `[${q.owned}]`}[${q.operator}]${q.text ? `=${q.text}` : ''}`
                 )
                 .join('');
+            const searchParam = searchQuery ? `&_q=${encodeURIComponent(searchQuery)}` : '';
 
             const list = await apiFetch(baseURL +
-                `/${collectionName}?${query}&pagination[page]=${currentPage}&pagination[pageSize]=6${filterParams}`, options
+                `/${collectionName}?${query}&pagination[page]=${currentPage}&pagination[pageSize]=10${filterParams}${searchParam}`, options
             );
             if (collectionName === "users") {
                 setData(list)
@@ -62,10 +66,10 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
 
     useEffect(() => {
         handleGetDocument()
-    }, [currentPage, filterQuery])
+    }, [currentPage, filterQuery, searchQuery])
 
     return (
-        <StrapiListContext.Provider value={{ data, setData, setFilterQuery, setCurrentPage, currentPage, filterQuery, totalPage }}>
+        <StrapiListContext.Provider value={{ data, setData, setFilterQuery, setCurrentPage, currentPage, filterQuery, totalPage, setSearchQuery }}>
             {children}
         </StrapiListContext.Provider>
     );

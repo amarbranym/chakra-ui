@@ -11,6 +11,7 @@ import Signup from './views/Auth/Signup';
 import Dashboard from './layout/Dashboard';
 import { nav } from './config/nav';
 import { Toaster } from "react-hot-toast";
+import StudentPreview from './views/app/StudentPreview';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -31,6 +32,7 @@ root.render(
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/student/preview/:id" element={<StudentPreview/>} />
         </Routes>
       </Router>
     </StrapiAdmin>

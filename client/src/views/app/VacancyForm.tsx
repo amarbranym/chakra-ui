@@ -13,10 +13,12 @@ import ViewPlugin from '../../plugins/livepreview/ViewPlugin'
 import { BiSave } from 'react-icons/bi'
 import { candidatesSchema, vacancySchema } from '../../config/schema/vacancySchema'
 import { apiFetch, populateData } from '../../strapi/utils/service'
+import { useStrapiContext } from '../../strapi/providers/StrapiAdmin'
 
 const VacancyForm = () => {
     const context = useOutletContext<any>();
     const { id } = useParams();
+    // const { baseURL } = useStrapiContext()
 
     const query = "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference"
 
@@ -43,12 +45,12 @@ const VacancyForm = () => {
         const { data } = JSON.parse(values)
 
         const promises = data?.Candidates && data?.Candidates.map(async (candidate: any) => {
-            const studentId = candidate.Student?.connect[0]?.id; 
+            const studentId = candidate.Student?.connect[0]?.id;
             console.log(studentId)
             if (studentId) {
                 try {
                     const result = await handleUpdate(studentId, candidate, data?.Company);
-                    return result; 
+                    return result;
                 } catch (error) {
                     console.error(`Error fetching document for student ID ${studentId}:`, error);
                 }
@@ -76,7 +78,7 @@ const VacancyForm = () => {
                                 <Button isLoading={isLoading} loadingText="loading" variant="solid" colorScheme='blue' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
                             </HStack>
                         </GridItem>
-                        <GridItem colSpan={{ base: 6, lg: 4 }}>
+                        <GridItem colSpan={{ base: 6, lg: 6 }}>
                             <Stack gap="4">
                                 <BorderCard  >
                                     <BasicForm fieldsSchema={vacancySchema} name="vacancydetails" />
@@ -89,13 +91,6 @@ const VacancyForm = () => {
                                     }} fieldsSchema={candidatesSchema} name="Candidates" />
                                 </BorderCard>
                             </Stack>
-                        </GridItem>
-                        <GridItem colSpan={{ base: 6, lg: 2 }} >
-                            <VStack gap="4">
-                                <StatusPlugin />
-                                <RegistrationPlugin />
-                                <ViewPlugin />
-                            </VStack>
                         </GridItem>
                     </Grid>
                 )}

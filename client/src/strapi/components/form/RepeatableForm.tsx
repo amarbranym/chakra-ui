@@ -45,11 +45,22 @@ const RepeatableForm = ({ fieldsSchema, name = "", type = "RepeatableComponent",
                     break;
 
                 case 'ref:strapi':
-                    fieldValidation = Yup.object().shape({
-                        id: Yup.string(),
-                        value: Yup.string(),
-                        label: Yup.string(),
-                    });
+                    if (field?.multiple) {
+                        fieldValidation = Yup.array()
+                            .of(
+                                Yup.object().shape({
+                                    id: Yup.string().required(`ID is required`),
+                                    value: Yup.string().required(`Value is required`),
+                                    label: Yup.string().required(`Label is required`),
+                                })
+                            ).min(1, `${field?.label} must have at least 1 item`);
+                    } else {
+                        fieldValidation = Yup.object().shape({
+                            id: Yup.string(),
+                            value: Yup.string(),
+                            label: Yup.string(),
+                        });
+                    }
                     break;
 
                 case 'select':

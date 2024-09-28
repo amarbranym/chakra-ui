@@ -1159,8 +1159,17 @@ export interface ApiStudentStudent extends Schema.CollectionType {
     >;
     SalaryNegotiation: Attribute.Integer;
     Status: Attribute.Enumeration<
-      ['Hired', 'Rejected', 'In Probation', 'In Process']
-    >;
+      [
+        'Hired',
+        'Rejected',
+        'In Probation',
+        'In Process',
+        'Interview',
+        'Laid Off'
+      ]
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'In Process'>;
     DateOfHiring: Attribute.Date;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1186,6 +1195,7 @@ export interface ApiVacanyVacany extends Schema.CollectionType {
     singularName: 'vacany';
     pluralName: 'vacancies';
     displayName: 'Vacancies';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1214,6 +1224,7 @@ export interface ApiVacanyVacany extends Schema.CollectionType {
     Candidates: Attribute.Component<'vacancy.candidates', true>;
     Notes: Attribute.Text;
     Title: Attribute.String;
+    MaxSalary: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

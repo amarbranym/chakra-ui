@@ -14,6 +14,7 @@ interface StrapiFormContextProps {
   submit?: () => void;
   onSave?: () => void;
   setSchema: React.Dispatch<React.SetStateAction<any>>;
+  withoutPopulateData: any
 }
 
 const StrapiFormContext = createContext<StrapiFormContextProps | undefined>(undefined);
@@ -30,6 +31,7 @@ export const StrapiFormProvider: React.FC<{
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [initialData, setInitialData] = useState<any>({});
   const [data, setData] = useState<any>({});
+  const [withoutPopulateData, setWithoutPopulateData] = useState<any>({})
   const { baseURL } = useStrapiContext()
   const handleData = (key: string, values: any) => {
     setData((prevData: any) => ({ ...prevData, [key]: values }));
@@ -53,8 +55,10 @@ export const StrapiFormProvider: React.FC<{
 
     } else {
       const poulateResult = populateData(schemaFields, result?.data?.attributes);
+      setWithoutPopulateData(result?.data?.attributes)
       setInitialData(poulateResult)
-      setData(poulateResult)
+      setData(poulateResult);
+
     }
   }
 
@@ -160,7 +164,7 @@ export const StrapiFormProvider: React.FC<{
     }
   }
   return (
-    <StrapiFormContext.Provider value={{ data, initialData, setData, handleData, setSchema, submit: handleSubmit }}>
+    <StrapiFormContext.Provider value={{ data, initialData, setData, handleData, withoutPopulateData, setSchema, submit: handleSubmit }}>
       {children({ submit: handleSubmit, isLoading, data })}
     </StrapiFormContext.Provider>
   );

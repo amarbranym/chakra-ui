@@ -18,13 +18,35 @@ import UserForm from "../views/app/UserForm";
 import { LiaIndustrySolid } from "react-icons/lia";
 import { TbDeviceTabletSearch } from "react-icons/tb";
 export const nav = [
+  // {
+  //   name: "Home",
+  //   route: "/",
+  //   component: App,
+  //   title: "Home",
+  //   icon: FiHome,
+  //   isParent: false,
+  // },
   {
-    name: "Home",
+    name: "Candidate",
+    route: "/candidate/:id",
+    component: CandidateForm,
+    title: "Candidate",
+    isParent: false,
+  },
+  {
+    name: "Candidate",
+    route: "/candidate/create",
+    component: CandidateForm,
+    title: "Candidate",
+    isParent: false,
+  },
+  {
+    name: "Candidates",
     route: "/",
-    component: App,
-    title: "Home",
-    icon: FiHome,
+    component: CandidatesList,
+    title: "Candidates",
     isParent: true,
+    icon: PiStudent,
   },
   {
     name: "Companies",
@@ -48,28 +70,7 @@ export const nav = [
     title: "Company",
     isParent: false,
   },
-  {
-    name: "Candidate",
-    route: "/candidate/:id",
-    component: CandidateForm,
-    title: "Candidate",
-    isParent: false,
-  },
-  {
-    name: "Candidate",
-    route: "/candidate/create",
-    component: CandidateForm,
-    title: "Candidate",
-    isParent: false,
-  },
-  {
-    name: "Candidates",
-    route: "/candidates",
-    component: CandidatesList,
-    title: "Candidates",
-    isParent: true,
-    icon: PiStudent,
-  },
+  
   {
     name: "Contacts",
     route: "/contacts",
@@ -164,4 +165,5 @@ export const nav = [
     title: "User",
     isParent: false,
   },
+ 
 ];

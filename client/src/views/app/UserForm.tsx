@@ -30,20 +30,14 @@ const UserForm = () => {
                                 <Button isLoading={isLoading} loadingText="loading" variant="solid" colorScheme='blue' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
                             </HStack>
                         </GridItem>
-                        <GridItem colSpan={{ base: 6, lg: 4 }}>
+                        <GridItem colSpan={{ base: 6, lg: 6 }}>
                             <Stack gap="4">
                                 <BorderCard  >
                                     <BasicForm fieldsSchema={userSchema} name="userdetails" />
                                 </BorderCard>
                             </Stack>
                         </GridItem>
-                        <GridItem colSpan={{ base: 6, lg: 2 }} >
-                            <VStack gap="4">
-                                <StatusPlugin />
-                                <RegistrationPlugin />
-                                <ViewPlugin />
-                            </VStack>
-                        </GridItem>
+                        
                     </Grid>
                 )}
             </StrapiFormProvider>

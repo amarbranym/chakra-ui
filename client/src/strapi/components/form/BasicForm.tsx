@@ -15,7 +15,7 @@ interface BasicFromProps {
 }
 const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "Basic" }) => {
 
-    const { setSchema, initialData:data, handleData } = useStrapiFormContext();
+    const { setSchema, initialData: data, handleData } = useStrapiFormContext();
 
     const formValue = Object.hasOwn(data, name) ? data[name] : {}
 
@@ -57,11 +57,21 @@ const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "
                     break;
 
                 case 'ref:strapi':
-                    fieldValidation = Yup.object().shape({
-                        id: Yup.string(),
-                        value: Yup.string(),
-                        label: Yup.string(),
-                    });
+                    if (field?.multiple) {
+                        fieldValidation = Yup.array().of(
+                            Yup.object().shape({
+                                id: Yup.string(),
+                                value: Yup.string(),
+                                label: Yup.string(),
+                            })
+                        );
+                    } else {
+                        fieldValidation = Yup.object().shape({
+                            id: Yup.string(),
+                            value: Yup.string(),
+                            label: Yup.string(),
+                        });
+                    }
                     break;
 
                 case 'select':

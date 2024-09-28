@@ -13,6 +13,7 @@ import ViewPlugin from '../../plugins/livepreview/ViewPlugin'
 import { BiSave } from 'react-icons/bi'
 import { addressSchema, experienceSchema, otherDetailSchema, personalSchema, qualificationSchema } from '../../config/schema/candidateSchemas'
 import { phoneNumberSchema } from '../../config/schema/phoneNumberSchema'
+import CandidateInfo from '../../plugins/livepreview/CandidateInfo'
 
 const CandidateForm = () => {
     const context = useOutletContext<any>();
@@ -22,7 +23,7 @@ const CandidateForm = () => {
             <StrapiFormProvider
                 collectionName="students"
                 slug={id}
-                query="populate=experience.Company.Contact,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,IndustriesPreference"
+                query="populate=experience.Company.Contact,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,IndustriesPreference,Company"
             >
                 {({ submit, isLoading }) => (
                     <Grid templateColumns="repeat(6, 1fr)" gap="6" >
@@ -32,7 +33,7 @@ const CandidateForm = () => {
                                 <Button isLoading={isLoading} loadingText="loading" variant="solid" colorScheme='blue' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
                             </HStack>
                         </GridItem>
-                        <GridItem colSpan={{ base: 6, lg: 4 }}>
+                        <GridItem colSpan={{ base: 6, lg: id ? 4 : 6 }}>
                             <Stack gap="4">
                                 <BorderCard  >
                                     <BasicForm fieldsSchema={personalSchema} name="personalDetails" />
@@ -58,7 +59,6 @@ const CandidateForm = () => {
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
-                                        console.log(values)
                                         return (<span>
                                             {values.qualification.value} years of experience as {values.school.value}
                                         </span>)
@@ -69,14 +69,16 @@ const CandidateForm = () => {
                                 </BorderCard>
                             </Stack>
                         </GridItem>
-                        <GridItem colSpan={{ base: 6, lg: 2 }} >
-                            <VStack gap="4">
-                                <StatusPlugin />
-                                <RegistrationPlugin />
-                                <ViewPlugin />
+                        {
+                            id && <GridItem colSpan={{ base: 6, lg: 2 }} >
+                                <VStack gap="4">
+                                    <CandidateInfo />
+                                    <ViewPlugin studentId={id} route="student/preview" />
 
-                            </VStack>
-                        </GridItem>
+                                </VStack>
+                            </GridItem>
+                        }
+
                     </Grid>
                 )}
             </StrapiFormProvider>

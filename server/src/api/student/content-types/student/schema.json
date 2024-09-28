@@ -109,8 +109,12 @@
         "Hired",
         "Rejected",
         "In Probation",
-        "In Process"
-      ]
+        "In Process",
+        "Interview",
+        "Laid Off"
+      ],
+      "default": "In Process",
+      "required": true
     },
     "DateOfHiring": {
       "type": "date"

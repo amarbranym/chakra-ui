@@ -1,20 +1,30 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { useStrapiContext } from './StrapiAdmin';
+import { apiFetch, populateData } from '../utils/service';
 
 interface StrapiDocumentContextProps {
     data: any;
     setData: React.Dispatch<React.SetStateAction<any>>;
     isLoading?: boolean;
-
 }
 
 const StrapiDocumentContext = createContext<StrapiDocumentContextProps | undefined>(undefined);
 
-export const StrapiDocument: React.FC<{ children: (props: { data: any[] }) => ReactNode, collectionName?: string, query?: string, slug: string }> = ({ children, collectionName, query, slug }) => {
+export const StrapiDocument: React.FC<{ children: (props: { data: any }) => ReactNode, collectionName?: string, query?: string, slug?: string }> = ({ children, collectionName, query, slug }) => {
     const [data, setData] = useState<any>({});
-
-
+    const { baseURL, accessToken } = useStrapiContext()
+    const handleGetDocument = async () => {
+        const result = await apiFetch(baseURL +
+            `/${collectionName}/${slug}?${query}`);
+        setData(result?.data?.attributes)
+    }
+    useEffect(() => {
+        if (slug) {
+            handleGetDocument()
+        }
+    }, [slug])
     return (
         <StrapiDocumentContext.Provider value={{ data, setData }}>
             {children({ data })}
