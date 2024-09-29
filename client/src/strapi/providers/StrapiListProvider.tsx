@@ -47,7 +47,7 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
             const searchParam = searchQuery ? `&_q=${encodeURIComponent(searchQuery)}` : '';
 
             const list = await apiFetch(baseURL +
-                `/${collectionName}?${query}&pagination[page]=${currentPage}&pagination[pageSize]=10${filterParams}${searchParam}`, options
+                `/${collectionName}?${query}&pagination[page]=${currentPage}&pagination[pageSize]=6${filterParams}${searchParam}`, options
             );
             if (collectionName === "users") {
                 setData(list)

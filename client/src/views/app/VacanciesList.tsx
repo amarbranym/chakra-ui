@@ -9,6 +9,7 @@ import Card from '../../strapi/components/list/Card';
 import { Link, useOutletContext } from 'react-router-dom';
 import { AddIcon } from '@chakra-ui/icons';
 import { companySchema } from '../../config/schema/companySchema';
+import SearchBox from '../../strapi/components/list/SearchBox';
 const VacanciesList = () => {
     const context = useOutletContext<any>()
     return (
@@ -17,9 +18,12 @@ const VacanciesList = () => {
                 <Heading as='h2'>{context?.title}</Heading>
                 <Button as={Link} variant="solid" colorScheme='blue' size="md" leftIcon={<AddIcon />} to={`/vacancy/create`} >Create new entry</Button>
             </HStack>
+            <HStack gap="4">
+                <SearchBox />
             <Stack py={{ base: "4" }}>
                 <Filters fieldSchema={[...companySchema]} />
             </Stack>
+            </HStack>
             <Stack border="1px solid" borderColor="gray.100" rounded="md">
                 <Table>
                     <Thead>

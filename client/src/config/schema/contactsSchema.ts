@@ -18,6 +18,10 @@ export const contactsSchema: FormData[] = [
     name: "Email",
     type: "text",
     label: "Email",
+    rules: {
+      min: 3,
+      max: 80,
+    },
     required:true,
     help: "",
     cols: 6,
