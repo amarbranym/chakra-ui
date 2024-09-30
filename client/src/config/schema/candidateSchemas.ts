@@ -82,7 +82,6 @@ export const otherDetailSchema: FormData[] = [
     type: "date",
     label: "DOB",
     required: false,
-
     help: "",
     cols: 6,
     row: 1,
@@ -142,7 +141,7 @@ export const personalSchema: FormData[] = [
     label: "Last Name",
     required: false,
     rules: {
-      min: 3,
+      min: 0,
       max: 50,
     },
     help: "",
@@ -163,7 +162,7 @@ export const personalSchema: FormData[] = [
     type: "text",
     label: "Father Name",
     rules: {
-      min: 3,
+      min: 0,
       max: 50,
     },
     required: false,
@@ -265,7 +264,7 @@ export const addressSchema: FormData[] = [
     type: "textarea",
     required: false,
     rules: {
-      min: 3,
+      min: 0,
       max: 300,
     },
     label: "Street",

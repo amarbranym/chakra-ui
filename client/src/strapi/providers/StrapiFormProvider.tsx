@@ -1,6 +1,6 @@
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { useStrapiContext } from './StrapiAdmin';
 import { apiFetch, populateData } from '../utils/service';
 import { FormData } from '../../config/schema/formTypes';
@@ -9,18 +9,21 @@ interface StrapiFormContextProps {
   data: any;
   setData: React.Dispatch<React.SetStateAction<any>>;
   handleData: any;
+  handleErrors: any;
   isLoading?: boolean;
+  hasAllErrors?: boolean;
   initialData: any;
   submit?: () => void;
   onSave?: () => void;
   setSchema: React.Dispatch<React.SetStateAction<any>>;
   withoutPopulateData: any
+
 }
 
 const StrapiFormContext = createContext<StrapiFormContextProps | undefined>(undefined);
 
 export const StrapiFormProvider: React.FC<{
-  children: (props: { submit: () => void; isLoading?: boolean, data?: any }) => React.ReactNode;
+  children: (props: { submit: () => void; isLoading?: boolean, data?: any , hasAllErrors?:boolean}) => React.ReactNode;
   submit?: (result: { data: any; success: boolean }) => void;
   collectionName: string;
   slug?: string;
@@ -33,10 +36,25 @@ export const StrapiFormProvider: React.FC<{
   const [data, setData] = useState<any>({});
   const [withoutPopulateData, setWithoutPopulateData] = useState<any>({})
   const { baseURL } = useStrapiContext()
+
+  const [hasErrors, setHasErrors] = useState<any>({})
+  const [hasAllErrors, setHasAllErrors] = useState<boolean>()
+
   const handleData = (key: string, values: any) => {
     setData((prevData: any) => ({ ...prevData, [key]: values }));
     // setInitialData((prevData: any) => ({ ...prevData, [key]: values }));
   };
+
+  const handleErrors = (key: string, action: number) => {
+    setHasErrors({ ...hasErrors, [key]: action })
+  }
+
+
+  useMemo(() => {
+    if (hasErrors) {
+      setHasAllErrors(!Object.values(hasErrors).every(value => value === 0))
+    }
+  }, [hasErrors]);
 
   const [schemaFields, setSchemaFields] = useState<any[]>([]);
 
@@ -50,7 +68,8 @@ export const StrapiFormProvider: React.FC<{
     const result = await apiFetch(baseURL +
       `/${collectionName}/${slug}?${query}`);
     if (collectionName === "users") {
-      const poulateResult = populateData(schemaFields, result);
+      const poulateResult = populateData(schemaFields, result, collectionName);
+      console.log("populate", poulateResult)
       setInitialData(poulateResult)
 
     } else {
@@ -106,7 +125,8 @@ export const StrapiFormProvider: React.FC<{
             }
             else {
               obj[`${field.name}`] = {
-                connect: [{ id: data[`${field.name}`]?.id }]
+                connect: [{ id: data[`${field.name}`]?.id }],
+                disconnect: []
               }
             }
           }
@@ -164,8 +184,8 @@ export const StrapiFormProvider: React.FC<{
     }
   }
   return (
-    <StrapiFormContext.Provider value={{ data, initialData, setData, handleData, withoutPopulateData, setSchema, submit: handleSubmit }}>
-      {children({ submit: handleSubmit, isLoading, data })}
+    <StrapiFormContext.Provider value={{ data, initialData, setData, handleData, handleErrors, withoutPopulateData, setSchema, submit: handleSubmit, hasAllErrors }}>
+      {children({ submit: handleSubmit, isLoading, data, hasAllErrors })}
     </StrapiFormContext.Provider>
   );
 };

@@ -25,12 +25,12 @@ const CandidateForm = () => {
                 slug={id}
                 query="populate=experience.Company.Contact,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,IndustriesPreference,Company"
             >
-                {({ submit, isLoading }) => (
+                {({ submit, isLoading, hasAllErrors }) => (
                     <Grid templateColumns="repeat(6, 1fr)" gap="6" >
                         <GridItem colSpan={6}>
                             <HStack justify="space-between" alignItems="center">
                                 <Heading as='h2'>{context?.title}</Heading>
-                                <Button isLoading={isLoading} loadingText="loading" variant="solid" colorScheme='blue' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
+                                <Button isDisabled={hasAllErrors} isLoading={isLoading} loadingText="loading" variant="solid" colorScheme='blue' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
                             </HStack>
                         </GridItem>
                         <GridItem colSpan={{ base: 6, lg: id ? 4 : 6 }}>

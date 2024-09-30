@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({ renderItem }) => {
 
     return (
         <>
-        {data.map((item, index) => (
+        { data && data?.map((item, index) => (
             <React.Fragment key={item.id || index}>
                 {renderItem(item)}
             </React.Fragment>

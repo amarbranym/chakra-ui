@@ -17,8 +17,27 @@ export const convertRef = (refData: any, field: any) => {
       label: refData?.data?.attributes[field],
     };
 };
+export const convertRefUser = (refData: any, field: any) => {
+  console.log("ref", refData)
+  if (Array.isArray(refData?.data)) {
+    return refData?.data.map((value: any) => ({
+      id: value?.id,
+      value: value[field],
+      label: value[field],
+    }));
+  } else
+    return {
+      id: refData.id,
+      value: refData[field],
+      label: refData[field],
+    };
+};
 
-export const populateData = (view: any[], initialData?: any) => {
+export const populateData = (
+  view: any[],
+  initialData?: any,
+  collectionName?: string
+) => {
   let obj: any = {};
 
   for (let i = 0; i < view.length; i++) {
@@ -35,16 +54,31 @@ export const populateData = (view: any[], initialData?: any) => {
         const field = schema[k];
         try {
           if (field.type === "ref:strapi") {
-            if (field.multiple) {
-              obj[`${name}`][`${field.name}`] = convertRef(
-                initialData[`${field.name}`],
-                field.rules?.field
-              );
+            if (collectionName === "users") {
+              if (field.multiple) {
+                obj[`${name}`][`${field.name}`] = convertRefUser(
+                  initialData[`${field.name}`],
+                  field.rules?.field
+                );
+              } else {
+                obj[`${name}`][`${field.name}`] = convertRefUser(
+                  initialData[`${field.name}`],
+                  field.rules?.field
+                );
+              }
+
             } else {
-              obj[`${name}`][`${field.name}`] = convertRef(
-                initialData[`${field.name}`],
-                field.rules?.field
-              );
+              if (field.multiple) {
+                obj[`${name}`][`${field.name}`] = convertRef(
+                  initialData[`${field.name}`],
+                  field.rules?.field
+                );
+              } else {
+                obj[`${name}`][`${field.name}`] = convertRef(
+                  initialData[`${field.name}`],
+                  field.rules?.field
+                );
+              }
             }
           } else {
             obj[`${name}`][`${field.name}`] = initialData[`${field.name}`];

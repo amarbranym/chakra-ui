@@ -54,3 +54,86 @@ export const userSchema: FormData[] = [
     row: 1,
   },
 ];
+
+export const signupSchema: FormData[] = [
+  {
+    name: "username",
+    type: "text",
+    label: "User Name",
+    required: true,
+    help: "",
+    rules: {
+      min: 3,
+      max: 50,
+    },
+    cols: 12,
+    row: 1,
+  },
+  {
+    name: "email",
+    type: "email",
+    label: "Email",
+    required: true,
+    rules: {
+      min: 3,
+      max: 50,
+    },
+    help: "",
+    cols: 12,
+    row: 1,
+  },
+  {
+    name: "password",
+    type: "password",
+    label: "Password",
+    required: true,
+    rules: {
+      min: 6,
+      max: 50,
+    },
+    help: "",
+    cols: 12,
+    row: 1,
+  },
+  {
+    name: "confirmPassword",
+    type: "password",
+    label: "Confirm Password",
+    required: true,
+    rules: {
+      min: 6,
+      max: 50,
+    },
+    help: "",
+    cols: 12,
+    row: 1,
+  },
+];
+export const loginSchema: FormData[] = [
+  {
+    name: "identifier",
+    type: "email",
+    label: "Email",
+    required: true,
+    rules: {
+      min: 3,
+      max: 50,
+    },
+    help: "",
+    cols: 12,
+    row: 1,
+  },
+  {
+    name: "password",
+    type: "password",
+    label: "Password",
+    required: true,
+    rules: {
+      min: 6,
+      max: 50,
+    },
+    help: "",
+    cols: 12,
+    row: 1,
+  },
+];

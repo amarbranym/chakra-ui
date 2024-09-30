@@ -41,7 +41,7 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
             const filterParams = filterQuery
                 .map(
                     (q) =>
-                        `&filters[${q.operatorFields}]${q.owned && `[${q.owned}]`}[${q.operator}]${q.text ? `=${q.text}` : ''}`
+                        `&filters[${q.operatorFields}]${q.owned && `[${q.owned}]`}[${q.operator}]${q.text || q.date ? `=${q.text || q.date}` : ''}`
                 )
                 .join('');
             const searchParam = searchQuery ? `&_q=${encodeURIComponent(searchQuery)}` : '';

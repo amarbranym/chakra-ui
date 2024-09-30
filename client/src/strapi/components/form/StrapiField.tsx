@@ -18,7 +18,6 @@ const StrapiField = ({ ...props }: any) => {
     useEffect(() => {
         setFieldValue(props.name, props?.multiple ? [] : null);
     }, [])
-
     useEffect(() => {
         if (meta.value) {
             if (!props.multiple) {
@@ -32,13 +31,24 @@ const StrapiField = ({ ...props }: any) => {
     const handleGetDocument = async () => {
         const url = `${props.rules.model}?_q=${searchValue}`;
         const data = await apiFetch(baseURL + `/${url}`);
-        const options = data?.data?.map((item: any) => ({
-            label: item.attributes[props.rules.field],
-            value: item.attributes[props.rules.field],
-            type: "connect",
-            id: item?.id
-        })) || [];
-        setValues(options);
+        if (props?.rules?.model === "users-permissions/roles") {
+            const options = data?.roles?.map((item: any) => ({
+                label: item[props.rules.field],
+                value: item[props.rules.field],
+                type: "connect",
+                id: item?.id
+            })) || [];
+            setValues(options);
+        } else {
+
+            const options = data?.data?.map((item: any) => ({
+                label: item.attributes[props.rules.field],
+                value: item.attributes[props.rules.field],
+                type: "connect",
+                id: item?.id
+            })) || [];
+            setValues(options);
+        }
     }
 
     useEffect(() => {
@@ -127,6 +137,14 @@ const StrapiField = ({ ...props }: any) => {
         // });
     };
 
+
+    const handleOnChange = (event: any) => {
+        const { value } = event.target;
+        // setFieldValue(props.name, value);
+        // console.log(props.name)
+        setSearchValue(value)
+    }
+
     return (
         <Box ref={inputRef} position='relative'  >
             <InputGroup onClick={handleInputClick}>
@@ -134,7 +152,7 @@ const StrapiField = ({ ...props }: any) => {
                     size="md"
                     {...field}
                     type="text"
-                    onChange={(e: any) => setSearchValue(e.target.value)}
+                    onChange={handleOnChange}
                     value={searchValue}
                 />
                 <InputRightElement>

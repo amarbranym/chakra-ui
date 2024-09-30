@@ -15,7 +15,7 @@ interface BasicFromProps {
 }
 const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "Basic" }) => {
 
-    const { setSchema, initialData: data, handleData } = useStrapiFormContext();
+    const { setSchema, initialData: data, handleErrors, handleData } = useStrapiFormContext();
 
     const formValue = Object.hasOwn(data, name) ? data[name] : {}
 
@@ -55,6 +55,11 @@ const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "
                         .min(field?.rules?.min, `${field?.label} must be at least ${field?.rules?.min}`)
                         .max(field?.rules?.max, `${field?.label} must be at most ${field?.rules?.max}`);
                     break;
+                case 'password':
+                    fieldValidation = Yup.string()
+                        .min(field?.rules?.min, `${field?.label} must be at least ${field?.rules?.min}`)
+                        .max(field?.rules?.max, `${field?.label} must be at most ${field?.rules?.max}`);
+                    break;
 
                 case 'ref:strapi':
                     if (field?.multiple) {
@@ -68,7 +73,7 @@ const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "
                     } else {
                         fieldValidation = Yup.object().shape({
                             id: Yup.string(),
-                            value: Yup.string(),
+                            value: Yup.string().required(`${field?.label} is required`),
                             label: Yup.string(),
                         });
                     }
@@ -101,9 +106,15 @@ const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "
                 initialValues={initialValues}
                 enableReinitialize
                 onSubmit={() => { }}
-                validate={(values: any) => { handleData(name, values) }}
+                validate={(values: any) => {
+                    handleData(name, values)
+                    validationSchema.validate(values).then(() => {
+                        handleErrors(name, 0)
+                    }).catch(e => {
+                        handleErrors(name, 1)
+                    })
+                }}
                 validationSchema={validationSchema}
-
             >
                 <Form>
                     <Grid templateColumns="repeat(12, 1fr)" templateRows="repeat(1,1fr)" gap="4" >

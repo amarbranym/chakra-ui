@@ -10,6 +10,7 @@ import { Link, useOutletContext } from 'react-router-dom'
 import { AddIcon } from '@chakra-ui/icons'
 import { contactsSchema } from '../../config/schema/contactsSchema'
 import SearchBox from '../../strapi/components/list/SearchBox'
+import { datesSechema, idSchema } from '../../config/schema/filterOprators'
 
 const ContactsList = () => {
     const context = useOutletContext<any>()
@@ -25,7 +26,7 @@ const ContactsList = () => {
             <HStack gap="4">
                 <SearchBox />
                 <Stack py={{ base: "4" }}>
-                    <Filters fieldSchema={[...contactsSchema]} />
+                    <Filters fieldSchema={[...contactsSchema, ...idSchema, ...datesSechema]} />
                 </Stack>
             </HStack>
             <Stack border="1px solid" borderColor="gray.100" rounded="md">

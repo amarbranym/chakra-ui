@@ -15,7 +15,8 @@ export interface FormData {
     | "number"
     | "ref:strapi"
     | "tel"
-    | "password";
+    | "password"
+    |"datetime-local"
   label?: string;
   rules?: {
     min?: number;

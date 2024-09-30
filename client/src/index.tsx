@@ -12,6 +12,7 @@ import Dashboard from './layout/Dashboard';
 import { nav } from './config/nav';
 import { Toaster } from "react-hot-toast";
 import StudentPreview from './views/app/StudentPreview';
+import ProtectedRoute from './strapi/components/auth/ProtectedRoute';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,22 +21,25 @@ root.render(
   <ChakraProvider>
     <Toaster position="top-center" reverseOrder={false} />
 
-    <StrapiAdmin baseURL='http://localhost:1337/api' allowUser={["public"]} >
-      <Router>
+    <Router>
+      <StrapiAdmin baseURL='http://localhost:1337/api' allowUser={["public"]} >
         <Routes>
-          <Route element={<Dashboard />} >
+          <Route element={<ProtectedRoute><Dashboard /></ProtectedRoute>} >
             {
               nav.map((config: any, index: number) => (
                 <Route key={index} path={config.route} element={<config.component />} />
               ))
             }
           </Route>
+          <Route path="/student/preview/:id" element={<ProtectedRoute><StudentPreview /></ProtectedRoute>} />
+        </Routes>
+        <Routes>
+
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/student/preview/:id" element={<StudentPreview/>} />
         </Routes>
-      </Router>
-    </StrapiAdmin>
+      </StrapiAdmin>
+    </Router>
   </ChakraProvider>
 );
 

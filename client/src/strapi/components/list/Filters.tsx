@@ -16,8 +16,8 @@ const Filters: React.FC<FiltersProps> = ({ fieldSchema }) => {
     const { filterQuery = [], setFilterQuery = () => { } } = useStrapiListContext()
     const [selectedField, setSelectedField] = useState<any>({});
 
-    const fields = fieldSchema?.filter((item) => ["text", "textarea", "email", "ref:strapi", "number", "date", "select"].includes(item.type))
-
+    const fields = fieldSchema?.filter((item) => ["text", "textarea", "email", "ref:strapi", "number", "date", "select", "datetime-local"].includes(item.type))
+console.log("fields",fieldSchema)
     const [queryData, setQueryData] = useState<any>({
         operatorFields: "",
         operator: "",
@@ -52,7 +52,7 @@ const Filters: React.FC<FiltersProps> = ({ fieldSchema }) => {
             prevFilterQuery.filter((item: any) => item.id !== id)
         );
     };
-
+console.log("querydata", queryData)
 
     return (
         <Stack direction="row" gap="4" alignItems="center"   >
@@ -92,10 +92,10 @@ const Filters: React.FC<FiltersProps> = ({ fieldSchema }) => {
                                                                 <option key={index} value={item.label}>{item.label}</option>
                                                             ))
                                                         }
-                                                    </Select> : <Input size='md' name='text' onChange={handleChange} type={["text", "ref:strapi", "email", "textareat"].includes(selectedField.type) ? "text" : selectedField.type} />
+                                                    </Select> : (selectedField.type === "date") ? <Input size="md" name='date' type={selectedField.type || "date"} onChange={handleChange}></Input> : <Input size='md' name='text' onChange={handleChange} type={["text", "ref:strapi", "email", "textareat"].includes(selectedField.type) ? "text" : selectedField.type} />
                                                 }
                                             </>}</>
-                                            {(queryData["operator"] && queryData["operatorFields"] && queryData?.text) &&
+                                            {(queryData["operator"] && queryData["operatorFields"] &&( queryData?.text || queryData?.date)) &&
                                                 <Button size="md" w="full" variant="outline" colorScheme='blue' onClick={() => {
                                                     handleAddFilter();
                                                     onClose();

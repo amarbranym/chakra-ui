@@ -22,12 +22,12 @@ const IndustryForm = () => {
                 slug={id}
                 query="populate=*"
             >
-                {({ submit, isLoading }) => (
+                {({ submit, isLoading ,hasAllErrors}) => (
                     <Grid templateColumns="repeat(6, 1fr)" gap="6" >
                         <GridItem colSpan={6}>
                             <HStack justify="space-between" alignItems="center">
                                 <Heading as='h2'>{context?.title}</Heading>
-                                <Button isLoading={isLoading} loadingText="loading" variant="solid" colorScheme='blue' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
+                                <Button isLoading={isLoading} loadingText="loading" isDisabled={hasAllErrors}  variant="solid" colorScheme='blue' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
                             </HStack>
                         </GridItem>
                         <GridItem colSpan={{ base: 6, lg: 6 }}>

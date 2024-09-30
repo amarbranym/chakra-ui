@@ -1,5 +1,33 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
+export interface VacancyCandidates extends Schema.Component {
+  collectionName: 'components_vacancy_candidates';
+  info: {
+    displayName: 'Candidates';
+    icon: 'bell';
+    description: '';
+  };
+  attributes: {
+    Student: Attribute.Relation<
+      'vacancy.candidates',
+      'oneToOne',
+      'api::student.student'
+    >;
+    SalaryNegotiation: Attribute.Integer;
+    Status: Attribute.Enumeration<
+      [
+        'Hired',
+        'Rejected',
+        'In Probation',
+        'In Process',
+        'Interview',
+        'Laid Off'
+      ]
+    >;
+    DateOfHiring: Attribute.Date;
+  };
+}
+
 export interface StudentQualification extends Schema.Component {
   collectionName: 'components_student_qualifications';
   info: {
@@ -94,34 +122,6 @@ export interface StudentDocument extends Schema.Component {
   };
 }
 
-export interface VacancyCandidates extends Schema.Component {
-  collectionName: 'components_vacancy_candidates';
-  info: {
-    displayName: 'Candidates';
-    icon: 'bell';
-    description: '';
-  };
-  attributes: {
-    Student: Attribute.Relation<
-      'vacancy.candidates',
-      'oneToOne',
-      'api::student.student'
-    >;
-    SalaryNegotiation: Attribute.Integer;
-    Status: Attribute.Enumeration<
-      [
-        'Hired',
-        'Rejected',
-        'In Probation',
-        'In Process',
-        'Interview',
-        'Laid Off'
-      ]
-    >;
-    DateOfHiring: Attribute.Date;
-  };
-}
-
 export interface ContactPhone extends Schema.Component {
   collectionName: 'components_contact_phones';
   info: {
@@ -190,10 +190,10 @@ export interface ContactAddress extends Schema.Component {
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
+      'vacancy.candidates': VacancyCandidates;
       'student.qualification': StudentQualification;
       'student.experience': StudentExperience;
       'student.document': StudentDocument;
-      'vacancy.candidates': VacancyCandidates;
       'contact.phone': ContactPhone;
       'contact.contacts': ContactContacts;
       'contact.address': ContactAddress;

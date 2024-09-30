@@ -6,7 +6,7 @@ interface StrapiContextProps {
     baseURL: string;
     apiKey: string;
     isAuthenticated?: boolean;
-    accessToken?:string
+    accessToken?: string
 }
 
 const StrapiContext = createContext<StrapiContextProps | undefined>(undefined);
@@ -31,26 +31,26 @@ export const StrapiAdmin: React.FC<{ children: ReactNode, baseURL?: string, apiK
             const result = await response.json();
             return result;
         } catch (error) {
-            console.error('Error fetching user:', error);
             return null;
         }
     };
 
     const checkAuthStatus = async () => {
-        const token = localStorage.getItem("jwt");
+        const token = localStorage.getItem("jwt") || undefined;
         setAccessToken(token || "")
 
-        if (token) {
+        if (!token) {
+            setIsAuthenticated(false);
+            setCurrentRole("public");
+
+        } else {
             setIsAuthenticated(true);
             // Optionally, decode the JWT to extract the role (if the role is encoded)
             const decodedToken = JSON.parse(atob(token.split('.')[1]));
             const id = decodedToken?.id;
             const role = await handleUser(id, token)
-
+console.log("role", role)
             if (role) setCurrentRole(role?.role?.type);
-        } else {
-            setIsAuthenticated(false);
-            setCurrentRole("public");
         }
     };
 
