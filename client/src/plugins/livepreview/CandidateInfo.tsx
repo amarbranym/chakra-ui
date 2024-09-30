@@ -16,13 +16,14 @@ const CandidateInfo = () => {
                     <Text>Candidate ID</Text>
                     <Text>#{id}</Text>
                 </HStack>
+                <HStack justify="space-between" alignItems={"center"}>
+                    <Text>Status</Text>
+                    <Text fontSize={"large"} fontWeight={"bold"} textTransform={"uppercase"} >{withoutPopulateData?.Status}</Text>
+                </HStack>
                 {
-                    (withoutPopulateData?.Status && withoutPopulateData?.Status !== "In Probation") && (
+                    (withoutPopulateData?.Status && withoutPopulateData?.Status !== "In Process") && (
                         <>
-                            <HStack justify="space-between" alignItems={"center"}>
-                                <Text>Status</Text>
-                                <Text fontSize={"large"} fontWeight={"bold"} textTransform={"uppercase"} >{withoutPopulateData?.Status}</Text>
-                            </HStack>
+
                             <HStack justify="space-between" alignItems={"center"}>
                                 <Text>Date of Activity</Text>
                                 <Text>{withoutPopulateData?.DateOfHiring}</Text>

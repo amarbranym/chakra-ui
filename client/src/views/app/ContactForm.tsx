@@ -3,7 +3,7 @@
 import React from 'react'
 import BasicForm from '../../strapi/components/form/BasicForm'
 import { StrapiFormProvider } from '../../strapi/providers/StrapiFormProvider'
-import { Button, Container, Grid, GridItem, Heading, HStack, Stack, VStack, } from '@chakra-ui/react'
+import { Button, Container, Grid, GridItem, Heading, HStack, Stack, Text, VStack, } from '@chakra-ui/react'
 import BorderCard from '../../layout/BorderCard'
 import RepeatableForm from '../../strapi/components/form/RepeatableForm'
 import { useOutletContext, useParams } from 'react-router-dom'
@@ -40,14 +40,15 @@ const ContactForm = () => {
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
                                         console.log(values)
-                                        return (<span>
-                                            {values.CountryCode} years of experience as {values.Type.value} in {values.Number}
-                                        </span>)
+                                        return (<Text textTransform="capitalize">
+                                            Contact number {values?.CountryCode} {" "}{values?.Number} address type {values?.Type}
+
+                                        </Text>)
                                     }} fieldsSchema={phoneNumberSchema} name="Phone" />
                                 </BorderCard>
                             </Stack>
                         </GridItem>
-                        
+
                     </Grid>
                 )}
             </StrapiFormProvider>

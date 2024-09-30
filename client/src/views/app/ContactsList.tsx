@@ -14,6 +14,13 @@ import { datesSechema, idSchema } from '../../config/schema/filterOprators'
 
 const ContactsList = () => {
     const context = useOutletContext<any>()
+    const handleMapValue = (value: any) => {
+        const result = value && value.map((item: any) => {
+            return item?.attributes?.Name
+        })
+
+        return result.join(", ")
+    };
     return (
         <StrapiList collectionName='contacts' query="populate=*" >
             <Stack mb="6">
@@ -33,18 +40,26 @@ const ContactsList = () => {
                 <Table>
                     <Thead>
                         <Tr>
+                            <Th>Id</Th>
                             <Th>Name</Th>
+                            <Th>Contact</Th>
+                            <Th>Designation</Th>
+                            <Th>Companies</Th>
                             <Th>Email</Th>
                             <Th>Action</Th>
                         </Tr>
                     </Thead>
                     <Card
                         renderItem={(item) => (
+
                             <Tr>
+                                <Td>{item?.id}</Td>
                                 <Td>{item?.attributes?.Name}</Td>
+                                <Td>{item?.attributes?.Phone[0]?.Number}</Td>
+                                <Td>{item?.attributes?.Designation}</Td>
+                                <Td>{handleMapValue(item?.attributes?.Companies?.data)}</Td>
                                 <Td>{item?.attributes?.Email}</Td>
                                 <Td><Button size="sm" variant="ghost" as={Link} to={`/contact/${item.id}`} >Edit</Button></Td>
-
                             </Tr>
                         )}
                     />

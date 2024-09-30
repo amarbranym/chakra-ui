@@ -27,7 +27,7 @@ const StrapiField = ({ ...props }: any) => {
         }
     }, [props.name, meta.value, props.multiple])
 
-
+console.log("meta", meta.value)
     const handleGetDocument = async () => {
         const url = `${props.rules.model}?_q=${searchValue}`;
         const data = await apiFetch(baseURL + `/${url}`);
@@ -143,6 +143,7 @@ const StrapiField = ({ ...props }: any) => {
         // setFieldValue(props.name, value);
         // console.log(props.name)
         setSearchValue(value)
+        setShowMenu(true)
     }
 
     return (
@@ -153,6 +154,13 @@ const StrapiField = ({ ...props }: any) => {
                     {...field}
                     type="text"
                     onChange={handleOnChange}
+                    onKeyDown={(e) => {
+                        if(e.key === "Enter"){
+                            if(values.length > 0){
+                                onItemClick(values[0])
+                            }
+                        }
+                    }}
                     value={searchValue}
                 />
                 <InputRightElement>

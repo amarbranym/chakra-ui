@@ -979,12 +979,7 @@ export interface ApiPaymentPayment extends Schema.CollectionType {
     Status: Attribute.Enumeration<['Collected', 'Pending']>;
     PaymentMode: Attribute.Enumeration<['Online', 'Offline', 'Check']>;
     CollectionDate: Attribute.Date;
-    RelatedVacancy: Attribute.Relation<
-      'api::payment.payment',
-      'oneToOne',
-      'api::vacany.vacany'
-    >;
-    RelatedStudent: Attribute.Relation<
+    Candidate: Attribute.Relation<
       'api::payment.payment',
       'oneToOne',
       'api::student.student'
@@ -1171,6 +1166,11 @@ export interface ApiStudentStudent extends Schema.CollectionType {
       Attribute.Required &
       Attribute.DefaultTo<'In Process'>;
     DateOfHiring: Attribute.Date;
+    Payment: Attribute.Relation<
+      'api::student.student',
+      'oneToOne',
+      'api::payment.payment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

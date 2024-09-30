@@ -13,6 +13,7 @@ import SearchBox from '../../strapi/components/list/SearchBox';
 import { datesSechema, idSchema } from '../../config/schema/filterOprators';
 const CompaniesList = () => {
     const context = useOutletContext<any>()
+
     return (
         <StrapiList collectionName='companies' query="populate=City,Industry,Contact" >
             <HStack justify="space-between" alignItems="center">
@@ -29,15 +30,22 @@ const CompaniesList = () => {
                 <Table>
                     <Thead>
                         <Tr>
+                            <Th>Id</Th>
                             <Th>Name</Th>
+                            <Th>Contact</Th>
+                            <Th>Industry</Th>
                             <Th>City</Th>
                             <Th>Action</Th>
                         </Tr>
                     </Thead>
                     <Card
                         renderItem={(item) => (
+
                             <Tr>
+                                <Td>{item?.id}</Td>
                                 <Td>{item?.attributes?.Name}</Td>
+                                <Td>{item?.attributes?.Contact[0]?.Number}</Td>
+                                <Td>{item?.attributes?.Industry?.data?.attributes?.Name}</Td>
                                 <Td>{item?.attributes?.City?.data?.attributes?.Name}</Td>
                                 <Td><Button size="sm" variant="ghost" as={Link} to={`/company/${item.id}`} >Edit</Button></Td>
 

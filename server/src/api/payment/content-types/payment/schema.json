@@ -43,15 +43,11 @@
     "CollectionDate": {
       "type": "date"
     },
-    "RelatedVacancy": {
+    "Candidate": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::vacany.vacany"
-    },
-    "RelatedStudent": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::student.student"
+      "target": "api::student.student",
+      "inversedBy": "Payment"
     }
   }
 }

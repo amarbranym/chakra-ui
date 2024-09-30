@@ -118,6 +118,12 @@
     },
     "DateOfHiring": {
       "type": "date"
+    },
+    "Payment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::payment.payment",
+      "mappedBy": "Candidate"
     }
   }
 }

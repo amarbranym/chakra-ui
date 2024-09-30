@@ -3,7 +3,7 @@
 import React from 'react'
 import BasicForm from '../../strapi/components/form/BasicForm'
 import { StrapiFormProvider } from '../../strapi/providers/StrapiFormProvider'
-import { Button, Container, Grid, GridItem, Heading, HStack, Stack, VStack, } from '@chakra-ui/react'
+import { Button, Container, Grid, GridItem, Heading, HStack, Stack, Text, VStack, } from '@chakra-ui/react'
 import BorderCard from '../../layout/BorderCard'
 import RepeatableForm from '../../strapi/components/form/RepeatableForm'
 import { useOutletContext, useParams } from 'react-router-dom'
@@ -43,25 +43,26 @@ const CandidateForm = () => {
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
-                                        console.log(values)
-                                        return (<span>
-                                            {values.CountryCode} years of experience as {values.Type.value} in {values.Number}
-                                        </span>)
+                                        return (<Text textTransform={"capitalize"}>
+                                            Contact number {values?.CountryCode} {" "}{values?.Number} address type {values?.Type}
+                                            {
+                                                console.log(values)
+                                            }
+                                        </Text>)
                                     }} fieldsSchema={phoneNumberSchema} name="Contacts" />
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
-                                        console.log(values)
-                                        return (<span>
-                                            {values.Duration} years of experience as {values.Designation.value} in {values.Company.value}
-                                        </span>)
+                                        return (<Text textTransform="capitalize">
+                                            {values?.Duration} years of experience as {values?.Designation.value} in {values?.Company?.value}
+                                        </Text>)
                                     }} fieldsSchema={experienceSchema} name="experience" />
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
-                                        return (<span>
-                                            {values.qualification.value} years of experience as {values.school.value}
-                                        </span>)
+                                        return (<Text textTransform="capitalize">
+                                            {values?.qualification?.value}  at {values?.school?.value}
+                                        </Text>)
                                     }} fieldsSchema={qualificationSchema} name="qualification" />
                                 </BorderCard>
                                 <BorderCard>

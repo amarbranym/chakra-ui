@@ -44,7 +44,7 @@ export const contactsSchema: FormData[] = [
     name: "Designation",
     type: "text",
     rules: {
-      min: 3,
+      min: 0,
       max: 50,
     },
     label: "Designation",

@@ -16,7 +16,7 @@ export interface FormData {
     | "ref:strapi"
     | "tel"
     | "password"
-    |"datetime-local"
+    | "datetime-local";
   label?: string;
   rules?: {
     min?: number;
@@ -32,4 +32,6 @@ export interface FormData {
   as?: string;
   rows?: string;
   required?: boolean;
+  defaultValue?: string | number;
+  value?: string;
 }

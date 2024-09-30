@@ -48,7 +48,7 @@ export const companySchema: FormData[] = [
     label: "Address",
     required: false,
     rules: {
-      min: 3,
+      min: 0,
       max: 300,
     },
     help: "",

@@ -81,7 +81,7 @@ export const otherDetailSchema: FormData[] = [
     name: "DOB",
     type: "date",
     label: "DOB",
-    required: false,
+    required: true,
     help: "",
     cols: 6,
     row: 1,
@@ -106,7 +106,7 @@ export const otherDetailSchema: FormData[] = [
     name: "MaritalStatus",
     type: "select",
     label: "Marital Status",
-    required: false,
+    required: true,
 
     rules: {
       options: [
@@ -221,7 +221,7 @@ export const qualificationSchema: FormData[] = [
     required: false,
     rules: {
       min: 0,
-      max: 2,
+      max: 10,
     },
     label: "Score ",
     help: "",
@@ -232,19 +232,6 @@ export const qualificationSchema: FormData[] = [
 
 export const addressSchema: FormData[] = [
   {
-    name: "City",
-    type: "ref:strapi",
-    label: "City",
-    required: true,
-    rules: {
-      model: "cities",
-      field: "Name",
-    },
-    help: "",
-    cols: 6,
-    row: 1,
-  },
-  {
     name: "AddressType",
     type: "select",
     required: true,
@@ -254,6 +241,19 @@ export const addressSchema: FormData[] = [
         { value: "permanent", label: "Permanent" },
         { value: "alternate", label: "Alternate" },
       ],
+    },
+    help: "",
+    cols: 6,
+    row: 1,
+  },
+  {
+    name: "City",
+    type: "ref:strapi",
+    label: "City",
+    required: true,
+    rules: {
+      model: "cities",
+      field: "Name",
     },
     help: "",
     cols: 6,

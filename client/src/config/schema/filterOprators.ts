@@ -43,16 +43,6 @@ export const filterOprators = [
     fieldTypes: ["number", "date", "datetime-local"],
   },
   {
-    label: "Included in an array",
-    value: "$in",
-    fieldTypes: ["text", "textarea", "email", "ref:strapi", "number"],
-  },
-  {
-    label: "Not included in an array",
-    value: "$notIn",
-    fieldTypes: ["text", "textarea", "email", "ref:strapi", "number"],
-  },
-  {
     label: "Contains",
     value: "$contains",
     fieldTypes: ["text", "textarea", "email", "ref:strapi"],
@@ -100,7 +90,6 @@ export const filterOprators = [
       'datetime-local'
     ],
   },
-  { label: "Is between", value: "$between", fieldTypes: ["number", "date", "datetime-local"] },
   {
     label: "Starts with",
     value: "$startsWith",

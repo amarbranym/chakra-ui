@@ -21,22 +21,38 @@ const VacanciesList = () => {
             </HStack>
             <HStack gap="4">
                 <SearchBox />
-            <Stack py={{ base: "4" }}>
-                <Filters fieldSchema={[...companySchema, ...idSchema, ...datesSechema]} />
-            </Stack>
+                <Stack py={{ base: "4" }}>
+                    <Filters fieldSchema={[...companySchema, ...idSchema, ...datesSechema]} />
+                </Stack>
             </HStack>
             <Stack border="1px solid" borderColor="gray.100" rounded="md">
                 <Table>
                     <Thead>
                         <Tr>
-                            <Th>Name</Th>
+                            <Th>Id</Th>
+                            <Th>Title</Th>
+                            <Th>Company</Th>
+                            <Th>Designation</Th>
+                            <Th>Status</Th>
+                            <Th>Min Salary</Th>
+                            <Th>Max Salary</Th>
+                            <Th>Seats</Th>
                             <Th>Action</Th>
                         </Tr>
                     </Thead>
                     <Card
                         renderItem={(item) => (
+
                             <Tr>
+                                <Td>{item?.id}</Td>
+
                                 <Td>{item?.attributes?.Title}</Td>
+                                <Td>{item?.attributes?.Company?.data?.attributes?.Name}</Td>
+                                <Td>{item?.attributes?.Designation?.data?.attributes?.Name}</Td>
+                                <Td>{item?.attributes?.Status}</Td>
+                                <Td>{item?.attributes?.MinSalary}</Td>
+                                <Td>{item?.attributes?.MaxSalary}</Td>
+                                <Td>{item?.attributes?.Seats}</Td>
                                 <Td><Button size="sm" variant="ghost" as={Link} to={`/vacancy/${item.id}`} >Edit</Button></Td>
 
                             </Tr>

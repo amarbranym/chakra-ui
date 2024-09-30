@@ -33,6 +33,7 @@ const UsersList = () => {
                 <Table>
                     <Thead>
                         <Tr>
+                            <Th>Id</Th>
                             <Th>username</Th>
                             <Th>Email</Th>
                             <Th>Action</Th>
@@ -41,6 +42,7 @@ const UsersList = () => {
                     <Card
                         renderItem={(item) => (
                             <Tr>
+                                <Td>{item?.id}</Td>
                                 <Td>{item?.username}</Td>
                                 <Td>{item?.email}</Td>
                                 <Td><Button size="sm" variant="ghost" as={Link} to={`/user/${item.id}`} >Edit</Button></Td>

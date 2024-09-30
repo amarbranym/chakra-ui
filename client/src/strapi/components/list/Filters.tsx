@@ -2,13 +2,14 @@
 import React, { useState } from 'react'
 import { useStrapiListContext } from '../../providers/StrapiListProvider'
 import { v4 as uuidv4 } from 'uuid';
-import { Box, Button, Input, Popover, PopoverBody, PopoverContent, PopoverTrigger, Select, Stack, VStack } from '@chakra-ui/react';
+import { Badge, Box, Button, IconButton, Input, Popover, PopoverBody, PopoverContent, PopoverTrigger, Select, Stack, VStack } from '@chakra-ui/react';
 // import { CloseButton, Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
 import {
     FiPlus,
 } from 'react-icons/fi'
 import { IoClose } from "react-icons/io5";
 import { filterOprators } from '../../../config/schema/filterOprators';
+import { SmallCloseIcon } from '@chakra-ui/icons';
 interface FiltersProps {
     fieldSchema?: any[]
 }
@@ -17,7 +18,7 @@ const Filters: React.FC<FiltersProps> = ({ fieldSchema }) => {
     const [selectedField, setSelectedField] = useState<any>({});
 
     const fields = fieldSchema?.filter((item) => ["text", "textarea", "email", "ref:strapi", "number", "date", "select", "datetime-local"].includes(item.type))
-console.log("fields",fieldSchema)
+    console.log("fields", fieldSchema)
     const [queryData, setQueryData] = useState<any>({
         operatorFields: "",
         operator: "",
@@ -52,7 +53,7 @@ console.log("fields",fieldSchema)
             prevFilterQuery.filter((item: any) => item.id !== id)
         );
     };
-console.log("querydata", queryData)
+    console.log("querydata", queryData)
 
     return (
         <Stack direction="row" gap="4" alignItems="center"   >
@@ -95,7 +96,7 @@ console.log("querydata", queryData)
                                                     </Select> : (selectedField.type === "date") ? <Input size="md" name='date' type={selectedField.type || "date"} onChange={handleChange}></Input> : <Input size='md' name='text' onChange={handleChange} type={["text", "ref:strapi", "email", "textareat"].includes(selectedField.type) ? "text" : selectedField.type} />
                                                 }
                                             </>}</>
-                                            {(queryData["operator"] && queryData["operatorFields"] &&( queryData?.text || queryData?.date)) &&
+                                            {(queryData["operator"] && queryData["operatorFields"] && (queryData?.text || queryData?.date)) &&
                                                 <Button size="md" w="full" variant="outline" colorScheme='blue' onClick={() => {
                                                     handleAddFilter();
                                                     onClose();
@@ -114,7 +115,7 @@ console.log("querydata", queryData)
             <Box display="flex" gap="4">
                 {
                     filterQuery.map((item: any, index: number) => (
-                        <Button key={item.id || index} rightIcon={<IoClose />} onClick={() => handleRemove(item.id)} size="md" colorScheme='blue' variant="outline">{`${item.operatorFields} ${item.operatorName}`}</Button>
+                        <Badge colorScheme='blue' variant="outline" display="flex" gap="2" alignItems={"center"} px="2" py={"1"} rounded="md" textTransform="capitalize" fontSize={"small"} key={item.id || index} >{`${item.operatorFields} ${item.operatorName} ${item.text}`}  <IconButton aria-label='' colorScheme='gray' variant={"ghost"} size="sm" type="button" icon={<SmallCloseIcon />} onClick={() => handleRemove(item.id)} /></Badge>
                     ))
                 }
             </Box>

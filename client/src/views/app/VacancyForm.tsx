@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import BasicForm from '../../strapi/components/form/BasicForm'
 import { StrapiFormProvider } from '../../strapi/providers/StrapiFormProvider'
-import { Button, Container, Grid, GridItem, Heading, HStack, Stack, VStack, } from '@chakra-ui/react'
+import { Button, Container, Grid, GridItem, Heading, HStack, Stack, Text, VStack, } from '@chakra-ui/react'
 import BorderCard from '../../layout/BorderCard'
 import RepeatableForm from '../../strapi/components/form/RepeatableForm'
 import { useOutletContext, useParams } from 'react-router-dom'
@@ -85,9 +85,9 @@ const VacancyForm = () => {
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
-                                        return (<span>
-                                            {values.Student.label} is {values.Status}
-                                        </span>)
+                                        return (<Text textTransform="capitalize">
+                                            {values?.Student?.label} is {values?.Status}
+                                        </Text>)
                                     }} fieldsSchema={candidatesSchema} name="Candidates" />
                                 </BorderCard>
                             </Stack>

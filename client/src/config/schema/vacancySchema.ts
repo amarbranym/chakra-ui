@@ -8,7 +8,7 @@ export const vacancySchema: FormData[] = [
     required: false,
 
     rules: {
-      min: 5,
+      min: 0,
       max: 80,
     },
     help: "",
@@ -19,12 +19,13 @@ export const vacancySchema: FormData[] = [
     name: "Seats",
     type: "number",
     label: "Seats",
-    required: false,
+    required: true,
 
     rules: {
       min: 1,
       max: 80,
     },
+
     help: "",
     cols: 6,
     row: 1,
@@ -109,7 +110,7 @@ export const vacancySchema: FormData[] = [
     required: false,
 
     rules: {
-      min: 5,
+      min: 0,
       max: 300,
     },
     help: "",
@@ -138,7 +139,7 @@ export const candidatesSchema: FormData[] = [
     name: "SalaryNegotiation",
     type: "number",
     label: "SalaryNegotiation",
-    required: false,
+    required: true,
     rules: {
       min: 5000,
       max: 50000,

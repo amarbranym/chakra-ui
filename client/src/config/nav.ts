@@ -17,6 +17,8 @@ import UsersList from "../views/app/UsersList";
 import UserForm from "../views/app/UserForm";
 import { LiaIndustrySolid } from "react-icons/lia";
 import { TbDeviceTabletSearch } from "react-icons/tb";
+import PaymentsList from "../views/app/PaymentsList";
+import PaymentForm from "../views/app/PaymentForm";
 export const nav = [
   // {
   //   name: "Home",
@@ -70,7 +72,7 @@ export const nav = [
     title: "Company",
     isParent: false,
   },
-  
+
   {
     name: "Contacts",
     route: "/contacts",
@@ -144,6 +146,30 @@ export const nav = [
     icon: MdOutlineContacts,
   },
   {
+    name: "Payments",
+    route: "/payments",
+    title: "Payments",
+    component: PaymentsList,
+    isParent: true,
+    icon: TbDeviceTabletSearch,
+  },
+  {
+    name: "Payment",
+    route: "/payment/:id",
+    title: "Payments",
+    component: PaymentForm,
+    isParent: false,
+    icon: TbDeviceTabletSearch,
+  },
+  {
+    name: "Payment",
+    route: "/payment/create",
+    title: "Payments",
+    component: PaymentForm,
+    isParent: false,
+    icon: TbDeviceTabletSearch,
+  },
+  {
     name: "Users",
     route: "/users",
     component: UsersList,
@@ -165,5 +191,4 @@ export const nav = [
     title: "User",
     isParent: false,
   },
- 
 ];
