@@ -65,7 +65,7 @@ export default function Dashboard() {
       <Box ml={{ base: 0, md: 60 }} position="relative" >
         <Box w="full" h="100vh" p="4" pl={{ base: '4', md: "0" }}  >
           <Header />
-          <Box my="4" p="4" bg="white" rounded="4" overflowX="auto" h='full' >
+          <Box my="4" p="4" bg="white" rounded="4" overflowX="auto" h='full' pb={"20"} >
             <Stack mb='6'>
               {
                 page && page[0].isParent === true ? <BreadCrumbComponent page={page && page[0]} /> :
