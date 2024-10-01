@@ -18,9 +18,8 @@ import { useStrapiContext } from '../../strapi/providers/StrapiAdmin'
 const VacancyForm = () => {
     const context = useOutletContext<any>();
     const { id } = useParams();
-    // const { baseURL } = useStrapiContext()
-
-    const query = "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference"
+    const { baseURL } = useStrapiContext()
+    const query = "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Candidates"
 
 
     const handleUpdate = async (id: string, Candidates: any, Company: any) => {
@@ -37,7 +36,7 @@ const VacancyForm = () => {
             }),
             credentials: 'include',
         };
-        await apiFetch("http://localhost:1337/api" + `/students/${id}?`, options);
+        await apiFetch(baseURL + `/students/${id}?`, options);
 
     }
 

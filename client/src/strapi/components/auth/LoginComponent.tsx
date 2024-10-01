@@ -58,7 +58,7 @@ const LoginComponent = () => {
     const handleSave = async (value: any) => {
         const { identifier, password } = value
         try {
-            const response = await fetch('http://localhost:1337/api/auth/local', {
+            const response = await fetch('https://api.bemployed.in/api/auth/local', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,7 +74,6 @@ const LoginComponent = () => {
             }
             if (response.ok === true) {
                 const responseData = await response.json();
-                console.log("response after", responseData)
 
                 localStorage.setItem('jwt', responseData.jwt);
                 toast.success("login successful!");

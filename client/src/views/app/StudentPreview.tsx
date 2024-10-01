@@ -32,7 +32,7 @@ const StudentPreview = () => {
     return (
         <Container maxW='container.xl ' mb="20" position={"relative"}  >
             <div className='print:hidden bg-red-50 fixed  right-[10%] top-10 '>
-            <Button colorScheme='blue' onClick={() => window.print()} >Print</Button>
+                <Button colorScheme='blue' onClick={() => window.print()} >Print</Button>
             </div>
             <StrapiDocument slug={id} collectionName='students' query="populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference">
                 {({ data }) => (
@@ -64,14 +64,17 @@ const StudentPreview = () => {
                                                     }
 
                                                 </div>
+                                                {
+                                                    data?.experience?.length > 0 && <>
+                                                        <Horizontalline text="Career Objective" />
+                                                        <div>
+                                                            <p>
+                                                                To pursue a challeging career and be a part of a progresive organization that gives scope to enhance my knowledge, skills and reach the pinnacle in this field  with sheer determination, dedication and hard work.
+                                                            </p>
+                                                        </div>
+                                                    </>
+                                                }
 
-                                                <Horizontalline text="Career Objective" />
-
-                                                <div>
-                                                    <p>
-                                                        To pursue a challeging career and be a part of a progresive organization that gives scope to enhance my knowledge, skills and reach the pinnacle in this field  with sheer determination, dedication and hard work.
-                                                    </p>
-                                                </div>
 
                                                 {
                                                     data?.qualification?.length > 0 && (

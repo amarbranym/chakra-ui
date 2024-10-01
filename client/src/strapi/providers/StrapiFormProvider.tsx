@@ -23,7 +23,7 @@ interface StrapiFormContextProps {
 const StrapiFormContext = createContext<StrapiFormContextProps | undefined>(undefined);
 
 export const StrapiFormProvider: React.FC<{
-  children: (props: { submit: () => void; isLoading?: boolean, data?: any , hasAllErrors?:boolean}) => React.ReactNode;
+  children: (props: { submit: () => void; isLoading?: boolean, data?: any, hasAllErrors?: boolean }) => React.ReactNode;
   submit?: (result: { data: any; success: boolean }) => void;
   collectionName: string;
   slug?: string;
@@ -69,7 +69,6 @@ export const StrapiFormProvider: React.FC<{
       `/${collectionName}/${slug}?${query}`);
     if (collectionName === "users") {
       const poulateResult = populateData(schemaFields, result, collectionName);
-      console.log("populate", poulateResult)
       setInitialData(poulateResult)
 
     } else {
@@ -91,6 +90,7 @@ export const StrapiFormProvider: React.FC<{
 
   const onSuccess = async (res: any, options: any = {},) => {
     const message = `${collectionName} successfully ${options?.method === "PUT" ? "updated" : "created"}`
+   
     if (res?.ok) {
       if (onSave) {
         await onSave(options?.body);

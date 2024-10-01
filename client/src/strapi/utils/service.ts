@@ -1,5 +1,6 @@
 /* eslint-disable prefer-const */
 
+import toast from "react-hot-toast";
 import { FormData } from "../../config/schema/formTypes";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -18,7 +19,6 @@ export const convertRef = (refData: any, field: any) => {
     };
 };
 export const convertRefUser = (refData: any, field: any) => {
-  console.log("ref", refData)
   if (Array.isArray(refData?.data)) {
     return refData?.data.map((value: any) => ({
       id: value?.id,
@@ -66,7 +66,6 @@ export const populateData = (
                   field.rules?.field
                 );
               }
-
             } else {
               if (field.multiple) {
                 obj[`${name}`][`${field.name}`] = convertRef(
@@ -143,6 +142,13 @@ export const apiFetch = async (
       ...options,
     });
     const data = await response.json();
+
+    if (response?.ok === false) {
+      if (options?.method === "PUT" || options?.method === "POST") {
+        const message = data?.error?.message;
+        toast.error(message || `An error occurred during ValidationError`);
+      }
+    }
 
     if (onSuccess) onSuccess(response, options);
     return data;

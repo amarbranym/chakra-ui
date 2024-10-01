@@ -27,7 +27,6 @@ const StrapiField = ({ ...props }: any) => {
         }
     }, [props.name, meta.value, props.multiple])
 
-console.log("meta", meta.value)
     const handleGetDocument = async () => {
         const url = `${props.rules.model}?_q=${searchValue}`;
         const data = await apiFetch(baseURL + `/${url}`);
@@ -130,7 +129,6 @@ console.log("meta", meta.value)
         setFieldValue(props.name, sortData);
         setShowMenu(s => !s)
 
-        console.log("res", data)
         // await createDocumentOption({
         //     data: { [props.rules.field]: searchValue },
         //     model: props.rules.model
@@ -141,7 +139,6 @@ console.log("meta", meta.value)
     const handleOnChange = (event: any) => {
         const { value } = event.target;
         // setFieldValue(props.name, value);
-        // console.log(props.name)
         setSearchValue(value)
         setShowMenu(true)
     }

@@ -8,9 +8,9 @@ import Pagination from '../../strapi/components/list/Pagination';
 import Card from '../../strapi/components/list/Card';
 import { Link, useOutletContext } from 'react-router-dom';
 import { AddIcon } from '@chakra-ui/icons';
-import { companySchema } from '../../config/schema/companySchema';
 import SearchBox from '../../strapi/components/list/SearchBox';
 import { datesSechema, idSchema } from '../../config/schema/filterOprators';
+import { vacancySchema } from '../../config/schema/vacancySchema';
 const VacanciesList = () => {
     const context = useOutletContext<any>()
     return (
@@ -22,7 +22,7 @@ const VacanciesList = () => {
             <HStack gap="4">
                 <SearchBox />
                 <Stack py={{ base: "4" }}>
-                    <Filters fieldSchema={[...companySchema, ...idSchema, ...datesSechema]} />
+                    <Filters fieldSchema={[...vacancySchema, ...idSchema, ...datesSechema]} />
                 </Stack>
             </HStack>
             <Stack border="1px solid" borderColor="gray.100" rounded="md">

@@ -7,7 +7,6 @@ import { Badge, Box, Button, IconButton, Input, Popover, PopoverBody, PopoverCon
 import {
     FiPlus,
 } from 'react-icons/fi'
-import { IoClose } from "react-icons/io5";
 import { filterOprators } from '../../../config/schema/filterOprators';
 import { SmallCloseIcon } from '@chakra-ui/icons';
 interface FiltersProps {
@@ -18,7 +17,6 @@ const Filters: React.FC<FiltersProps> = ({ fieldSchema }) => {
     const [selectedField, setSelectedField] = useState<any>({});
 
     const fields = fieldSchema?.filter((item) => ["text", "textarea", "email", "ref:strapi", "number", "date", "select", "datetime-local"].includes(item.type))
-    console.log("fields", fieldSchema)
     const [queryData, setQueryData] = useState<any>({
         operatorFields: "",
         operator: "",
@@ -53,7 +51,6 @@ const Filters: React.FC<FiltersProps> = ({ fieldSchema }) => {
             prevFilterQuery.filter((item: any) => item.id !== id)
         );
     };
-    console.log("querydata", queryData)
 
     return (
         <Stack direction="row" gap="4" alignItems="center"   >

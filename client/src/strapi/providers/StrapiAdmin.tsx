@@ -11,7 +11,7 @@ interface StrapiContextProps {
 
 const StrapiContext = createContext<StrapiContextProps | undefined>(undefined);
 
-export const StrapiAdmin: React.FC<{ children: ReactNode, baseURL?: string, apiKey?: string, allowUser: any }> = ({ children, baseURL = "http://localhost:1337/api", apiKey = "", allowUser }) => {
+export const StrapiAdmin: React.FC<{ children: ReactNode, baseURL?: string, apiKey?: string, allowUser: any }> = ({ children, baseURL = "https://api.bemployed.in/api", apiKey = "", allowUser }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [currentRole, setCurrentRole] = useState("public");
     const [accessToken, setAccessToken] = useState<string>("")
@@ -49,7 +49,6 @@ export const StrapiAdmin: React.FC<{ children: ReactNode, baseURL?: string, apiK
             const decodedToken = JSON.parse(atob(token.split('.')[1]));
             const id = decodedToken?.id;
             const role = await handleUser(id, token)
-console.log("role", role)
             if (role) setCurrentRole(role?.role?.type);
         }
     };

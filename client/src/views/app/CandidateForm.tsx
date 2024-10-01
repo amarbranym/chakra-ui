@@ -23,7 +23,7 @@ const CandidateForm = () => {
             <StrapiFormProvider
                 collectionName="students"
                 slug={id}
-                query="populate=experience.Company.Contact,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,IndustriesPreference,Company"
+                query="populate=experience.Company.Contact,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,IndustriesPreference,Company,Payment"
             >
                 {({ submit, isLoading, hasAllErrors }) => (
                     <Grid templateColumns="repeat(6, 1fr)" gap="6" >

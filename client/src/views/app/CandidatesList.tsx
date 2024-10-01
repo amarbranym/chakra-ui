@@ -29,7 +29,7 @@ const CandidatesList = () => {
         return result.join(", ")
     };
     return (
-        <StrapiList collectionName='students' query="populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference" >
+        <StrapiList collectionName='students' query="populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment" >
             <Stack mb="6">
                 {/* <BreadCrumbComponent /> */}
             </Stack>
@@ -52,6 +52,7 @@ const CandidatesList = () => {
                             <Th>Id</Th>
                             <Th>Name</Th>
                             <Th>Contact</Th>
+                            <Th>Gender</Th>
                             <Th>Status</Th>
                             <Th>Skills</Th>
                             <Th>Industry</Th>
@@ -64,6 +65,7 @@ const CandidatesList = () => {
                                 <Td>{item?.id}</Td>
                                 <Td>{item?.attributes?.FirstName}{" "}{item?.attributes?.LastName}</Td>
                                 <Td>{item?.attributes?.Contacts[0]?.Number}</Td>
+                                <Td>{item?.attributes?.Gender}</Td>
                                 <Td>{item?.attributes?.Status}</Td>
                                 <Td>{handleMapValue(item?.attributes?.Skills?.data)}</Td>
                                 <Td>{handleMapValueIndustry(item?.attributes?.IndustriesPreference?.data)}</Td>

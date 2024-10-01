@@ -124,6 +124,14 @@
       "relation": "oneToOne",
       "target": "api::payment.payment",
       "mappedBy": "Candidate"
+    },
+    "CandidateType": {
+      "type": "enumeration",
+      "enum": [
+        "Student",
+        "Labour"
+      ],
+      "default": "Student"
     }
   }
 }
