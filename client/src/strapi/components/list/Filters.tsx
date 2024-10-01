@@ -22,7 +22,7 @@ const Filters: React.FC<FiltersProps> = ({ fieldSchema }) => {
         operator: "",
         owned: ""
     })
-
+// console.log("data")
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
