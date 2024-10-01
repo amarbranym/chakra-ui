@@ -20,7 +20,7 @@ const PaymentForm = () => {
             <StrapiFormProvider
                 collectionName="payments"
                 slug={id}
-                query="populate=Candidate"
+                query="populate=Candidate,Company"
             >
                 {({ submit, isLoading, hasAllErrors }) => (
                     <Grid templateColumns="repeat(6, 1fr)" gap="6" >

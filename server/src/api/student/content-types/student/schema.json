@@ -34,9 +34,6 @@
       "type": "string",
       "required": true
     },
-    "Email": {
-      "type": "email"
-    },
     "LastName": {
       "type": "string"
     },
@@ -132,6 +129,9 @@
         "Labour"
       ],
       "default": "Student"
+    },
+    "Email": {
+      "type": "string"
     }
   }
 }

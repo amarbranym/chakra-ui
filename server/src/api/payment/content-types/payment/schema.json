@@ -48,6 +48,11 @@
       "relation": "oneToOne",
       "target": "api::student.student",
       "inversedBy": "Payment"
+    },
+    "Company": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company.company"
     }
   }
 }

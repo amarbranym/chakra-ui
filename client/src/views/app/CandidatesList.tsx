@@ -12,6 +12,7 @@ import { otherDetailSchema, personalSchema } from '../../config/schema/candidate
 import SearchBox from '../../strapi/components/list/SearchBox';
 import { datesSechema, idSchema } from '../../config/schema/filterOprators';
 import { candidatesSchema } from '../../config/schema/vacancySchema';
+import { extractCountryCode, formatDateDD_MM_YYYY } from '../../strapi/utils/service';
 const CandidatesList = () => {
     const context = useOutletContext<any>();
     const handleMapValue = (value: any) => {
@@ -42,7 +43,7 @@ const CandidatesList = () => {
                 <SearchBox />
                 <Stack py={{ base: "4" }}>
                     <Filters fieldSchema={[...personalSchema, ...otherDetailSchema, ...idSchema, ...datesSechema,
-                    ...candidatesSchema.filter((item:any) => ["date","number", "select"].includes(item.type))]} />
+                    ...candidatesSchema.filter((item: any) => ["date", "number", "select"].includes(item.type))]} />
                 </Stack>
             </HStack>
             <Stack border="1px solid" borderColor="gray.100" rounded="md">
@@ -51,11 +52,13 @@ const CandidatesList = () => {
                         <Tr>
                             <Th>Id</Th>
                             <Th>Name</Th>
+                            <Th>Father Name</Th>
                             <Th>Contact</Th>
                             <Th>Gender</Th>
                             <Th>Status</Th>
                             <Th>Skills</Th>
                             <Th>Industry</Th>
+                            <Th>Created At</Th>
                             <Th>Action</Th>
                         </Tr>
                     </Thead>
@@ -64,11 +67,13 @@ const CandidatesList = () => {
                             <Tr>
                                 <Td>{item?.id}</Td>
                                 <Td>{item?.attributes?.FirstName}{" "}{item?.attributes?.LastName}</Td>
-                                <Td>{item?.attributes?.Contacts[0]?.Number}</Td>
+                                <Td>{item?.attributes?.FatherName}</Td>
+                                <Td>{extractCountryCode(item?.attributes?.Contacts[0]?.CountryCode)} {item?.attributes?.Contacts[0]?.Number}</Td>
                                 <Td>{item?.attributes?.Gender}</Td>
                                 <Td>{item?.attributes?.Status}</Td>
                                 <Td>{handleMapValue(item?.attributes?.Skills?.data)}</Td>
                                 <Td>{handleMapValueIndustry(item?.attributes?.IndustriesPreference?.data)}</Td>
+                                <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
                                 <Td display="flex" gap="2">
                                     <Button size="sm" variant="solid" as={Link} to={`/candidate/${item.id}`} >Edit</Button>
                                     <Button size="sm" variant="solid" target='_blank' as={Link} to={`/student/preview/${item.id}`} >View</Button>

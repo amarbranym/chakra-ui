@@ -82,12 +82,11 @@ const Pagination = () => {
             <HStack gap="2" w="fit-content" alignItems={"center"} >
                 <Stack>
 
-                    <Select defaultValue={"6"} onChange={(e) => setPageSize(e.target.value)}>
-                        <option selected value="6">6</option>
-                        <option value='10'>10</option>
-                        <option value='30'>20</option>
-                        <option value='40'>30</option>
-                        <option value='50'>40</option>
+                    <Select defaultValue={"50"} onChange={(e) => setPageSize(e.target.value)}>
+                        <option selected value="50">50</option>
+                        <option value='100'>100</option>
+                        <option value='200'>200</option>
+                        <option value='500'>500</option>
                     </Select>
                 </Stack>
                 <Stack>

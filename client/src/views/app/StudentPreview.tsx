@@ -7,6 +7,7 @@ import { Box, Button, Container, Divider, Heading, HStack, ListItem, Stack, Tabl
 import moment from 'moment'
 import "../../style.css"
 import Horizontalline from '../../layout/Horizontalline'
+import { extractCountryCode } from '../../strapi/utils/service'
 const termsAndConditions = [
     "If a candidate is interested in applying for any job, they must submit their resume along with an ID Proof, Passport Size Photo, and a consultancy fee of Rs. 500/-.",
     "When attending an interview, candidates must mention our consultancy name so that the company is promptly informed.",
@@ -20,10 +21,7 @@ const StudentPreview = () => {
     const { id } = useParams()
     const currentDate = moment().format('YYYY-MM-DD')
     // Automatically trigger print preview when the component mounts
-    function extractCountryCode(input: any) {
-        const match = input.match(/\(\+\d+\)/);
-        return match ? match[0].replace(/[()]/g, '') : '';
-    }
+  
 
 
 
@@ -36,7 +34,7 @@ const StudentPreview = () => {
             </div>
             <StrapiDocument slug={id} collectionName='students' query="populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference">
                 {({ data }) => (
-                    <div className='page-container  py-6 mx-auto  shadow-xl print:shadow-none '>
+                    <div className='page-container  py-10 mx-auto  shadow-xl print:shadow-none '>
                         <div className="page-footer">
                             <div>Candidate Id: {id}</div>
                             <div>|</div>
@@ -54,12 +52,12 @@ const StudentPreview = () => {
                                             <div className=' '>
                                                 <div className='flex flex-col gap-1'>
                                                     <h1 className=' text-2xl font-bold '>{data?.FirstName} {data?.LastName}</h1>
-                                                    <p className='text-sm '>{data.Email}</p>
-                                                    <p className='text-sm '>{data?.Address?.Street}</p>
+                                                    <p className='text-sm '> Email: {data.Email}</p>
+                                                    <p className='text-sm text-balance '>  {data?.Address?.Street}</p>
 
-                                                    {
+                                                   {
                                                         data?.Contacts?.slice(0, 2).map((phone: any) => (
-                                                            <p key={phone.Number} className='text-sm '> {extractCountryCode(phone.CountryCode)} {phone.Number}</p>
+                                                            <p key={phone.Number} className='text-sm '>  Mob: {extractCountryCode(phone.CountryCode)} {phone.Number}</p>
                                                         ))
                                                     }
 

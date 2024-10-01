@@ -24,7 +24,72 @@ export interface VacancyCandidates extends Schema.Component {
         'Laid Off'
       ]
     >;
-    DateOfHiring: Attribute.Date;
+    DateOfHiring: Attribute.Date & Attribute.Unique;
+  };
+}
+
+export interface ContactPhone extends Schema.Component {
+  collectionName: 'components_contact_phones';
+  info: {
+    displayName: 'Phone';
+    icon: 'phone';
+    description: '';
+  };
+  attributes: {
+    CountryCode: Attribute.Enumeration<
+      [
+        'USA (+1)',
+        'India (+91)',
+        'UK (+44)',
+        'Australia (+61)',
+        'Japan (+81)',
+        'Germany (+49)',
+        'France (+33)',
+        'China (+86)',
+        'Italy (+39)',
+        'Russia (+7)'
+      ]
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'India (+91)'>;
+    Number: Attribute.String &
+      Attribute.SetMinMaxLength<{
+        maxLength: 10;
+      }>;
+    Type: Attribute.Enumeration<['Primary', 'Alternate', 'Work', 'Home']> &
+      Attribute.DefaultTo<'Primary'>;
+  };
+}
+
+export interface ContactContacts extends Schema.Component {
+  collectionName: 'components_contact_contacts';
+  info: {
+    displayName: 'Contacts';
+    icon: 'user';
+    description: '';
+  };
+  attributes: {
+    contact: Attribute.Relation<
+      'contact.contacts',
+      'oneToOne',
+      'api::contact.contact'
+    >;
+    Designation: Attribute.Enumeration<
+      ['Owner', 'Manager', 'Employee', 'HelpDesk ']
+    >;
+  };
+}
+
+export interface ContactAddress extends Schema.Component {
+  collectionName: 'components_contact_addresses';
+  info: {
+    displayName: 'Address';
+    icon: 'house';
+  };
+  attributes: {
+    Street: Attribute.Text;
+    City: Attribute.Relation<'contact.address', 'oneToOne', 'api::city.city'>;
+    AddressType: Attribute.Enumeration<['Permanent', 'Alternate']>;
   };
 }
 
@@ -122,81 +187,16 @@ export interface StudentDocument extends Schema.Component {
   };
 }
 
-export interface ContactPhone extends Schema.Component {
-  collectionName: 'components_contact_phones';
-  info: {
-    displayName: 'Phone';
-    icon: 'phone';
-    description: '';
-  };
-  attributes: {
-    CountryCode: Attribute.Enumeration<
-      [
-        'USA (+1)',
-        'India (+91)',
-        'UK (+44)',
-        'Australia (+61)',
-        'Japan (+81)',
-        'Germany (+49)',
-        'France (+33)',
-        'China (+86)',
-        'Italy (+39)',
-        'Russia (+7)'
-      ]
-    > &
-      Attribute.Required &
-      Attribute.DefaultTo<'India (+91)'>;
-    Number: Attribute.String &
-      Attribute.SetMinMaxLength<{
-        maxLength: 10;
-      }>;
-    Type: Attribute.Enumeration<['Primary', 'Alternate', 'Work', 'Home']> &
-      Attribute.DefaultTo<'Primary'>;
-  };
-}
-
-export interface ContactContacts extends Schema.Component {
-  collectionName: 'components_contact_contacts';
-  info: {
-    displayName: 'Contacts';
-    icon: 'user';
-    description: '';
-  };
-  attributes: {
-    contact: Attribute.Relation<
-      'contact.contacts',
-      'oneToOne',
-      'api::contact.contact'
-    >;
-    Designation: Attribute.Enumeration<
-      ['Owner', 'Manager', 'Employee', 'HelpDesk ']
-    >;
-  };
-}
-
-export interface ContactAddress extends Schema.Component {
-  collectionName: 'components_contact_addresses';
-  info: {
-    displayName: 'Address';
-    icon: 'house';
-  };
-  attributes: {
-    Street: Attribute.Text;
-    City: Attribute.Relation<'contact.address', 'oneToOne', 'api::city.city'>;
-    AddressType: Attribute.Enumeration<['Permanent', 'Alternate']>;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
       'vacancy.candidates': VacancyCandidates;
-      'student.qualification': StudentQualification;
-      'student.experience': StudentExperience;
-      'student.document': StudentDocument;
       'contact.phone': ContactPhone;
       'contact.contacts': ContactContacts;
       'contact.address': ContactAddress;
+      'student.qualification': StudentQualification;
+      'student.experience': StudentExperience;
+      'student.document': StudentDocument;
     }
   }
 }

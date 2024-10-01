@@ -11,6 +11,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { companySchema } from '../../config/schema/companySchema';
 import SearchBox from '../../strapi/components/list/SearchBox';
 import { datesSechema, idSchema } from '../../config/schema/filterOprators';
+import { formatDateDD_MM_YYYY } from '../../strapi/utils/service';
 const CompaniesList = () => {
     const context = useOutletContext<any>()
 
@@ -35,6 +36,7 @@ const CompaniesList = () => {
                             <Th>Contact</Th>
                             <Th>Industry</Th>
                             <Th>City</Th>
+                            <Th>Created At</Th>
                             <Th>Action</Th>
                         </Tr>
                     </Thead>
@@ -47,6 +49,8 @@ const CompaniesList = () => {
                                 <Td>{item?.attributes?.Contact[0]?.Number}</Td>
                                 <Td>{item?.attributes?.Industry?.data?.attributes?.Name}</Td>
                                 <Td>{item?.attributes?.City?.data?.attributes?.Name}</Td>
+                                <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
+
                                 <Td><Button size="sm" variant="ghost" as={Link} to={`/company/${item.id}`} >Edit</Button></Td>
 
                             </Tr>

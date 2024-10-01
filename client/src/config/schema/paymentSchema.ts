@@ -73,12 +73,25 @@ export const paymentSchema: FormData[] = [
     cols: 6,
     row: 1,
   },
+  // {
+  //   name: "Company",
+  //   type: "ref:strapi",
+  //   label: "Company",
+  //   required:false,
+  //   rules: {
+  //     model: "companies",
+  //     field: "Name",
+  //   },
+  //   multiple:false,
+  //   help: "",
+  //   cols: 6,
+  //   row: 1,
+  // },
   {
     name: "Candidate",
     type: "ref:strapi",
     label: "Candidate",
     required: false,
-
     rules: {
       model: "students",
       field: "FirstName",
@@ -88,4 +101,5 @@ export const paymentSchema: FormData[] = [
     cols: 6,
     row: 1,
   },
+ 
 ];

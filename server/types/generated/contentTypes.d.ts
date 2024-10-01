@@ -984,6 +984,11 @@ export interface ApiPaymentPayment extends Schema.CollectionType {
       'oneToOne',
       'api::student.student'
     >;
+    Company: Attribute.Relation<
+      'api::payment.payment',
+      'oneToOne',
+      'api::company.company'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1128,7 +1133,6 @@ export interface ApiStudentStudent extends Schema.CollectionType {
       'api::skill.skill'
     >;
     FirstName: Attribute.String & Attribute.Required;
-    Email: Attribute.Email;
     LastName: Attribute.String;
     Contacts: Attribute.Component<'contact.phone', true>;
     DOB: Attribute.Date;
@@ -1173,6 +1177,7 @@ export interface ApiStudentStudent extends Schema.CollectionType {
     >;
     CandidateType: Attribute.Enumeration<['Student', 'Labour']> &
       Attribute.DefaultTo<'Student'>;
+    Email: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

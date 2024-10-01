@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useField, useFormikContext } from 'formik';
 import { apiFetch } from '../../utils/service';
 import { useStrapiContext } from '../../providers/StrapiAdmin';
-import { Badge, Box, Button, HStack, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Stack, Text, } from '@chakra-ui/react';
-import { ChevronDownIcon, SmallAddIcon, SmallCloseIcon } from '@chakra-ui/icons'
+import { Badge, Box, HStack, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Text, } from '@chakra-ui/react';
+import { ChevronDownIcon, SmallCloseIcon } from '@chakra-ui/icons'
 
 
 const StrapiField = ({ ...props }: any) => {
@@ -126,9 +126,16 @@ const StrapiField = ({ ...props }: any) => {
             type: "connect",
             id: data?.id
         };
-        setFieldValue(props.name, sortData);
-        setShowMenu(s => !s)
 
+        if (props?.multiple) {
+            setFieldValue(props.name, [...meta?.value, sortData]);
+            setSearchValue("")
+        } else {
+            setFieldValue(props.name, sortData);
+        }
+
+        setShowMenu(s => !s)
+       
         // await createDocumentOption({
         //     data: { [props.rules.field]: searchValue },
         //     model: props.rules.model
@@ -143,6 +150,7 @@ const StrapiField = ({ ...props }: any) => {
         setShowMenu(true)
     }
 
+    console.log("meta", meta)
     return (
         <Box ref={inputRef} position='relative'  >
             <InputGroup onClick={handleInputClick}>
@@ -152,9 +160,12 @@ const StrapiField = ({ ...props }: any) => {
                     type="text"
                     onChange={handleOnChange}
                     onKeyDown={(e) => {
-                        if(e.key === "Enter"){
-                            if(values.length > 0){
+                        if (e.key === "Enter") {
+                            if (values.length > 0) {
                                 onItemClick(values[0])
+                            }
+                            else{
+                                handleSave()
                             }
                         }
                     }}
@@ -169,17 +180,13 @@ const StrapiField = ({ ...props }: any) => {
                 showMenu &&
                 <List maxH="20rem" bg="white" rounded="8px" position="absolute" w='full' zIndex={999999} shadow="md" mt="2" overflowX="auto" >
                     <>
-                        {
-                            values?.length > 0 ? values?.map((item: any, index: any) => (
-                                <ListItem px={{ base: "3" }} alignItems={"center"} display={"flex"} py={{ base: "2" }} _hover={{ bg: "gray.100" }} bg={isSelected(item) && "gray.200"} key={index + 1} onClick={() => onItemClick(item)}><Text fontSize={"sm"} color="gray.500" mr="4" fontWeight={"700"}>{item.id}</Text>{item.label}</ListItem>
+                        {values?.map((item: any, index: any) => (
+                            <ListItem px={{ base: "3" }} alignItems={"center"} display={"flex"} py={{ base: "2" }} _hover={{ bg: "gray.100" }} bg={isSelected(item) && "gray.200"} key={index + 1} onClick={() => onItemClick(item)}><Text fontSize={"sm"} color="gray.500" mr="4" fontWeight={"700"}>{item.id}</Text>{item.label}</ListItem>
 
-                            )) :
-                                <ListItem py={{ base: "2" }} onClick={handleSave}  >
-                                    <Stack>
-                                        <Button colorScheme='blue' leftIcon={<SmallAddIcon />} size='sm' type='button' variant="ghost" mx="auto"  >add item</Button>
-                                    </Stack>
-                                </ListItem>
-                        }
+                        ))}
+                        <ListItem px={{ base: "3" }} alignItems={"center"} display={"flex"} py={{ base: "2" }} _hover={{ bg: "gray.100" }} onClick={handleSave}  >
+                        <Text fontSize={"sm"} color="gray.500" mr="4" fontWeight={"700"}>{">"}</Text><Text>Add <b>{searchValue}</b></Text>
+                        </ListItem>
                     </>
                 </List>
             }
@@ -188,8 +195,9 @@ const StrapiField = ({ ...props }: any) => {
             {
                 props?.multiple && (
                     <HStack wrap="wrap" gap="2" mt='2'>
+
                         {
-                            meta && meta?.value?.map((tag: any, index: any) => tag.type !== "disconnect" && (
+                            meta && meta?.value && meta?.value?.map((tag: any, index: any) => tag.type !== "disconnect" && (
                                 <Badge key={index} display="flex" gap="1" alignItems="center" >
                                     {tag.label}
                                     <IconButton aria-label='' bg="transparent" _hover={{ bg: "transparent" }} size="xs" onClick={(e) => onTagRemove(e, tag)} type="button" icon={<SmallCloseIcon />} />

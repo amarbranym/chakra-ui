@@ -11,6 +11,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import SearchBox from '../../strapi/components/list/SearchBox';
 import { datesSechema, idSchema } from '../../config/schema/filterOprators';
 import { paymentSchema } from '../../config/schema/paymentSchema';
+import { formatDateDD_MM_YYYY } from '../../strapi/utils/service';
 const PaymentsList = () => {
   const context = useOutletContext<any>()
   return (
@@ -34,6 +35,7 @@ const PaymentsList = () => {
               <Th>Payment Type</Th>
               <Th>Payment Mode</Th>
               <Th>Status</Th>
+              <Th>Created At</Th>
               <Th> Candidate</Th>
               <Th>Action</Th>
             </Tr>
@@ -47,6 +49,7 @@ const PaymentsList = () => {
                 <Td>{item?.attributes?.PaymentType}</Td>
                 <Td>{item?.attributes?.PaymentMode}</Td>
                 <Td>{item?.attributes?.Status}</Td>
+                <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
                 <Td>{item?.attributes?.Candidate?.data?.attributes?.FirstName} {" "}{item?.attributes?.Candidate?.data?.attributes?.LastName}</Td>
                 <Td><Button size="sm" variant="ghost" as={Link} to={`/payment/${item.id}`} >Edit</Button></Td>
 

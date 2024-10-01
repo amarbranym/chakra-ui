@@ -11,6 +11,7 @@ import { AddIcon } from '@chakra-ui/icons'
 import { contactsSchema } from '../../config/schema/contactsSchema'
 import SearchBox from '../../strapi/components/list/SearchBox'
 import { datesSechema, idSchema } from '../../config/schema/filterOprators'
+import { formatDateDD_MM_YYYY } from '../../strapi/utils/service'
 
 const ContactsList = () => {
     const context = useOutletContext<any>()
@@ -46,6 +47,7 @@ const ContactsList = () => {
                             <Th>Designation</Th>
                             <Th>Companies</Th>
                             <Th>Email</Th>
+                            <Th>Created At</Th>
                             <Th>Action</Th>
                         </Tr>
                     </Thead>
@@ -59,6 +61,8 @@ const ContactsList = () => {
                                 <Td>{item?.attributes?.Designation}</Td>
                                 <Td>{handleMapValue(item?.attributes?.Companies?.data)}</Td>
                                 <Td>{item?.attributes?.Email}</Td>
+                                <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
+
                                 <Td><Button size="sm" variant="ghost" as={Link} to={`/contact/${item.id}`} >Edit</Button></Td>
                             </Tr>
                         )}

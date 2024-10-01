@@ -11,6 +11,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { userSchema } from '../../config/schema/userSchema';
 import SearchBox from '../../strapi/components/list/SearchBox';
 import { datesSechema, idSchema } from '../../config/schema/filterOprators';
+import { formatDateDD_MM_YYYY } from '../../strapi/utils/service';
 
 const UsersList = () => {
     const context = useOutletContext<any>()
@@ -36,6 +37,7 @@ const UsersList = () => {
                             <Th>Id</Th>
                             <Th>username</Th>
                             <Th>Email</Th>
+                            <Th>Created At</Th>
                             <Th>Action</Th>
                         </Tr>
                     </Thead>
@@ -45,6 +47,7 @@ const UsersList = () => {
                                 <Td>{item?.id}</Td>
                                 <Td>{item?.username}</Td>
                                 <Td>{item?.email}</Td>
+                                <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
                                 <Td><Button size="sm" variant="ghost" as={Link} to={`/user/${item.id}`} >Edit</Button></Td>
                             </Tr>
                         )}

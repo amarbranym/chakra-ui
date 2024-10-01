@@ -2,6 +2,7 @@
 
 import toast from "react-hot-toast";
 import { FormData } from "../../config/schema/formTypes";
+import moment from "moment";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const convertRef = (refData: any, field: any) => {
@@ -157,3 +158,12 @@ export const apiFetch = async (
     throw error;
   }
 };
+
+export const formatDateDD_MM_YYYY = (date: string) => {
+  return moment(date).format("DD-MM-YYYY"); // Adjust the format as needed
+};
+
+export function extractCountryCode(input: any) {
+  const match = input && input.match(/\(\+\d+\)/);
+  return match ? match[0].replace(/[()]/g, '') : '';
+}

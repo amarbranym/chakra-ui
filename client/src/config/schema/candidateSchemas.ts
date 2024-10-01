@@ -150,9 +150,13 @@ export const personalSchema: FormData[] = [
   },
   {
     name: "Email",
-    type: "email",
+    type: "text",
     label: "Email",
-    required: true,
+    rules: {
+      min: 0,
+      max: 50,
+    },
+    required: false,
     help: "",
     cols: 6,
     row: 1,
@@ -165,7 +169,7 @@ export const personalSchema: FormData[] = [
       min: 0,
       max: 50,
     },
-    required: false,
+    required: true,
 
     help: "",
     cols: 6,

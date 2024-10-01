@@ -11,6 +11,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import SearchBox from '../../strapi/components/list/SearchBox';
 import { datesSechema, idSchema } from '../../config/schema/filterOprators';
 import { vacancySchema } from '../../config/schema/vacancySchema';
+import { formatDateDD_MM_YYYY } from '../../strapi/utils/service';
 const VacanciesList = () => {
     const context = useOutletContext<any>()
     return (
@@ -37,6 +38,7 @@ const VacanciesList = () => {
                             <Th>Min Salary</Th>
                             <Th>Max Salary</Th>
                             <Th>Seats</Th>
+                            <Th>Created At</Th>
                             <Th>Action</Th>
                         </Tr>
                     </Thead>
@@ -53,6 +55,7 @@ const VacanciesList = () => {
                                 <Td>{item?.attributes?.MinSalary}</Td>
                                 <Td>{item?.attributes?.MaxSalary}</Td>
                                 <Td>{item?.attributes?.Seats}</Td>
+                                <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
                                 <Td><Button size="sm" variant="ghost" as={Link} to={`/vacancy/${item.id}`} >Edit</Button></Td>
 
                             </Tr>

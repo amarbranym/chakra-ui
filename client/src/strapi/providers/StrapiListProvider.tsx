@@ -27,7 +27,7 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
     const [filterQuery, setFilterQuery] = useState<any[]>([])
     const [totalPage, setTotalPage] = useState<number>(1);
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const [pageSize, setPageSize] = useState<string>("6")
+    const [pageSize, setPageSize] = useState<string>("50")
 
     const handleGetDocument = async () => {
         const options = {

@@ -54,7 +54,7 @@ const CandidateForm = () => {
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
                                         return (<Text textTransform="capitalize">
-                                            {values?.Duration} years of experience as {values?.Designation.value} in {values?.Company?.value}
+                                            {values?.Duration} {values?.Designation.value} in {values?.Company?.value}
                                         </Text>)
                                     }} fieldsSchema={experienceSchema} name="experience" />
                                 </BorderCard>
