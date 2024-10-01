@@ -127,7 +127,7 @@ const StudentPreview = () => {
 
                                                 }
 
-                                                <Horizontalline text='Parsonal Details' />
+                                                <Horizontalline text='Personal Details' />
                                                 <table className=' w-1/2 '>
                                                     <tbody className='  ' >
                                                         <tr className=''>
@@ -150,6 +150,14 @@ const StudentPreview = () => {
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <div className=' '>
+                                                    <span>Signature</span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div style={{ breakAfter: "page" }}></div>

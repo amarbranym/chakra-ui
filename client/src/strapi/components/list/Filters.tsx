@@ -112,7 +112,7 @@ const Filters: React.FC<FiltersProps> = ({ fieldSchema }) => {
             <Box display="flex" gap="4">
                 {
                     filterQuery.map((item: any, index: number) => (
-                        <Badge colorScheme='blue' variant="outline" display="flex" gap="2" alignItems={"center"} px="2" py={"1"} rounded="md" textTransform="capitalize" fontSize={"small"} key={item.id || index} >{`${item.operatorFields} ${item.operatorName} ${item.text}`}  <IconButton aria-label='' colorScheme='gray' variant={"ghost"} size="sm" type="button" icon={<SmallCloseIcon />} onClick={() => handleRemove(item.id)} /></Badge>
+                        <Badge colorScheme='blue' variant="outline" display="flex" gap="2" alignItems={"center"} px="2" py={"1"} rounded="md" textTransform="capitalize" fontSize={"small"} key={item.id || index} >{`${item.operatorFields} ${item.operatorName} ${item.text || item.date}`}  <IconButton aria-label='' colorScheme='gray' variant={"ghost"} size="sm" type="button" icon={<SmallCloseIcon />} onClick={() => handleRemove(item.id)} /></Badge>
                     ))
                 }
             </Box>

@@ -115,7 +115,7 @@ export const filterOprators = [
 export const datesSechema: FormData[] = [
   {
     name: "createdAt",
-    type: "datetime-local",
+    type: "date",
     label: "createdAt",
     required: false,
     help: "",
@@ -124,7 +124,7 @@ export const datesSechema: FormData[] = [
   },
   {
     name: "updatedAt",
-    type: "datetime-local",
+    type: "date",
     label: "updatedAt",
     required: false,
     help: "",
