@@ -152,7 +152,7 @@ const StudentPreview = () => {
                                                 {
                                                     data?.Skills?.data.length > 0 && (
                                                         <>
-                                                            <Heading size="sm" textTransform={"uppercase"} mb={2}>Skills</Heading>
+                                                            <Heading size="sm" textTransform={"uppercase"} mb={2}>Skills & Achievements</Heading>
                                                             <div >
                                                                 {
                                                                     data?.Skills?.data.map((skill: any) => (
