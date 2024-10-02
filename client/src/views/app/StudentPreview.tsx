@@ -7,7 +7,7 @@ import { Box, Button, Container, Divider, Heading, HStack, ListItem, Stack, Tabl
 import moment from 'moment'
 import "../../style.css"
 import Horizontalline from '../../layout/Horizontalline'
-import { extractCountryCode } from '../../strapi/utils/service'
+import { extractCountryCode, formatDateDD_MM_YYYY } from '../../strapi/utils/service'
 const termsAndConditions = [
     "If a candidate is interested in applying for any job, they must submit their resume along with an ID Proof, Passport Size Photo, and a consultancy fee of Rs. 500/-.",
     "When attending an interview, candidates must mention our consultancy name so that the company is promptly informed.",
@@ -34,61 +34,65 @@ const StudentPreview = () => {
             </div>
             <StrapiDocument slug={id} collectionName='students' query="populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference">
                 {({ data }) => (
-                    <div className='page-container  py-10 mx-auto  shadow-xl print:shadow-none '>
+                    <div style={{minHeight: "297mm"}} className='page-container py-10 mx-auto  shadow-xl print:shadow-none '>
                         <div className="page-footer">
                             <div>Candidate Id: {id}</div>
                             <div>|</div>
-                            <div>Date : {currentDate}</div>
+                            <div>Date : {formatDateDD_MM_YYYY(currentDate)}</div>
                             <div>|</div>
                             <div>Place : Sri Ganganagar</div>
                             <div>|</div>
                             <div className='font-bold'>Bemployed</div>
                         </div>
-                        <table className='table '>
+                        <table className='table w-full'>
                             <tbody>
                                 <tr>
                                     <td>
                                         <div className="">
                                             <div className=' '>
-                                                <div className='flex flex-col gap-1'>
-                                                    <h1 className=' text-2xl font-bold '>{data?.FirstName} {data?.LastName}</h1>
-                                                    <p className='text-sm '> Email: {data.Email}</p>
-                                                    <p className='text-sm text-balance '>  {data?.Address?.Street}</p>
-
-                                                    {
-                                                        data?.Contacts?.slice(0, 2).map((phone: any) => (
-                                                            <p key={phone.Number} className='text-sm '>  Mob: {extractCountryCode(phone.CountryCode)} {phone.Number}</p>
-                                                        ))
-                                                    }
+                                                <div className='text-center flex flex-col gap-1 mb-10'>
+                                                    <h1 className=' text-3xl font-bold mt-4 mb-2'>{data?.FirstName} {data?.LastName}</h1>
+                                                    <p className='text-sm '> 
+                                                        {data.Email}
+                                                        {
+                                                            data?.Contacts?.filter((phone:any) => phone.Type === "Primary").map((phone: any) => (
+                                                                <span key={phone.Number} className='text-sm '> • {extractCountryCode(phone.CountryCode)} {phone.Number}</span>
+                                                            ))
+                                                        }
+                                                    </p>
+                                                    <p className='text-sm max-w-lg mx-auto'>{data?.Address?.Street}, {data?.Address?.City?.data?.attributes?.Name}</p>
 
                                                 </div>
-
+                                                
+                                                <hr className='mb-6'/>
 
                                                 {
                                                     (data?.CandidateType === "Blue Collar" || data?.CandidateType === "White Collar") && <>
-                                                        <Horizontalline text="Career Objective" />
+                                                        <Heading size="sm" textTransform={"uppercase"} mb={2}>Career Objective</Heading>
                                                         <div>
                                                             <p>
-                                                                To pursue a challeging career and be a part of a progresive organization that gives scope to enhance my knowledge, skills and reach the pinnacle in this field  with sheer determination, dedication and hard work.
+                                                            To pursue a challeging career and be a part of a progresive organization that gives scope to enhance my knowledge, skills and reach the pinnacle in this field  with sheer determination, dedication and hard work.
                                                             </p>
                                                         </div>
                                                     </>
                                                 }
 
+                                                <hr className='mt-4 mb-6'/>
 
                                                 {
                                                     data?.qualification?.length > 0 && (
                                                         <>
                                                             {console.log('data', data)}
 
-                                                            <Horizontalline text="Qualification" />
+                                                            <Heading size="sm" textTransform={"uppercase"} mb={2}>Academic Qualifications</Heading>
                                                             <div className='flex flex-col gap-1'>
                                                                 {
                                                                     data?.qualification?.map((item: any) => (
-                                                                        <div className='flex items-center gap-4' key={item.id}>
-
-                                                                            <li > {item.qualification?.data?.attributes?.Name}, {item.school?.data?.attributes?.Name} </li>
-                                                                            {item?.Score && <p >- ({item.Score}%) </p>}
+                                                                        <div key={item.id}>
+                                                                            <span className='mr-4'>➣</span>
+                                                                            {item.qualification?.data?.attributes?.Name}, 
+                                                                            {item.school?.data?.attributes?.Name}
+                                                                            {item?.Score && <span> - ({item.Score}%)</span>}
                                                                         </div>
                                                                     ))
                                                                 }
@@ -99,27 +103,46 @@ const StudentPreview = () => {
                                                     )
                                                 }
 
+                                                <hr className='mt-4 mb-6'/>
 
                                                 {
                                                     data?.experience?.length > 0 && <>
-                                                        <Horizontalline text="Experience" />
-                                                        <div>
+                                                        <Heading size="sm" textTransform={"uppercase"} mb={2}>Experience</Heading>
+                                                        <div className='flex flex-col gap-1'>
                                                             {data?.experience.map((item: any) => (
-                                                                <li key={item.id}> {item.Duration === 12 ? "1 Year " : `${item?.Duration} Month`} experience of  {item?.Company?.data?.attributes?.Name}</li>
+                                                                <div key={item.id}> 
+                                                                    <span className='mr-4'>➣</span>
+                                                                    <span>
+                                                                        {item.Duration < 12 ? <>
+                                                                            {item.Duration} Month{item.Duration > 1 && "s"}
+                                                                        </> : <>
+                                                                            {Math.floor(item.Duration / 12)} Year{Math.floor(item.Duration / 12) > 1 && "s"} 
+                                                                            {item.Duration % 12 > 0 && <span> and {item.Duration % 12} Month{item.Duration % 12 > 1 && "s"}</span>}
+                                                                        </>}
+                                                                    </span>
+                                                                    <span> of experience in </span>
+                                                                    {item?.Company?.data?.attributes?.Name}
+                                                                    <span> as a </span>
+                                                                    {item.Designation?.data?.attributes?.Name}
+                                                                </div>
                                                             ))}
                                                         </div>
                                                     </>
                                                 }
 
+                                                <hr className='mt-4 mb-6'/>
 
                                                 {
                                                     data?.Skills?.data.length > 0 && (
                                                         <>
-                                                            <Horizontalline text="Skills" />
+                                                            <Heading size="sm" textTransform={"uppercase"} mb={2}>Skills</Heading>
                                                             <div >
                                                                 {
                                                                     data?.Skills?.data.map((skill: any) => (
-                                                                        <li key={skill.id}>{skill?.attributes?.name}</li>
+                                                                        <div key={skill.id}>
+                                                                            <span className='mr-4'>➣</span>
+                                                                            {skill?.attributes?.name}
+                                                                        </div>
                                                                     ))
                                                                 }
 
@@ -129,30 +152,36 @@ const StudentPreview = () => {
 
                                                 }
 
-                                                <Horizontalline text='Personal Details' />
-                                                <table className=' w-1/2 '>
-                                                    <tbody className='  ' >
+                                                <hr className='mt-4 mb-6'/> 
+
+                                                <Heading size="sm" textTransform={"uppercase"} mb={2}>Personal Details</Heading>
+                                                <table cellPadding={"4px"} className='w-2/3 text-md -mx-1'>
+                                                    <tbody className='text-left' >
                                                         <tr className=''>
-                                                            <th className=" py-2  pr-3 text-left text-sm font-semibold text-gray-900 ">FatherName:</th>
-                                                            <td className="  py-2  pr-3 text-left text-sm  ">{data?.FatherName}</td>
+                                                            <th className="font-semibold text-gray-900 ">FatherName:</th>
+                                                            <td className="">{data?.FatherName}</td>
                                                         </tr>
                                                         <tr className=' '>
-                                                            <th className=" py-2  pr-3 text-left text-sm font-semibold text-gray-900 ">Date of Birth:</th>
-                                                            <td className="  py-2  pr-3 text-left text-sm   ">
-                                                                {data?.DOB}
+                                                            <th className="font-semibold text-gray-900 ">Date of Birth:</th>
+                                                            <td className="    ">
+                                                                {formatDateDD_MM_YYYY(data?.DOB)}
                                                             </td>
                                                         </tr>
                                                         <tr className=' '>
-                                                            <th className="  py-2  pr-3 text-left text-sm font-semibold text-gray-900 ">Gender:</th>
-                                                            <td className="  py-2  pr-3 text-left text-sm  ">{data?.Gender}</td>
+                                                            <th className="font-semibold text-gray-900 ">Gender:</th>
+                                                            <td className="">{data?.Gender}</td>
                                                         </tr>
                                                         <tr className=' '>
-                                                            <th className=" py-2  pr-3 text-left text-sm font-semibold text-gray-900 ">Marital Status:</th>
-                                                            <td className="  py-2  pr-3 text-left text-sm   ">{data?.MaritalStatus}</td>
+                                                            <th className="font-semibold text-gray-900 ">Marital Status:</th>
+                                                            <td className="">{data?.MaritalStatus}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-
+                                                <br />
+                                                <br />
+                                                <div className=' '>
+                                                    <span>Signature</span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div style={{ breakAfter: "page" }}></div>
@@ -162,7 +191,7 @@ const StudentPreview = () => {
                                             <br />
                                             <hr />
                                         </div>
-                                        <div className=" relative mt-10">
+                                        <div className="relative mt-10">
                                             <div className='  min-h-full'>
                                                 <h2 className='text-2xl font-bold text-center '> Terms & Conditions </h2>
                                                 <ol className=' px-6 mt-12 list-decimal flex flex-col gap-6'>

@@ -38,7 +38,7 @@ export const experienceSchema: FormData[] = [
     required: true,
     rules: {
       min: 0,
-      max: 12,
+      max: 180,
     },
     help: "",
     cols: 6,

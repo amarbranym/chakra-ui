@@ -2,20 +2,16 @@ import { BiBuilding } from "react-icons/bi";
 import CompaniesList from "../views/app/CompaniesList";
 import CandidatesList from "../views/app/CandidatesList";
 import ContactsList from "../views/app/ContactsList";
-import App from "../App";
-import { FiHome, FiUsers } from "react-icons/fi";
+import { FiUsers } from "react-icons/fi";
 import { PiStudent } from "react-icons/pi";
 import { MdOutlineContacts } from "react-icons/md";
 import CandidateForm from "../views/app/CandidateForm";
 import CompanyForm from "../views/app/CompanyForm";
 import ContactForm from "../views/app/ContactForm";
-import IndustryForm from "../views/app/IndustryForm";
-import IndustriesList from "../views/app/IndustriesList";
 import VacancyForm from "../views/app/VacancyForm";
 import VacanciesList from "../views/app/VacanciesList";
 import UsersList from "../views/app/UsersList";
 import UserForm from "../views/app/UserForm";
-import { LiaIndustrySolid } from "react-icons/lia";
 import { TbDeviceTabletSearch } from "react-icons/tb";
 import PaymentsList from "../views/app/PaymentsList";
 import PaymentForm from "../views/app/PaymentForm";
@@ -29,21 +25,23 @@ export const nav = [
   //   isParent: false,
   // },
   {
-    name: "Candidate",
+    name: "edit_candidate",
     route: "/candidate/:id",
     component: CandidateForm,
     title: "Candidate",
     isParent: false,
+    parent: "candidates"
   },
   {
-    name: "Candidate",
+    name: "create_candidate",
     route: "/candidate/create",
     component: CandidateForm,
     title: "Candidate",
     isParent: false,
+    parent: "candidates"
   },
   {
-    name: "Candidates",
+    name: "candidates",
     route: "/",
     component: CandidatesList,
     title: "Candidates",

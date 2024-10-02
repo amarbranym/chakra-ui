@@ -160,7 +160,7 @@ export const apiFetch = async (
 };
 
 export const formatDateDD_MM_YYYY = (date: string) => {
-  return moment(date).format("DD-MM-YYYY"); // Adjust the format as needed
+  return moment(date).format("DD MMM YYYY"); // Adjust the format as needed
 };
 
 export function extractCountryCode(input: any) {
