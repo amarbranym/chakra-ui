@@ -22,7 +22,7 @@ root.render(
     <Toaster position="top-center" reverseOrder={false} />
     {/* https://api.bemployed.in/api */}
     <Router>
-      <StrapiAdmin baseURL='http://localhost:1337/api' allowUser={["public"]} >
+      <StrapiAdmin baseURL='https://api.bemployed.in/api' allowUser={["public"]} >
         <Routes>
           <Route element={<ProtectedRoute><Dashboard /></ProtectedRoute>} >
             {

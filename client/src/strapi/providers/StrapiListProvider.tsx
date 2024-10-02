@@ -24,12 +24,14 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
     const [data, setData] = useState<any[]>([]);
     const { baseURL, accessToken } = useStrapiContext()
     const [currentPage, setCurrentPage] = useState<number>(1)
+    const [isLoading, setLoading] = useState<boolean>(false)
     const [filterQuery, setFilterQuery] = useState<any[]>([])
     const [totalPage, setTotalPage] = useState<number>(1);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [pageSize, setPageSize] = useState<string>("50")
 
     const handleGetDocument = async () => {
+        setLoading(true)
         const options = {
             method: 'GET',
             headers: {
@@ -61,8 +63,10 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
 
 
             setTotalPage(list?.meta?.pagination?.pageCount);
+            setLoading(false)
         } catch (err) {
             console.error('Error fetching candidate list:', err);
+            setLoading(false)
         }
     };
 
@@ -71,7 +75,7 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
     }, [currentPage, filterQuery, searchQuery, pageSize])
 
     return (
-        <StrapiListContext.Provider value={{ data, setData, setFilterQuery, setCurrentPage, currentPage, filterQuery, totalPage, setSearchQuery, setPageSize }}>
+        <StrapiListContext.Provider value={{ data, setData, setFilterQuery, setCurrentPage, currentPage,isLoading, filterQuery, totalPage, setSearchQuery, setPageSize }}>
             {children}
         </StrapiListContext.Provider>
     );

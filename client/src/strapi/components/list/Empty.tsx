@@ -1,18 +1,19 @@
 import React from 'react';
 import { useStrapiListContext } from '../../providers/StrapiListProvider';
-import { Box } from '@chakra-ui/react';
+import { Box, Center, Spinner } from '@chakra-ui/react';
 interface EmptyProps {
     className?: string;
     children: React.ReactNode;
 }
 const Empty: React.FC<EmptyProps> = ({ children }) => {
-    const { data } = useStrapiListContext();
+    const { data, isLoading } = useStrapiListContext();
 
     if (!data || data.length === 0) {
         return (
-            <Box>
-                {children}
-            </Box>
+            <Center w="100%" py={8}>
+                
+                {isLoading ? <Spinner/> : children}
+            </Center>
         );
     }
 
