@@ -87,6 +87,7 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+
   return (
     <Box
       bg={'grey.200'}
@@ -103,7 +104,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
       {nav.filter((config) => config.isParent !== false).map((link: any) => (
         <NavItem href={link.route} key={link.name} icon={link.icon} >
-          {link.name}
+          {link.title}
         </NavItem>
       ))}
     </Box>
@@ -116,11 +117,11 @@ interface NavItemProps extends FlexProps {
   href: any
 }
 const NavItem = ({ href = "", icon, children, ...rest }: NavItemProps) => {
+
   return (
     <NavLink
       to={href}
       style={{ textDecoration: 'none' }}
-
     >
       {({ isActive }) => (
         <Flex

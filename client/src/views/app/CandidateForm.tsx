@@ -44,24 +44,21 @@ const CandidateForm = () => {
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
                                         return (<Text textTransform={"capitalize"}>
-                                            Contact number {values?.CountryCode} {" "}{values?.Number} address type {values?.Type}
-                                            {
-                                                console.log(values)
-                                            }
+                                           {values?.CountryCode} {values?.Number}
                                         </Text>)
                                     }} fieldsSchema={phoneNumberSchema} name="Contacts" />
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
                                         return (<Text textTransform="capitalize">
-                                            {values?.Duration} {values?.Designation.value} in {values?.Company?.value}
+                                            {values?.Designation.value} in {values?.Company?.value}
                                         </Text>)
                                     }} fieldsSchema={experienceSchema} name="experience" />
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
                                         return (<Text textTransform="capitalize">
-                                            {values?.qualification?.value}  at {values?.school?.value}
+                                            {values?.qualification?.value} from {values?.school?.value}
                                         </Text>)
                                     }} fieldsSchema={qualificationSchema} name="qualification" />
                                 </BorderCard>

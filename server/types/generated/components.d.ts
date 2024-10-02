@@ -101,7 +101,7 @@ export interface StudentExperience extends Schema.Component {
       Attribute.SetMinMax<
         {
           min: 1;
-          max: 12;
+          max: 180;
         },
         number
       > &

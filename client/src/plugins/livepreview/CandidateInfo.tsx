@@ -3,6 +3,7 @@ import BorderCard from '../../layout/BorderCard'
 import { Box, Heading, HStack, Text } from '@chakra-ui/react'
 import { useStrapiFormContext } from '../../strapi/providers/StrapiFormProvider';
 import { useParams } from 'react-router-dom';
+import { formatDateDD_MM_YYYY } from '../../strapi/utils/service';
 
 const CandidateInfo = () => {
     const { withoutPopulateData } = useStrapiFormContext();
@@ -26,7 +27,7 @@ const CandidateInfo = () => {
 
                             <HStack justify="space-between" alignItems={"center"}>
                                 <Text>Date of Activity</Text>
-                                <Text>{withoutPopulateData?.DateOfHiring}</Text>
+                                <Text>{formatDateDD_MM_YYYY(withoutPopulateData?.DateOfHiring)}</Text>
                             </HStack>
                             <HStack justify="space-between" alignItems={"center"}>
                                 <Text>Company</Text>

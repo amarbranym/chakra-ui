@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { AddIcon, ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon, DeleteIcon, SmallAddIcon } from '@chakra-ui/icons'
-import { Box, Button, Collapse, Grid, GridItem, Heading, HStack, IconButton, Stack, VStack } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Collapse, Flex, Grid, GridItem, Heading, HStack, IconButton, Stack, VStack } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useStrapiFormContext } from '../../providers/StrapiFormProvider';
 import { v4 as uuidv4 } from 'uuid';
@@ -130,17 +130,23 @@ const RepeatableForm = ({ fieldsSchema, name = "", type = "RepeatableComponent",
 
                             <Box w="full" >
 
-                                <Button position={"relative"} zIndex={1} isDisabled={(Object.keys(errors).length) && (Object.keys(touched).length) ? true : false} onClick={(e) => {
-                                    setExpanded(_e => _e === index ? -1 : index)
-                                }} w="full" variant="solid" py={0} px={2} justifyContent={"space-between"} rightIcon={<BiCaretDown />} flex='1' textAlign='left'>
-                                    <>
+                                
+                                <Flex gap={2} justifyContent={"space-between"} pt={2} alignItems={"center"} borderTopWidth={1}>
+                                    <div>
                                         {
                                             expanded === index ? "Edit Item" : render ? <>{render(values)}</> : ("New Item " + (index + 1))
                                         }
-                                    </>
-                                </Button>
+                                    </div>
+                                    <ButtonGroup variant={"ghost"} px={"2"}>
+                                        <Button position={"relative"} size={"sm"} zIndex={1} isDisabled={(Object.keys(errors).length) && (Object.keys(touched).length) ? true : false} onClick={(e) => {
+                                            setExpanded(_e => _e === index ? -1 : index)
+                                        }}>
+                                            {expanded === index ? "-" : "+"}
+                                        </Button>
+                                    </ButtonGroup>
+                                </Flex>
                                 <Collapse animateOpacity in={expanded === index} style={{ overflow: "visible" }}   >
-                                    <Box p={3} >
+                                    <Box py={3} >
                                         <Form >
                                             <Grid templateColumns="repeat(12, 1fr)" templateRows="repeat(2,1fr)" gap="4">
                                                 {fieldsSchema.map((field: any, index: any) => (
@@ -167,6 +173,7 @@ const RepeatableForm = ({ fieldsSchema, name = "", type = "RepeatableComponent",
                     </Formik>
                 ))
             }
+            <Box borderBottomWidth={1} w="full"></Box>
         </VStack>
     </Box>
 }

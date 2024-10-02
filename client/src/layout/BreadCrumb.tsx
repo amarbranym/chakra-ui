@@ -9,7 +9,7 @@ const BreadCrumbComponent = ({ page }: any) => {
                 <BreadcrumbLink >Home</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem isCurrentPage>
-                <BreadcrumbLink>{page?.name}</BreadcrumbLink>
+                <BreadcrumbLink>{page?.title}</BreadcrumbLink>
             </BreadcrumbItem>
         </Breadcrumb>
     )
