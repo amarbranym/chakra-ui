@@ -134,6 +134,9 @@
     },
     "Email": {
       "type": "string"
+    },
+    "Hobbies": {
+      "type": "text"
     }
   }
 }

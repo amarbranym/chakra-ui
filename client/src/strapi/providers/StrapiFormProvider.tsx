@@ -39,7 +39,7 @@ export const StrapiFormProvider: React.FC<{
 
   const [hasErrors, setHasErrors] = useState<any>({})
   const [hasAllErrors, setHasAllErrors] = useState<boolean>()
-
+console.log("hasError", hasErrors)
   const handleData = (key: string, values: any) => {
     setData((prevData: any) => ({ ...prevData, [key]: values }));
     // setInitialData((prevData: any) => ({ ...prevData, [key]: values }));

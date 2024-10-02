@@ -1185,6 +1185,7 @@ export interface ApiStudentStudent extends Schema.CollectionType {
     > &
       Attribute.DefaultTo<'White Collar'>;
     Email: Attribute.String;
+    Hobbies: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

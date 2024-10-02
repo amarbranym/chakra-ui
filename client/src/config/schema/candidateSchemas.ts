@@ -107,7 +107,6 @@ export const otherDetailSchema: FormData[] = [
     type: "select",
     label: "Marital Status",
     required: true,
-
     rules: {
       options: [
         { label: "Unmarried", value: "unmarried" },
@@ -115,6 +114,19 @@ export const otherDetailSchema: FormData[] = [
         { label: "Divorced", value: "divorced" },
       ],
     },
+    help: "",
+    cols: 6,
+    row: 1,
+  },
+  {
+    name: "Hobbies",
+    type: "text",
+    label: "Hobbies",
+    rules: {
+      min: 0,
+      max: 50,
+    },
+    required: false,
     help: "",
     cols: 6,
     row: 1,
@@ -187,6 +199,7 @@ export const personalSchema: FormData[] = [
         { label: "Blue Collar", value: "Blue Collar" },
       ],
     },
+    value: "Blue Collar",
     help: "",
     cols: 6,
     row: 1,
