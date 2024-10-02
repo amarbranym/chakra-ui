@@ -30,7 +30,7 @@ const CandidateForm = () => {
                         <GridItem colSpan={6}>
                             <HStack justify="space-between" alignItems="center">
                                 <Heading as='h2'>{context?.title}</Heading>
-                                <Button isDisabled={hasAllErrors} isLoading={isLoading} loadingText="loading" variant="solid" colorScheme='blue' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
+                                <Button isDisabled={false} isLoading={isLoading} loadingText="loading" variant="solid" colorScheme='blue' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
                             </HStack>
                         </GridItem>
                         <GridItem colSpan={{ base: 6, lg: id ? 4 : 6 }}>
