@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useMemo,  useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Box, Button, Grid, GridItem } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import FormFields from '../form/FormFields';
 import { signupSchema } from '../../../config/schema/userSchema';
 import * as Yup from "yup"
 import toast from 'react-hot-toast';
+import { useStrapiContext } from '../../providers/StrapiAdmin';
 
 const SignupCompnent = () => {
     const [loader, setLoader] = useState(false)
+    const { baseURL } = useStrapiContext()
+
     const { initialValues, validationSchemaFields } = useMemo(() => {
 
         const newInitialValues: { [key: string]: any } = {};
@@ -63,7 +66,7 @@ const SignupCompnent = () => {
     const handleSave = async (value: any) => {
         const { username, password, email } = value
         try {
-            const response = await fetch('https://api.bemployed.in/api/auth/local/register', {
+            const response = await fetch(baseURL + '/auth/local/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

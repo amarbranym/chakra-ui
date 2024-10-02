@@ -6,11 +6,15 @@ import FormSelect from "./FormSelect";
 import StrapiField from "./StrapiField";
 import FormNumberField from "./FormNumberField";
 import FormPasswordField from "./FormPasswordField";
+import FormDateField from "./FormDateField";
 
 const Fields = ({ ...props }: any) => {
   return (
     <>
-      {["text", "number", "date", "email",].includes(props?.type) && (<FormInput {...props} />)}
+      {["text", "number", "email"].includes(props?.type) && (<FormInput {...props} />)}
+
+      {["date"].includes(props?.type) && (<FormDateField {...props}/>)}
+
       {["password",].includes(props?.type) && (<FormPasswordField {...props} />)}
 
       {["tel"].includes(props?.type) && (<FormNumberField {...props}/>)}

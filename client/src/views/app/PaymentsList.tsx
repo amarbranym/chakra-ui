@@ -15,7 +15,7 @@ import { formatDateDD_MM_YYYY } from '../../strapi/utils/service';
 const PaymentsList = () => {
   const context = useOutletContext<any>()
   return (
-    <StrapiList collectionName='payments' query="populate=Candidate" >
+    <StrapiList collectionName='payments' query="populate=Candidate,Company" >
       <HStack justify="space-between" alignItems="center">
         <Heading as='h2'>{context?.title}</Heading>
         <Button as={Link} variant="solid" colorScheme='blue' size="md" leftIcon={<AddIcon />} to={`/payment/create`} >Create new entry</Button>
@@ -36,7 +36,8 @@ const PaymentsList = () => {
               <Th>Payment Mode</Th>
               <Th>Status</Th>
               <Th>Created At</Th>
-              <Th> Candidate</Th>
+              <Th>Candidate</Th>
+              <Th>Company</Th>
               <Th>Action</Th>
             </Tr>
           </Thead>
@@ -51,6 +52,7 @@ const PaymentsList = () => {
                 <Td>{item?.attributes?.Status}</Td>
                 <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
                 <Td>{item?.attributes?.Candidate?.data?.attributes?.FirstName} {" "}{item?.attributes?.Candidate?.data?.attributes?.LastName}</Td>
+                <Td>{item?.attributes?.Company?.data?.attributes?.Name}</Td>
                 <Td><Button size="sm" variant="ghost" as={Link} to={`/payment/${item.id}`} >Edit</Button></Td>
 
               </Tr>

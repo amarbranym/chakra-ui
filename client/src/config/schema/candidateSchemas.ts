@@ -175,6 +175,22 @@ export const personalSchema: FormData[] = [
     cols: 6,
     row: 1,
   },
+  {
+    name: "CandidateType",
+    type: "select",
+    label: "Candidate Type",
+    required: true,
+    rules: {
+      options: [
+        { label: "Labour", value: "Labour" },
+        { label: "White Collar", value: "White Collar" },
+        { label: "Blue Collar", value: "Blue Collar" },
+      ],
+    },
+    help: "",
+    cols: 6,
+    row: 1,
+  },
 ];
 
 export const qualificationSchema: FormData[] = [

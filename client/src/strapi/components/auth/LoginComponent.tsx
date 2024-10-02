@@ -7,9 +7,12 @@ import FormFields from '../form/FormFields';
 import { loginSchema, signupSchema } from '../../../config/schema/userSchema';
 import * as Yup from "yup"
 import toast from 'react-hot-toast';
+import { useStrapiContext } from '../../providers/StrapiAdmin';
 
 const LoginComponent = () => {
     const [loader, setLoader] = useState(false)
+    const { baseURL } = useStrapiContext()
+
     const { initialValues, validationSchemaFields } = useMemo(() => {
 
         const newInitialValues: { [key: string]: any } = {};
@@ -58,7 +61,7 @@ const LoginComponent = () => {
     const handleSave = async (value: any) => {
         const { identifier, password } = value
         try {
-            const response = await fetch('https://api.bemployed.in/api/auth/local', {
+            const response = await fetch(baseURL + '/auth/local', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

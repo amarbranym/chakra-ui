@@ -1175,8 +1175,10 @@ export interface ApiStudentStudent extends Schema.CollectionType {
       'oneToOne',
       'api::payment.payment'
     >;
-    CandidateType: Attribute.Enumeration<['Student', 'Labour']> &
-      Attribute.DefaultTo<'Student'>;
+    CandidateType: Attribute.Enumeration<
+      ['White Collar', 'Labour', 'Blue Collar']
+    > &
+      Attribute.DefaultTo<'White Collar'>;
     Email: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

@@ -168,8 +168,7 @@ export const candidatesSchema: FormData[] = [
   },
   {
     name: "DateOfHiring",
-    required: false,
-
+    required: true,
     type: "date",
     label: "DateOfHiring",
     help: "",

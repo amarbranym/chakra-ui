@@ -20,9 +20,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <ChakraProvider>
     <Toaster position="top-center" reverseOrder={false} />
-
+    {/* https://api.bemployed.in/api */}
     <Router>
-      <StrapiAdmin baseURL='https://api.bemployed.in/api' allowUser={["public"]} >
+      <StrapiAdmin baseURL='http://localhost:1337/api' allowUser={["public"]} >
         <Routes>
           <Route element={<ProtectedRoute><Dashboard /></ProtectedRoute>} >
             {

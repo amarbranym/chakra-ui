@@ -125,10 +125,11 @@
     "CandidateType": {
       "type": "enumeration",
       "enum": [
-        "Student",
-        "Labour"
+        "White Collar",
+        "Labour",
+        "Blue Collar"
       ],
-      "default": "Student"
+      "default": "White Collar"
     },
     "Email": {
       "type": "string"
