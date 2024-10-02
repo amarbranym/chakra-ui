@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 
-
+@media print {
+    .noprint {
+       visibility: hidden;
+    }
+ }
 
 .page-footer,
 .page-footer-space {

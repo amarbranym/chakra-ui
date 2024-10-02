@@ -7,6 +7,10 @@ import { Box, Button, ButtonGroup, Center, Container, Divider, Heading, HStack, 
 import moment from 'moment'
 import "../../style.css"
 import { extractCountryCode, formatDateDD_MM_YYYY } from '../../strapi/utils/service'
+
+
+
+
 const termsAndConditions = [
     "If a candidate is interested in applying for any job, they must submit their resume along with an ID Proof, Passport Size Photo, and a consultancy fee of Rs. 500/-.",
     "When attending an interview, candidates must mention our consultancy name so that the company is promptly informed.",
@@ -17,6 +21,8 @@ const termsAndConditions = [
     "Once a candidate is registered with Bemployed, they cannot request a refund of the registration fee. (मेरे द्वारा दी गई वर्किंग फीस 500 रूपये कभी वापिस नहीं मांगूंगा और जॉब लगने के बाद अपनी सैलरी का एक तिहाई हिस्सा ईमानदारी से दे दूंगा)"
 ];
 const StudentPreview = () => {
+
+
     const { id } = useParams()
     const currentDate = moment().format('YYYY-MM-DD')
     // Automatically trigger print preview when the component mounts
@@ -27,21 +33,25 @@ const StudentPreview = () => {
         setValue('https://admin.bemployed.in/#/student/preview/' + id)
     }, [])
 
+    
+
 
     return (
         <Box overflow={"hidden"} h="100vh" w="100vw">
-            <Center zIndex={1000} bg="white" py={3} className='print:hidden' pos={"fixed"} bottom={0} right={0} left={0}>
+            <Center id="controls" zIndex={1000} bg="white" py={3} className='print:hidden noprint' pos={"fixed"} bottom={0} right={0} left={0}>
                 <ButtonGroup>
-                    <Button colorScheme='blackAlpha' bg="black" variant={"solid"} onClick={() => window.print()} >Download/ Print</Button>
+                    <Button colorScheme='blackAlpha' bg="black" variant={"solid"} onClick={() => {
+                        window.print()
+                    }} >Download/ Print</Button>
                     <Button colorScheme='gray' variant={"outline"} onClick={onCopy} >{hasCopied ? "Copied!" : "Copy Link"}</Button>
                 </ButtonGroup>
             </Center>
             <Container maxW='container.xl' pb="20" h="100vh" w="100vw" position={"relative"} overflow={"scroll"}>
 
-            <Box transform={["scale(0.5)", "scale(1)", "scale(1)"]}>
+            <Box transform={["scale(0.5)", "scale(1)", "scale(1)"]} className='print:!transform-none mx-auto' w="21cm">
             <StrapiDocument slug={id} collectionName='students' query="populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference">
                 {({ data }) => (
-                    <div style={{minHeight: "297mm"}} className='page-container py-10 mx-auto  shadow-xl print:shadow-none '>
+                    <div style={{minHeight: "297mm"}} className='page-container py-10  shadow-xl print:shadow-none '>
                         <div className="page-footer">
                             <div>Candidate Id: {id}</div>
                             <div>|</div>
@@ -191,13 +201,9 @@ const StudentPreview = () => {
                                                 </div>
                                             </div>
                                         </div>
+{/*                                         
                                         <div style={{ breakAfter: "page" }}></div>
-                                        <div className='print:hidden'>
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <hr />
-                                        </div>
+                                      
                                         <div className="relative mt-10">
                                             <div className='  min-h-full'>
                                                 <h2 className='text-2xl font-bold text-center '> Terms & Conditions </h2>
@@ -212,7 +218,7 @@ const StudentPreview = () => {
                                                     <span>Signature</span>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </td>
                                 </tr>
                             </tbody>
