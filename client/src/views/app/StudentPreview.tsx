@@ -3,10 +3,9 @@
 import React, { useEffect, useRef } from 'react'
 import { StrapiDocument } from '../../strapi/providers/StrapiDocument'
 import { useParams } from 'react-router-dom'
-import { Box, Button, Container, Divider, Heading, HStack, ListItem, Stack, Table, Tbody, Td, Text, Th, Tr, UnorderedList, VStack } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Center, Container, Divider, Heading, HStack, ListItem, Stack, Table, Tbody, Td, Text, Th, Tr, UnorderedList, useClipboard, VStack } from '@chakra-ui/react'
 import moment from 'moment'
 import "../../style.css"
-import Horizontalline from '../../layout/Horizontalline'
 import { extractCountryCode, formatDateDD_MM_YYYY } from '../../strapi/utils/service'
 const termsAndConditions = [
     "If a candidate is interested in applying for any job, they must submit their resume along with an ID Proof, Passport Size Photo, and a consultancy fee of Rs. 500/-.",
@@ -22,16 +21,24 @@ const StudentPreview = () => {
     const currentDate = moment().format('YYYY-MM-DD')
     // Automatically trigger print preview when the component mounts
 
+    const { onCopy, value, setValue, hasCopied } = useClipboard('')
 
-
-
+    useEffect(() => {
+        setValue('https://admin.bemployed.in/#/student/preview/' + id)
+    }, [])
 
 
     return (
-        <Container maxW='container.xl ' mb="20" position={"relative"}  >
-            <div className='print:hidden bg-red-50 fixed  right-[10%] top-10 '>
-                <Button colorScheme='blue' onClick={() => window.print()} >Print</Button>
-            </div>
+        <Box overflow={"hidden"} h="100vh" w="100vw">
+            <Center zIndex={1000} bg="white" py={3} className='print:hidden' pos={"fixed"} bottom={0} right={0} left={0}>
+                <ButtonGroup>
+                    <Button colorScheme='blackAlpha' bg="black" variant={"solid"} onClick={() => window.print()} >Download/ Print</Button>
+                    <Button colorScheme='gray' variant={"outline"} onClick={onCopy} >{hasCopied ? "Copied!" : "Copy Link"}</Button>
+                </ButtonGroup>
+            </Center>
+            <Container maxW='container.xl' pb="20" h="100vh" w="100vw" position={"relative"} overflow={"scroll"}>
+
+            <Box transform={["scale(0.5)", "scale(1)", "scale(1)"]}>
             <StrapiDocument slug={id} collectionName='students' query="populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference">
                 {({ data }) => (
                     <div style={{minHeight: "297mm"}} className='page-container py-10 mx-auto  shadow-xl print:shadow-none '>
@@ -201,9 +208,6 @@ const StudentPreview = () => {
                                                 </ol>
                                                 <br />
                                                 <br />
-                                                <br />
-                                                <br />
-                                                <br />
                                                 <div className=' '>
                                                     <span>Signature</span>
                                                 </div>
@@ -228,7 +232,10 @@ const StudentPreview = () => {
                 )}
 
             </StrapiDocument>
+            </Box>        
+    
         </Container>
+        </Box>
     )
 }
 

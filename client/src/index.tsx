@@ -31,10 +31,9 @@ root.render(
               ))
             }
           </Route>
-          <Route path="/student/preview/:id" element={<ProtectedRoute><StudentPreview /></ProtectedRoute>} />
+          <Route path="/student/preview/:id" element={<StudentPreview />} />
         </Routes>
         <Routes>
-
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

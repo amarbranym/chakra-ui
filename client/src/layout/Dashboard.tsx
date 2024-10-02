@@ -15,6 +15,9 @@ import {
   FlexProps,
   Stack,
   Container,
+  Heading,
+  Grid,
+  MenuIcon,
 } from '@chakra-ui/react'
 import {
   FiMenu,
@@ -25,6 +28,7 @@ import { matchRoutes, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { nav } from '../config/nav';
 import Header from './Header'
 import BreadCrumbComponent from './BreadCrumb'
+import { HamburgerIcon } from '@chakra-ui/icons'
 
 
 
@@ -45,40 +49,50 @@ export default function Dashboard() {
 
     setPage(currentPage)
 
+    onClose()
+
   }, [location])
   return (
-    <Box minH="100vh" bg='gray.200' overflow="hidden"   >
-      <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
-      <Drawer
+    <>
+       <Drawer
         isOpen={isOpen}
         placement="left"
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
-        size="full">
-        <DrawerContent>
+        size="xs">
+        <DrawerContent bg="black">
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
-      {/* mobilenav */}
-      <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} position="relative" >
-        <Box w="full" h="100vh" p="4" pl={{ base: '4', md: "0" }}  >
-          <Header />
-          <Box my="4" p="4" bg="white" rounded="4" overflowX="auto" h='full' pb={"20"} >
-            <Stack mb='6'>
-              {
-                page && page[0].isParent === true ? <BreadCrumbComponent page={page && page[0]} /> :
-                  <Container maxW={"container.xl"}>
-                    <BreadCrumbComponent page={page && page[0]}  />
-                  </Container>
-              }
-            </Stack>
-            <Outlet context={page && page[0]} />
-          </Box>
+   
+      <Grid templateColumns={{base: "1fr", lg: "16rem 1fr"}} w="100vw" position={"relative"} overflowX={"hidden"} overflowY={"scroll"} h="100vh" bg="black">
+
+        <Box position={"sticky"} top={0} h="fit-content">
+
+          <Flex px={2} py={[2,2,4]} alignItems={"center"}>
+            <IconButton display={{base: "block", lg: "none"}} onClick={onOpen} variant={"ghost"} color="white" _hover={{bg:"whiteAlpha.200"}} aria-label='Menu'><HamburgerIcon/></IconButton>
+            <Heading px={2} color="white" fontFamily={"sans-serif"} size="lg">Bemployed</Heading>
+          </Flex>
+
+          <SidebarContent onClose={() => onClose} display={{ base: 'none', lg: 'block' }} />
+
         </Box>
-      </Box>
-    </Box>
+        <Box position={"relative"} p={[2,2,4]} bg="white" rounded="4" h="fit-content" minH="100vh" w={{base:"100vw", lg: "calc(100vw - 16rem)"}} >
+          <Stack mb={[0, 0, 4]}>
+            {
+              page && page[0].isParent === true ? <BreadCrumbComponent page={page && page[0]} /> :
+                <Container px={[0,0, 4]} maxW={"container.xl"}>
+                  <BreadCrumbComponent page={page && page[0]}  />
+                </Container>
+            }
+          </Stack>
+          <Outlet context={page && page[0]} />
+          <Box h={20}></Box>
+        </Box>
+      </Grid>
+
+    </>
   )
 }
 
@@ -90,16 +104,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
   return (
     <Box
-      bg={'grey.200'}
-      w={{ base: 'full', md: 60 }}
-      pos="fixed"
-      h="full"
+      color="white"
+      p={2}
+      w={"full"}
       {...rest}>
-      <Flex h="20" alignItems="center" mx="6" justifyContent="space-between">
-        <Stack >
-          <StrapiCMS />
-        </Stack>
-        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
+      <Flex px={2} py={4} display={{ base: 'flex', lg: 'none' }} alignItems="center" justifyContent="space-between">
+        <Heading fontFamily={"sans-serif"} size="lg">Bemployed</Heading>
+        <CloseButton onClick={onClose} />
       </Flex>
 
       {nav.filter((config) => config.isParent !== false).map((link: any) => (
@@ -127,13 +138,13 @@ const NavItem = ({ href = "", icon, children, ...rest }: NavItemProps) => {
         <Flex
           align="center"
           p="2"
-          mx="4"
           my="1"
           borderRadius="lg"
+          w="100%"
           role="group"
           cursor="pointer"
           bg={isActive ? "blue.400" : "transparent"}  // Active state bg color
-          color={isActive ? "white" : "black"}
+          color={isActive ? "white" : "white"}
           _hover={{
             bg: 'blue.400',
             color: 'white',
@@ -157,32 +168,3 @@ const NavItem = ({ href = "", icon, children, ...rest }: NavItemProps) => {
   )
 }
 
-interface MobileProps extends FlexProps {
-  onOpen: () => void
-}
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
-  return (
-    <Flex
-      ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 24 }}
-      height="20"
-      alignItems="center"
-      bg={useColorModeValue('white', 'gray.900')}
-      borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-      justifyContent="flex-start"
-      {...rest}>
-      <IconButton
-        variant="outline"
-        onClick={onOpen}
-        aria-label="open menu"
-        icon={<FiMenu />}
-      />
-
-      <Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
-        <StrapiCMS />
-
-      </Text>
-    </Flex>
-  )
-}

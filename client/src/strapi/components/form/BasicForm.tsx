@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -118,7 +119,7 @@ const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "
                 validationSchema={validationSchema}
             >
                 <Form>
-                    <Grid templateColumns="repeat(12, 1fr)" templateRows="repeat(1,1fr)" gap="4" >
+                    <Grid templateColumns={"repeat(12, 1fr)"} templateRows="repeat(1,1fr)" gap="4" >
                         {fieldsSchema.map((field: any, index: any) => (
                             <FormFields key={index} {...field} />
                         ))}

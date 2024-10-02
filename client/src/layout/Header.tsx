@@ -3,9 +3,9 @@ import React from 'react'
 
 const Header = () => {
     return (
-        <HStack justify='end'  >
+        <HStack justify='end'>
            
-            <Avatar name='Oshigaki Kisame' src='https://bit.ly/broken-link' size="md" />
+            <Avatar name='Oshigaki Kisame' src='https://bit.ly/broken-link' size="sm" />
         </HStack>
     )
 }

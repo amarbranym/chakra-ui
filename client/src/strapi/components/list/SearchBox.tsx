@@ -7,11 +7,11 @@ const SearchBox = () => {
     const { setSearchQuery = () => { } } = useStrapiListContext()
 
     return (
-        <InputGroup maxW="400px" >
+        <InputGroup size="sm" maxW="400px" >
             <InputLeftElement pointerEvents='none'>
                 <FiSearch color='gray.300' />
             </InputLeftElement>
-            <Input type='text' bg="white" rounded="4" placeholder='Search' variant="outline" size="md" onChange={(e) => setSearchQuery(e.target.value)} />
+            <Input type='text' bg="white" rounded="4" placeholder='Search' variant="outline" size="sm" onChange={(e) => setSearchQuery(e.target.value)} />
         </InputGroup>
     )
 }

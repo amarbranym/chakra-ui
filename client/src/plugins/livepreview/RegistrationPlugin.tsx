@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import { Box, Button, Heading, HStack, Text } from '@chakra-ui/react'
-import BorderCard from '../../layout/BorderCard'
+import BorderCard from '../../components/BorderCard'
 
 const RegistrationPlugin = () => {
 

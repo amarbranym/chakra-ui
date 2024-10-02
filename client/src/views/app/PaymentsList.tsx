@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { Button, Heading, HStack, Stack, Table, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
+import { Button, Heading, HStack, Stack, Table, Td, Text, Th, Thead, Tr, VStack } from '@chakra-ui/react';
 import StrapiList from '../../strapi/components/list/StrapiList';
 import Filters from '../../strapi/components/list/Filters';
 import Empty from '../../strapi/components/list/Empty';
@@ -12,22 +12,25 @@ import SearchBox from '../../strapi/components/list/SearchBox';
 import { datesSechema, idSchema } from '../../config/schema/filterOprators';
 import { paymentSchema } from '../../config/schema/paymentSchema';
 import { formatDateDD_MM_YYYY } from '../../strapi/utils/service';
+import CreateButton from '../../components/CreateButton';
 const PaymentsList = () => {
   const context = useOutletContext<any>()
   return (
     <StrapiList collectionName='payments' query="populate=Candidate,Company" >
       <HStack justify="space-between" alignItems="center">
         <Heading as='h2'>{context?.title}</Heading>
-        <Button as={Link} variant="solid" colorScheme='blue' size="md" leftIcon={<AddIcon />} to={`/payment/create`} >Create new entry</Button>
+        <CreateButton link="/payment/create"/>
       </HStack>
-      <HStack gap="4">
+      <VStack gap="2" py={2} flexDirection={{base: "column", md: "row"}} alignItems={"flex-start"}>
         <SearchBox />
-        <Stack py={{ base: "4" }}>
-          <Filters fieldSchema={[...paymentSchema, ...idSchema, ...datesSechema]} />
+        <Stack>
+          <Filters fieldSchema={[...paymentSchema, ...idSchema, ...datesSechema]}>
+              <Button leftIcon={<AddIcon />} size="sm" variant='outline' >Add Filter</Button>
+          </Filters>
         </Stack>
-      </HStack>
-      <Stack border="1px solid" borderColor="gray.100" rounded="md">
-        <Table>
+      </VStack>
+      <Stack border="1px solid" borderColor="gray.100" rounded="md"  overflowX={"scroll"}>
+        <Table whiteSpace={"nowrap"}>
           <Thead>
             <Tr>
               <Th>Id</Th>

@@ -15,7 +15,7 @@ interface Props {
 const FormFields: React.FC<Props> = ({ ...props }: any) => {
     const [field, meta] = useField(props?.name);
     return (
-        <GridItem colSpan={props?.cols} rowSpan={props?.row} >
+        <GridItem colSpan={[12, 12, props?.cols]} rowSpan={props?.row} >
             <FormControl isInvalid={meta.touched && !!meta.error} isRequired={props?.required}>
                 <FormLabel htmlFor={props?.name}>{props?.label}</FormLabel>
                 <Fields  {...props} />

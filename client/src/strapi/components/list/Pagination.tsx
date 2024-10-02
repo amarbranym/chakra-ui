@@ -82,25 +82,25 @@ const Pagination = () => {
             <HStack gap="2" w="fit-content" alignItems={"center"} >
                 <Stack>
 
-                    <Select defaultValue={"50"} onChange={(e) => setPageSize(e.target.value)}>
+                    <Select defaultValue={"50"} size="sm" onChange={(e) => setPageSize(e.target.value)}>
                         <option selected value="50">50</option>
                         <option value='100'>100</option>
                         <option value='200'>200</option>
                         <option value='500'>500</option>
                     </Select>
                 </Stack>
-                <Stack>
+                <Stack display={{base: "none", md: "flex"}}>
                     <Text w="fit-content" >Entries per page</Text>
                 </Stack>
             </HStack>
             <Stack direction="row" gap="2" >
-                <IconButton colorScheme='blue' aria-label='' variant={currentPage === 1 ? "solid" : "outline"} size="sm" icon={<FiArrowLeft />} onClick={handlePreviousPage} isDisabled={currentPage === 1} >
+                <IconButton colorScheme='gray' aria-label='' variant={currentPage === 1 ? "solid" : "outline"} size="sm" icon={<FiArrowLeft />} onClick={handlePreviousPage} isDisabled={currentPage === 1} >
 
                 </IconButton>
                 {pages.map((page, index) =>
                     typeof page === 'number' ? (
                         <Button
-                            colorScheme='blue'
+                            colorScheme='gray'
                             key={index}
                             size="sm"
                             variant={currentPage === page ? 'solid' : 'outline'}
@@ -115,7 +115,7 @@ const Pagination = () => {
                     )
                 )}
 
-                <IconButton colorScheme='blue' aria-label="" size="sm" variant={currentPage === totalPage ? "solid" : "outline"} icon={<FiArrowRight />} isDisabled={currentPage === totalPage} onClick={handleNextPage}></IconButton>
+                <IconButton colorScheme='gray' aria-label="" size="sm" variant={currentPage === totalPage ? "solid" : "outline"} icon={<FiArrowRight />} isDisabled={currentPage === totalPage} onClick={handleNextPage}></IconButton>
             </Stack>
         </HStack>
     );

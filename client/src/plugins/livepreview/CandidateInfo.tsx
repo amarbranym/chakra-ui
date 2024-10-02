@@ -1,5 +1,5 @@
 import React from 'react'
-import BorderCard from '../../layout/BorderCard'
+import BorderCard from '../../components/BorderCard'
 import { Box, Heading, HStack, Text } from '@chakra-ui/react'
 import { useStrapiFormContext } from '../../strapi/providers/StrapiFormProvider';
 import { useParams } from 'react-router-dom';

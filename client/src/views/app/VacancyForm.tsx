@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import BasicForm from '../../strapi/components/form/BasicForm'
 import { StrapiFormProvider } from '../../strapi/providers/StrapiFormProvider'
 import { Button, Container, Grid, GridItem, Heading, HStack, Stack, Text, VStack, } from '@chakra-ui/react'
-import BorderCard from '../../layout/BorderCard'
+import BorderCard from '../../components/BorderCard'
 import RepeatableForm from '../../strapi/components/form/RepeatableForm'
 import { useOutletContext, useParams } from 'react-router-dom'
 import StatusPlugin from '../../plugins/livepreview/StatusPlugin'
@@ -62,21 +62,24 @@ const VacancyForm = () => {
     };
 
     return (
-        <Container maxW='container.xl' mb="20" >
+        <Container maxW='container.xl' mb="20" px={[0,0,4]} >
             <StrapiFormProvider
                 collectionName="vacancies"
                 slug={id}
                 query="populate=Designation,Company,Candidates,Candidates.Student"
                 onSave={handleSave}
             >
-                {({ submit, isLoading, hasAllErrors }) => (
+                {({ submit, isLoading, hasAllErrors, values }) => (
+                   <>
+                     <HStack my={2} py={2} bg="white" zIndex={100} justify="space-between" alignItems="center" position={"sticky"} top={0}>
+                        <>{console.log("Values", values)}</>
+                        <Heading as='h2' size="md" noOfLines={1}>
+                            <Text as="span" color={"gray.400"}>#{values?.id ?? "New"} </Text>
+                            <Text as="span">{values?.vacancydetails?.Title}</Text>
+                        </Heading>
+                        <Button isDisabled={false} isLoading={isLoading} loadingText="loading" variant="outline" colorScheme='gray' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
+                    </HStack>
                     <Grid templateColumns="repeat(6, 1fr)" gap="6" >
-                        <GridItem colSpan={6}>
-                            <HStack justify="space-between" alignItems="center">
-                                <Heading as='h2'>{context?.title}</Heading>
-                                <Button isLoading={isLoading} loadingText="loading" isDisabled={hasAllErrors} variant="solid" colorScheme='blue' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
-                            </HStack>
-                        </GridItem>
                         <GridItem colSpan={{ base: 6, lg: 6 }}>
                             <Stack gap="4">
                                 <BorderCard  >
@@ -92,6 +95,7 @@ const VacancyForm = () => {
                             </Stack>
                         </GridItem>
                     </Grid>
+                   </>
                 )}
             </StrapiFormProvider>
 

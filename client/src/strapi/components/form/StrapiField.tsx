@@ -184,7 +184,7 @@ const StrapiField = ({ ...props }: any) => {
                             <ListItem px={{ base: "3" }} alignItems={"center"} display={"flex"} py={{ base: "2" }} _hover={{ bg: "gray.100" }} bg={isSelected(item) && "gray.200"} key={index + 1} onClick={() => onItemClick(item)}><Text fontSize={"sm"} color="gray.500" mr="4" fontWeight={"700"}>{item.id}</Text>{item.label}</ListItem>
 
                         ))}
-                        {searchValue && <ListItem px={{ base: "3" }} alignItems={"center"} display={"flex"} py={{ base: "2" }} _hover={{ bg: "gray.100" }} onClick={handleSave}  >
+                        {(searchValue && (values.filter((value:any) => value.label === searchValue).length === 0)) && <ListItem px={{ base: "3" }} alignItems={"center"} display={"flex"} py={{ base: "2" }} _hover={{ bg: "gray.100" }} onClick={handleSave}  >
                             <Text fontSize={"sm"} color="gray.500" mr="4" fontWeight={"700"}>{">"}</Text><Text>Add <b>{searchValue}</b></Text>
                         </ListItem>}
                     </>

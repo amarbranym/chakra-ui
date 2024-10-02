@@ -1,5 +1,5 @@
 import React from 'react'
-import BorderCard from '../../layout/BorderCard'
+import BorderCard from '../../components/BorderCard'
 import { Box, Button, Heading, HStack, Select, Text } from '@chakra-ui/react'
 
 const StatusPlugin = () => {

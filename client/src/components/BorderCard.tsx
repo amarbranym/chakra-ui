@@ -3,7 +3,7 @@ import React from 'react'
 
 const BorderCard = ({ children }: { children: React.ReactNode }) => {
     return (
-        <Stack w={"full"} border="1px" py="6" px="4" borderRadius="8px" borderColor="gray.300" borderStyle="dotted" >{children}</Stack>
+        <Stack w={"full"} borderWidth={1} py={[4, 6]} px={3} borderRadius="8px" borderColor="gray.300" borderStyle="dotted" >{children}</Stack>
     )
 }
 

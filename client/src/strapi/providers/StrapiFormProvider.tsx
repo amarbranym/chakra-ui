@@ -5,6 +5,7 @@ import { useStrapiContext } from './StrapiAdmin';
 import { apiFetch, populateData } from '../utils/service';
 import { FormData } from '../../config/schema/formTypes';
 import toast from 'react-hot-toast';
+
 interface StrapiFormContextProps {
   data: any;
   setData: React.Dispatch<React.SetStateAction<any>>;
@@ -23,7 +24,7 @@ interface StrapiFormContextProps {
 const StrapiFormContext = createContext<StrapiFormContextProps | undefined>(undefined);
 
 export const StrapiFormProvider: React.FC<{
-  children: (props: { submit: () => void; isLoading?: boolean, data?: any, hasAllErrors?: boolean }) => React.ReactNode;
+  children: (props: { submit: () => void; isLoading?: boolean, data?: any, hasAllErrors?: boolean, values:any }) => React.ReactNode;
   submit?: (result: { data: any; success: boolean }) => void;
   collectionName: string;
   slug?: string;
@@ -39,7 +40,7 @@ export const StrapiFormProvider: React.FC<{
 
   const [hasErrors, setHasErrors] = useState<any>({})
   const [hasAllErrors, setHasAllErrors] = useState<boolean>()
-console.log("hasError", hasErrors)
+  console.log("hasError", hasErrors)
   const handleData = (key: string, values: any) => {
     setData((prevData: any) => ({ ...prevData, [key]: values }));
     // setInitialData((prevData: any) => ({ ...prevData, [key]: values }));
@@ -75,7 +76,7 @@ console.log("hasError", hasErrors)
       const poulateResult = populateData(schemaFields, result?.data?.attributes);
       setWithoutPopulateData(result?.data?.attributes)
       setInitialData(poulateResult)
-      setData(poulateResult);
+      setData({id: result?.data?.id, ...poulateResult});
 
     }
   }
@@ -185,7 +186,7 @@ console.log("hasError", hasErrors)
   }
   return (
     <StrapiFormContext.Provider value={{ data, initialData, setData, handleData, handleErrors, withoutPopulateData, setSchema, submit: handleSubmit, hasAllErrors }}>
-      {children({ submit: handleSubmit, isLoading, data, hasAllErrors })}
+      {children({ submit: handleSubmit, isLoading, data, hasAllErrors, values:data })}
     </StrapiFormContext.Provider>
   );
 };
