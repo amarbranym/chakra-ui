@@ -21,7 +21,7 @@ const StudentPreview = () => {
     const { id } = useParams()
     const currentDate = moment().format('YYYY-MM-DD')
     // Automatically trigger print preview when the component mounts
-  
+
 
 
 
@@ -55,15 +55,17 @@ const StudentPreview = () => {
                                                     <p className='text-sm '> Email: {data.Email}</p>
                                                     <p className='text-sm text-balance '>  {data?.Address?.Street}</p>
 
-                                                   {
+                                                    {
                                                         data?.Contacts?.slice(0, 2).map((phone: any) => (
                                                             <p key={phone.Number} className='text-sm '>  Mob: {extractCountryCode(phone.CountryCode)} {phone.Number}</p>
                                                         ))
                                                     }
 
                                                 </div>
+
+
                                                 {
-                                                    data?.experience?.length > 0 && <>
+                                                    (data?.CandidateType === "Blue Collar" || data?.CandidateType === "White Collar") && <>
                                                         <Horizontalline text="Career Objective" />
                                                         <div>
                                                             <p>
@@ -77,6 +79,8 @@ const StudentPreview = () => {
                                                 {
                                                     data?.qualification?.length > 0 && (
                                                         <>
+                                                            {console.log('data', data)}
+
                                                             <Horizontalline text="Qualification" />
                                                             <div className='flex flex-col gap-1'>
                                                                 {
@@ -148,14 +152,7 @@ const StudentPreview = () => {
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <div className=' '>
-                                                    <span>Signature</span>
-                                                </div>
+
                                             </div>
                                         </div>
                                         <div style={{ breakAfter: "page" }}></div>
