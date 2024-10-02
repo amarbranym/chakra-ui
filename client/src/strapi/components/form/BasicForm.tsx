@@ -73,7 +73,7 @@ const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "
                     } else {
                         fieldValidation = Yup.object().shape({
                             id: Yup.string(),
-                            value: Yup.string().required(`${field?.label} is required`),
+                            value: Yup.string(),
                             label: Yup.string(),
                         });
                     }

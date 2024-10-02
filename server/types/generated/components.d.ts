@@ -1,67 +1,30 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
-export interface ContactPhone extends Schema.Component {
-  collectionName: 'components_contact_phones';
+export interface VacancyCandidates extends Schema.Component {
+  collectionName: 'components_vacancy_candidates';
   info: {
-    displayName: 'Phone';
-    icon: 'phone';
+    displayName: 'Candidates';
+    icon: 'bell';
     description: '';
   };
   attributes: {
-    CountryCode: Attribute.Enumeration<
-      [
-        'USA (+1)',
-        'India (+91)',
-        'UK (+44)',
-        'Australia (+61)',
-        'Japan (+81)',
-        'Germany (+49)',
-        'France (+33)',
-        'China (+86)',
-        'Italy (+39)',
-        'Russia (+7)'
-      ]
-    > &
-      Attribute.Required &
-      Attribute.DefaultTo<'India (+91)'>;
-    Number: Attribute.String &
-      Attribute.SetMinMaxLength<{
-        maxLength: 10;
-      }>;
-    Type: Attribute.Enumeration<['Primary', 'Alternate', 'Work', 'Home']> &
-      Attribute.DefaultTo<'Primary'>;
-  };
-}
-
-export interface ContactContacts extends Schema.Component {
-  collectionName: 'components_contact_contacts';
-  info: {
-    displayName: 'Contacts';
-    icon: 'user';
-    description: '';
-  };
-  attributes: {
-    contact: Attribute.Relation<
-      'contact.contacts',
+    Student: Attribute.Relation<
+      'vacancy.candidates',
       'oneToOne',
-      'api::contact.contact'
+      'api::student.student'
     >;
-    Designation: Attribute.Enumeration<
-      ['Owner', 'Manager', 'Employee', 'HelpDesk ']
+    SalaryNegotiation: Attribute.Integer;
+    Status: Attribute.Enumeration<
+      [
+        'Hired',
+        'Rejected',
+        'In Probation',
+        'In Process',
+        'Interview',
+        'Laid Off'
+      ]
     >;
-  };
-}
-
-export interface ContactAddress extends Schema.Component {
-  collectionName: 'components_contact_addresses';
-  info: {
-    displayName: 'Address';
-    icon: 'house';
-  };
-  attributes: {
-    Street: Attribute.Text;
-    City: Attribute.Relation<'contact.address', 'oneToOne', 'api::city.city'>;
-    AddressType: Attribute.Enumeration<['Permanent', 'Alternate']>;
+    DateOfHiring: Attribute.Date;
   };
 }
 
@@ -159,44 +122,81 @@ export interface StudentDocument extends Schema.Component {
   };
 }
 
-export interface VacancyCandidates extends Schema.Component {
-  collectionName: 'components_vacancy_candidates';
+export interface ContactPhone extends Schema.Component {
+  collectionName: 'components_contact_phones';
   info: {
-    displayName: 'Candidates';
-    icon: 'bell';
+    displayName: 'Phone';
+    icon: 'phone';
     description: '';
   };
   attributes: {
-    Student: Attribute.Relation<
-      'vacancy.candidates',
-      'oneToOne',
-      'api::student.student'
-    >;
-    SalaryNegotiation: Attribute.Integer;
-    Status: Attribute.Enumeration<
+    CountryCode: Attribute.Enumeration<
       [
-        'Hired',
-        'Rejected',
-        'In Probation',
-        'In Process',
-        'Interview',
-        'Laid Off'
+        'USA (+1)',
+        'India (+91)',
+        'UK (+44)',
+        'Australia (+61)',
+        'Japan (+81)',
+        'Germany (+49)',
+        'France (+33)',
+        'China (+86)',
+        'Italy (+39)',
+        'Russia (+7)'
       ]
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'India (+91)'>;
+    Number: Attribute.String &
+      Attribute.SetMinMaxLength<{
+        maxLength: 10;
+      }>;
+    Type: Attribute.Enumeration<['Primary', 'Alternate', 'Work', 'Home']> &
+      Attribute.DefaultTo<'Primary'>;
+  };
+}
+
+export interface ContactContacts extends Schema.Component {
+  collectionName: 'components_contact_contacts';
+  info: {
+    displayName: 'Contacts';
+    icon: 'user';
+    description: '';
+  };
+  attributes: {
+    contact: Attribute.Relation<
+      'contact.contacts',
+      'oneToOne',
+      'api::contact.contact'
     >;
-    DateOfHiring: Attribute.Date & Attribute.Unique;
+    Designation: Attribute.Enumeration<
+      ['Owner', 'Manager', 'Employee', 'HelpDesk ']
+    >;
+  };
+}
+
+export interface ContactAddress extends Schema.Component {
+  collectionName: 'components_contact_addresses';
+  info: {
+    displayName: 'Address';
+    icon: 'house';
+  };
+  attributes: {
+    Street: Attribute.Text;
+    City: Attribute.Relation<'contact.address', 'oneToOne', 'api::city.city'>;
+    AddressType: Attribute.Enumeration<['Permanent', 'Alternate']>;
   };
 }
 
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
-      'contact.phone': ContactPhone;
-      'contact.contacts': ContactContacts;
-      'contact.address': ContactAddress;
+      'vacancy.candidates': VacancyCandidates;
       'student.qualification': StudentQualification;
       'student.experience': StudentExperience;
       'student.document': StudentDocument;
-      'vacancy.candidates': VacancyCandidates;
+      'contact.phone': ContactPhone;
+      'contact.contacts': ContactContacts;
+      'contact.address': ContactAddress;
     }
   }
 }

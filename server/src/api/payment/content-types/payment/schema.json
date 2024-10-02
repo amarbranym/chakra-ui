@@ -43,16 +43,16 @@
     "CollectionDate": {
       "type": "date"
     },
-    "Candidate": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::student.student",
-      "inversedBy": "Payment"
-    },
     "Company": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::company.company"
+    },
+    "Candidate": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::student.student",
+      "inversedBy": "Payments"
     }
   }
 }

@@ -28,7 +28,7 @@
     },
     "DateOfHiring": {
       "type": "date",
-      "unique": true
+      "unique": false
     }
   }
 }

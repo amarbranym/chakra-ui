@@ -835,6 +835,11 @@ export interface ApiCompanyCompany extends Schema.CollectionType {
       'api::city.city'
     >;
     Contact: Attribute.Component<'contact.phone', true>;
+    student: Attribute.Relation<
+      'api::company.company',
+      'oneToOne',
+      'api::student.student'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -979,15 +984,15 @@ export interface ApiPaymentPayment extends Schema.CollectionType {
     Status: Attribute.Enumeration<['Collected', 'Pending']>;
     PaymentMode: Attribute.Enumeration<['Online', 'Offline', 'Check']>;
     CollectionDate: Attribute.Date;
-    Candidate: Attribute.Relation<
-      'api::payment.payment',
-      'oneToOne',
-      'api::student.student'
-    >;
     Company: Attribute.Relation<
       'api::payment.payment',
       'oneToOne',
       'api::company.company'
+    >;
+    Candidate: Attribute.Relation<
+      'api::payment.payment',
+      'manyToOne',
+      'api::student.student'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1170,9 +1175,9 @@ export interface ApiStudentStudent extends Schema.CollectionType {
       Attribute.Required &
       Attribute.DefaultTo<'In Process'>;
     DateOfHiring: Attribute.Date;
-    Payment: Attribute.Relation<
+    Payments: Attribute.Relation<
       'api::student.student',
-      'oneToOne',
+      'oneToMany',
       'api::payment.payment'
     >;
     CandidateType: Attribute.Enumeration<

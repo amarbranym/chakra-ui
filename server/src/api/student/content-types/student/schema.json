@@ -95,7 +95,8 @@
     "Company": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::company.company"
+      "target": "api::company.company",
+      "inversedBy": "student"
     },
     "SalaryNegotiation": {
       "type": "integer"
@@ -116,9 +117,9 @@
     "DateOfHiring": {
       "type": "date"
     },
-    "Payment": {
+    "Payments": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::payment.payment",
       "mappedBy": "Candidate"
     },

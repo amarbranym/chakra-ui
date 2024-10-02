@@ -30,7 +30,7 @@ const CandidatesList = () => {
         return result.join(", ")
     };
     return (
-        <StrapiList collectionName='students' query="populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment" >
+        <StrapiList collectionName='students' query="populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Companies,IndustriesPreference,Payments" >
             <Stack mb="6">
                 {/* <BreadCrumbComponent /> */}
             </Stack>

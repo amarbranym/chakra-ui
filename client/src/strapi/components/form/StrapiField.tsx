@@ -16,7 +16,7 @@ const StrapiField = ({ ...props }: any) => {
     const [values, setValues] = useState<any[]>([]);
 
     useEffect(() => {
-        setFieldValue(props.name, props?.multiple ? [] : null);
+        setFieldValue(props.name, props?.multiple ? [] : {});
     }, [])
     useEffect(() => {
         if (meta.value) {
