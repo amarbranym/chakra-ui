@@ -51,8 +51,18 @@ const StrapiField = ({ ...props }: any) => {
     }
 
     useEffect(() => {
+
+        const delay = setTimeout(() => {
+            handleGetDocument()
+        }, 300)
+
+        return () => clearTimeout(delay)
+
+    }, [searchValue]);
+
+    useEffect(() => {
         handleGetDocument()
-    }, [searchValue, showMenu]);
+    }, [showMenu])
 
     const inputRef = useRef<any>(null);
 
@@ -150,7 +160,7 @@ const StrapiField = ({ ...props }: any) => {
         setShowMenu(true)
     }
 
-    console.log("meta", meta)
+    // console.log("meta", meta)
     return (
         <Box ref={inputRef} position='relative'  >
             <InputGroup onClick={handleInputClick}>

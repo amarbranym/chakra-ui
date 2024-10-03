@@ -1186,6 +1186,12 @@ export interface ApiStudentStudent extends Schema.CollectionType {
       Attribute.DefaultTo<'White Collar'>;
     Email: Attribute.String;
     Hobbies: Attribute.Text;
+    Designation: Attribute.Relation<
+      'api::student.student',
+      'oneToOne',
+      'api::designation.designation'
+    >;
+    Interviews: Attribute.Component<'student.interview', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

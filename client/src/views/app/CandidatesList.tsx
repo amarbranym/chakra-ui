@@ -14,6 +14,9 @@ import { datesSechema, idSchema } from '../../config/schema/filterOprators';
 import { candidatesSchema } from '../../config/schema/vacancySchema';
 import { extractCountryCode, formatDateDD_MM_YYYY } from '../../strapi/utils/service';
 import CreateButton from '../../components/CreateButton';
+import Tabs from '../../strapi/components/list/Tabs';
+
+
 const CandidatesList = () => {
     const context = useOutletContext<any>();
     const handleMapValue = (value: any) => {
@@ -31,7 +34,16 @@ const CandidatesList = () => {
         return result.join(", ")
     };
     return (
-        <StrapiList collectionName='students' query="populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment&sort[0]=createdAt:desc" >
+        <StrapiList collectionName='students' query={[
+            {
+                title: "All",
+                query: "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment&sort[0]=createdAt"
+            },
+            {
+                title: "Latest",
+                query: "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment&sort[0]=createdAt:desc"
+            }
+        ]} >
             <Stack mb="6">
                 {/* <BreadCrumbComponent /> */}
             </Stack>
@@ -41,6 +53,7 @@ const CandidatesList = () => {
                 <CreateButton link="/candidate/create"/>
             </HStack>
             <VStack gap="2" py={2} flexDirection={{base: "column", md: "row"}} alignItems={"flex-start"}>
+                <Tabs/>
                 <SearchBox />
                 <Stack>
                     <Filters fieldSchema={[...personalSchema, ...otherDetailSchema, ...idSchema, ...datesSechema,
@@ -82,8 +95,8 @@ const CandidatesList = () => {
                                 </Td>
                                 <Td>{item?.attributes?.Gender}</Td>
                                 <Td>{item?.attributes?.Status}</Td>
-                                <Td>{handleMapValue(item?.attributes?.Skills?.data)}</Td>
-                                <Td>{handleMapValueIndustry(item?.attributes?.IndustriesPreference?.data)}</Td>
+                                <Td maxW={"xs"} overflow={"hidden"} textOverflow={"ellipsis"}>{handleMapValue(item?.attributes?.Skills?.data)}</Td>
+                                <Td maxW={"xs"} overflow={"hidden"} textOverflow={"ellipsis"}>{handleMapValueIndustry(item?.attributes?.IndustriesPreference?.data)}</Td>
                                 <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
                                 <Td bg="white">
                                     <ButtonGroup size="sm" variant="solid">

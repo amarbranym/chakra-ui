@@ -137,6 +137,17 @@
     },
     "Hobbies": {
       "type": "text"
+    },
+    "Designation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::designation.designation"
+    },
+    "Interviews": {
+      "displayName": "Interview",
+      "type": "component",
+      "repeatable": true,
+      "component": "student.interview"
     }
   }
 }

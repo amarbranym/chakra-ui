@@ -39,7 +39,7 @@ const CompanyForm = () => {
                                 </BorderCard>
                                 <BorderCard>
                                     <RepeatableForm render={(values: any) => {
-                                        console.log(values)
+                                        // console.log(values)
                                         return (<Text textTransform="capitalize">
                                             Contact number {values?.CountryCode} {" "}{values?.Number} address type {values?.Type}
 

@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_student_interviews",
+  "info": {
+    "displayName": "Interview",
+    "icon": "user"
+  },
+  "options": {},
+  "attributes": {
+    "Company": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company.company"
+    },
+    "DateOfInterview": {
+      "type": "date"
+    },
+    "Result": {
+      "type": "enumeration",
+      "enum": [
+        "Pending",
+        "Selected",
+        "Rejected"
+      ]
+    },
+    "Notes": {
+      "type": "text"
+    }
+  }
+}

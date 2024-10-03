@@ -8,7 +8,7 @@ import { formatDateDD_MM_YYYY } from '../../strapi/utils/service';
 const CandidateInfo = () => {
     const { withoutPopulateData } = useStrapiFormContext();
     const { id } = useParams()
-    console.log("in", withoutPopulateData)
+    // console.log("in", withoutPopulateData)
     return (
         <BorderCard>
             <Box display="flex" flexDirection="column" gap="2">

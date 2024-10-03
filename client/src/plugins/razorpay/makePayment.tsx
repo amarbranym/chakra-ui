@@ -24,7 +24,7 @@ const makePayment = async ({ name, email, contact }: any, onSuccess: any) => {
       order_id: data.id,
       description: "Payment for bemployed services",
       handler: function (response: any) {
-        console.log("Payment response:", response);
+        // console.log("Payment response:", response);
         if (onSuccess) onSuccess(response);
       },
       prefill: {

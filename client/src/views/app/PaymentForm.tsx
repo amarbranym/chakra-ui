@@ -25,7 +25,7 @@ const PaymentForm = () => {
                 {({ submit, isLoading, hasAllErrors, values }) => (
                     <>
                      <HStack my={2} py={2} bg="white" zIndex={100} justify="space-between" alignItems="center" position={"sticky"} top={0}>
-                     <>{console.log("Values", values)}</>
+                     {/* <>{console.log("Values", values)}</> */}
                     <Heading as='h2' size="md" noOfLines={1}>
                             <Text as="span" color={"gray.400"}>#{values?.id ?? "New"} </Text>
                             <Text as="span">{values?.vacancydetails?.Title}</Text>

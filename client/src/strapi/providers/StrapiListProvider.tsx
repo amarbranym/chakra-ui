@@ -16,11 +16,15 @@ interface StrapiListContextProps {
     currentPage?: number;
     totalPage?: number;
     setSearchQuery?: React.Dispatch<React.SetStateAction<string>>;
-    searchQuery?: string
+    searchQuery?: string,
+    setQuery?:React.Dispatch<React.SetStateAction<string>>;
+    query?: string;
+    currentQuery?:string
 }
 const StrapiListContext = createContext<StrapiListContextProps | undefined>(undefined);
 
-export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?: string, query?: string }> = ({ children, collectionName, query }) => {
+export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?: string, query?: any }> = ({ children, collectionName, query }) => {
+
     const [data, setData] = useState<any[]>([]);
     const { baseURL, accessToken } = useStrapiContext()
     const [currentPage, setCurrentPage] = useState<number>(1)
@@ -30,7 +34,24 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [pageSize, setPageSize] = useState<string>("50")
 
+    const [currentQuery, setQuery] = useState<string>("")
+
+    useEffect(() => {
+
+        if(Array.isArray(query)){
+            setQuery(`${query[0]?.query}`)
+        }else{
+            setQuery(`${query}`)
+        }
+
+    }, [])
+
+    useEffect(() => {
+        // alert(currentQuery)
+    }, [currentQuery])
+
     const handleGetDocument = async () => {
+
         setLoading(true)
         const options = {
             method: 'GET',
@@ -50,20 +71,26 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
                 .join('');
             const searchParam = searchQuery ? `&_q=${encodeURIComponent(searchQuery)}` : '';
 
-            const list = await apiFetch(baseURL +
-                `/${collectionName}?${query}&pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}${filterParams}${searchParam}`, options
-            );
-            if (collectionName === "users") {
-                setData(list)
+            if(currentQuery){
 
-            } else {
+                const list = await apiFetch(baseURL +
+                    `/${collectionName}?${currentQuery}&pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}${filterParams}${searchParam}`, options
+                );
 
-                setData(list?.data)
+                if (collectionName === "users") {
+                    setData(list)
+    
+                } else {
+    
+                    setData(list?.data)
+                }
+    
+    
+                setTotalPage(list?.meta?.pagination?.pageCount);
+                setLoading(false)
+
             }
-
-
-            setTotalPage(list?.meta?.pagination?.pageCount);
-            setLoading(false)
+          
         } catch (err) {
             console.error('Error fetching candidate list:', err);
             setLoading(false)
@@ -72,10 +99,10 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
 
     useEffect(() => {
         handleGetDocument()
-    }, [currentPage, filterQuery, searchQuery, pageSize])
+    }, [currentPage, filterQuery, searchQuery, pageSize, currentQuery])
 
     return (
-        <StrapiListContext.Provider value={{ data, setData, setFilterQuery, setCurrentPage, currentPage,isLoading, filterQuery, totalPage, setSearchQuery, setPageSize }}>
+        <StrapiListContext.Provider value={{ query, setQuery,currentQuery, data, setData, setFilterQuery, setCurrentPage, currentPage,isLoading, filterQuery, totalPage, setSearchQuery, setPageSize }}>
             {children}
         </StrapiListContext.Provider>
     );

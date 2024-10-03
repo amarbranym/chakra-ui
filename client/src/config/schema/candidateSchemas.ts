@@ -1,6 +1,136 @@
 import { FormData } from "./formTypes";
 import { getYearOptions } from "./formUtils";
 
+export const statusSchema: FormData[] = [
+  {
+    name: "Company",
+    type: "ref:strapi",
+    label: "Company",
+    required: false,
+    rules: {
+      model: "companies",
+      field: "Name",
+    },
+    help: "",
+    cols: 6,
+    row: 1,
+  },
+  {
+    name: "Designation",
+    type: "ref:strapi",
+    label: "Designation",
+    required: false,
+
+    rules: {
+      model: "designations",
+      field: "Name",
+    },
+    help: "",
+    cols: 6,
+    row: 1,
+  },
+  {
+    name: "SalaryNegotiation",
+    type: "number",
+    label: "SalaryNegotiation",
+    required: false,
+    rules: {
+      min: 5000,
+      max: 50000,
+    },
+    help: "",
+    cols: 6,
+    row: 1,
+  },
+  {
+    name: "Status",
+    type: "select",
+    label: "Status",
+    required: false,
+
+    rules: {
+      options: [
+        { label: "Hired", value: "Hired" },
+        { label: "Rejected", value: "Rejected" },
+        { label: "In Probation", value: "In Probation" },
+        { label: "In Process", value: "In Process" },
+        { label: "Interview ", value: "Interview " },
+        { label: "Laid off ", value: "Laid off" },
+      ],
+    },
+    help: "",
+    cols: 6,
+    row: 1,
+  },
+  {
+    name: "DateOfHiring",
+    required: false,
+    type: "date",
+    label: "DateOfHiring",
+    help: "",
+    cols: 6,
+    row: 1,
+  },
+]
+
+export const interviewSchema: FormData[] = [
+  {
+    name: "Company",
+    type: "ref:strapi",
+    label: "Company",
+    required: false,
+
+    rules: {
+      model: "companies",
+      field: "Name",
+    },
+    help: "",
+    cols: 12,
+    row: 1,
+  },
+  {
+    name: "DateOfInterview",
+    required: true,
+    type: "date",
+    label: "Date of Interview",
+    help: "",
+    cols: 6,
+    row: 1,
+  },
+  {
+    name: "Result",
+    type: "select",
+    label: "Status",
+    required: true,
+
+    rules: {
+      options: [
+        { label: "Pending", value: "Pending" },
+        { label: "Selected ", value: "Selected" },
+        { label: "Rejected ", value: "Rejected" },
+      ],
+    },
+    help: "",
+    cols: 6,
+    row: 1,
+  },
+  {
+    name: "Notes",
+    type: "textarea",
+    label: "Notes",
+    required: false,
+
+    rules: {
+      min: 0,
+      max: 300,
+    },
+    help: "",
+    cols: 12,
+    row: 1,
+    rows: "3",
+  },
+]
+
 export const experienceSchema: FormData[] = [
   {
     name: "Company",

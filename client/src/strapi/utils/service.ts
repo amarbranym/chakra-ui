@@ -84,7 +84,7 @@ export const populateData = (
             obj[`${name}`][`${field.name}`] = initialData[`${field.name}`];
           }
         } catch (e) {
-          console.log(e);
+          // console.log(e);
         }
       }
     } else if (type === "Component") {
@@ -102,7 +102,7 @@ export const populateData = (
               initialData[`${name}`][`${field.name}`];
           }
         } catch (e: any) {
-          console.log(e);
+          // console.log(e);
         }
       }
     } else {

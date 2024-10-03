@@ -45,7 +45,7 @@ const VacancyForm = () => {
 
         const promises = data?.Candidates && data?.Candidates.map(async (candidate: any) => {
             const studentId = candidate.Student?.connect[0]?.id;
-            console.log(studentId)
+            // console.log(studentId)
             if (studentId) {
                 try {
                     const result = await handleUpdate(studentId, candidate, data?.Company);
@@ -72,7 +72,7 @@ const VacancyForm = () => {
                 {({ submit, isLoading, hasAllErrors, values }) => (
                    <>
                      <HStack my={2} py={2} bg="white" zIndex={100} justify="space-between" alignItems="center" position={"sticky"} top={0}>
-                        <>{console.log("Values", values)}</>
+                        {/* <>{console.log("Values", values)}</> */}
                         <Heading as='h2' size="md" noOfLines={1}>
                             <Text as="span" color={"gray.400"}>#{values?.id ?? "New"} </Text>
                             <Text as="span">{values?.vacancydetails?.Title}</Text>

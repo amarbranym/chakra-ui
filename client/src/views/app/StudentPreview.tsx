@@ -99,7 +99,7 @@ const StudentPreview = () => {
                                                 {
                                                     data?.qualification?.length > 0 && (
                                                         <>
-                                                            {console.log('data', data)}
+                                                            {/* {console.log('data', data)} */}
 
                                                             <Heading size="sm" textTransform={"uppercase"} mb={2}>Academic Qualifications</Heading>
                                                             <div className='flex flex-col gap-1'>

@@ -110,7 +110,7 @@ const BasicForm: React.FC<BasicFromProps> = ({ fieldsSchema, name = "", type = "
                 validate={(values: any) => {
                     handleData(name, values)
                     validationSchema.validate(values).then(() => {
-                        console.log("validate", values)
+                        // console.log("validate", values)
                         handleErrors(name, 0)
                     }).catch(e => {
                         handleErrors(name, 1)

@@ -1,7 +1,7 @@
 import { FormData } from "./formTypes";
 import moment from "moment";
 const currentDate = moment().format("DD-MM-YYYY");
-console.log(currentDate);
+// console.log(currentDate);
 export const paymentSchema: FormData[] = [
   {
     name: "Amount",
