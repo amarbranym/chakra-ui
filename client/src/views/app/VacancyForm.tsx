@@ -67,7 +67,7 @@ const VacancyForm = () => {
                 collectionName="vacancies"
                 slug={id}
                 query="populate=Designation,Company,Candidates,Candidates.Student"
-                onSave={handleSave}
+                // onSave={handleSave}
             >
                 {({ submit, isLoading, hasAllErrors, values }) => (
                    <>
