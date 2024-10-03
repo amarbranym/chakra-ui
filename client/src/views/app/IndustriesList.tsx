@@ -37,7 +37,7 @@ const IndustriesList = () => {
                         renderItem={(item) => (
                             <Tr>
                                 <Td>{item?.attributes?.Name}</Td>
-                                <Td><Button size="sm" variant="ghost" as={Link} to={`/industry/${item.id}`} >Edit</Button></Td>
+                                <Td><Button size="sm" variant="solid" as={Link} to={`/industry/${item.id}`} >Edit</Button></Td>
 
                             </Tr>
                         )}

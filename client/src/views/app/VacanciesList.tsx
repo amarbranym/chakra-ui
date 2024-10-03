@@ -59,7 +59,7 @@ const VacanciesList = () => {
                                 <Td>{item?.attributes?.MaxSalary}</Td>
                                 <Td>{item?.attributes?.Seats}</Td>
                                 <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
-                                <Td><Button size="sm" variant="ghost" as={Link} to={`/vacancy/${item.id}`} >Edit</Button></Td>
+                                <Td><Button size="sm" variant="solid" as={Link} to={`/vacancy/${item.id}`} >Edit</Button></Td>
 
                             </Tr>
                         )}

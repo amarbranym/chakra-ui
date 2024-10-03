@@ -54,7 +54,7 @@ const CompaniesList = () => {
                                 <Td>{item?.attributes?.City?.data?.attributes?.Name}</Td>
                                 <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
 
-                                <Td><Button size="sm" variant="ghost" as={Link} to={`/company/${item.id}`} >Edit</Button></Td>
+                                <Td><Button size="sm" variant="solid" as={Link} to={`/company/${item.id}`} >Edit</Button></Td>
 
                             </Tr>
                         )}

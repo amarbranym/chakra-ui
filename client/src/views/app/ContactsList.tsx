@@ -66,7 +66,7 @@ const ContactsList = () => {
                                 <Td>{item?.attributes?.Email}</Td>
                                 <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
 
-                                <Td><Button size="sm" variant="ghost" as={Link} to={`/contact/${item.id}`} >Edit</Button></Td>
+                                <Td><Button size="sm" variant="solid" as={Link} to={`/contact/${item.id}`} >Edit</Button></Td>
                             </Tr>
                         )}
                     />

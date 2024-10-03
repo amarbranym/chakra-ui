@@ -38,7 +38,7 @@ const CandidatesList = () => {
 
             <HStack justify="space-between" alignItems="center">
                 <Heading as='h2'>{context?.title}</Heading>
-                <CreateButton link="/candidates/create"/>
+                <CreateButton link="/candidate/create"/>
             </HStack>
             <VStack gap="2" py={2} flexDirection={{base: "column", md: "row"}} alignItems={"flex-start"}>
                 <SearchBox />

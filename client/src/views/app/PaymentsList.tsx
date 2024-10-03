@@ -56,7 +56,7 @@ const PaymentsList = () => {
                 <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
                 <Td>{item?.attributes?.Candidate?.data?.attributes?.FirstName} {" "}{item?.attributes?.Candidate?.data?.attributes?.LastName}</Td>
                 <Td>{item?.attributes?.Company?.data?.attributes?.Name}</Td>
-                <Td><Button size="sm" variant="ghost" as={Link} to={`/payment/${item.id}`} >Edit</Button></Td>
+                <Td><Button size="sm" variant="solid" as={Link} to={`/payment/${item.id}`} >Edit</Button></Td>
 
               </Tr>
             )}

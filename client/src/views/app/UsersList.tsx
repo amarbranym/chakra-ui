@@ -7,11 +7,12 @@ import Empty from '../../strapi/components/list/Empty';
 import Pagination from '../../strapi/components/list/Pagination';
 import Card from '../../strapi/components/list/Card';
 import { Link, useOutletContext } from 'react-router-dom';
-import { AddIcon } from '@chakra-ui/icons';
 import { userSchema } from '../../config/schema/userSchema';
 import SearchBox from '../../strapi/components/list/SearchBox';
 import { datesSechema, idSchema } from '../../config/schema/filterOprators';
 import { formatDateDD_MM_YYYY } from '../../strapi/utils/service';
+import CreateButton from '../../components/CreateButton';
+import { AddIcon } from '@chakra-ui/icons';
 
 const UsersList = () => {
     const context = useOutletContext<any>()
@@ -23,12 +24,14 @@ const UsersList = () => {
             </Stack>
             <HStack justify="space-between" alignItems="center">
                 <Heading as='h2'>{context?.title}</Heading>
-                <Button as={Link} variant="solid" colorScheme='blue' size="md" leftIcon={<AddIcon />} to={`/user/create`} >Create new entry</Button>
+                <CreateButton link="/user/create" />
             </HStack>
-            <HStack gap="4">
+            <HStack gap="4" py={2} >
                 <SearchBox />
                 <Stack py={{ base: "4" }}>
-                    <Filters fieldSchema={[...userSchema, ...idSchema, ...datesSechema]} />
+                    <Filters fieldSchema={[...userSchema, ...idSchema, ...datesSechema]} >
+                        <Button leftIcon={<AddIcon />} size="sm" variant='outline' >Add Filter</Button>
+                    </Filters>
                 </Stack></HStack>
             <Stack border="1px solid" borderColor="gray.100" rounded="md">
                 <Table>
@@ -48,7 +51,7 @@ const UsersList = () => {
                                 <Td>{item?.username}</Td>
                                 <Td>{item?.email}</Td>
                                 <Td>{formatDateDD_MM_YYYY(item?.attributes?.createdAt)}</Td>
-                                <Td><Button size="sm" variant="ghost" as={Link} to={`/user/${item.id}`} >Edit</Button></Td>
+                                <Td><Button size="sm" variant="solid" as={Link} to={`/user/${item.id}`} >Edit</Button></Td>
                             </Tr>
                         )}
                     />
