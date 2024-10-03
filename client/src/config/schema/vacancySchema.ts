@@ -160,6 +160,8 @@ export const candidatesSchema: FormData[] = [
         { label: "Rejected", value: "Rejected" },
         { label: "In Probation", value: "In Probation" },
         { label: "In Process", value: "In Process" },
+        { label: "Interview ", value: "Interview " },
+        { label: "Laid off ", value: "Laid off" },
       ],
     },
     help: "",
