@@ -15,6 +15,7 @@ import { candidatesSchema } from '../../config/schema/vacancySchema';
 import { extractCountryCode, formatDateDD_MM_YYYY } from '../../strapi/utils/service';
 import CreateButton from '../../components/CreateButton';
 import Tabs from '../../strapi/components/list/Tabs';
+import DeleteButton from '../../components/DeleteButton';
 
 
 const CandidatesList = () => {
@@ -37,12 +38,24 @@ const CandidatesList = () => {
         <StrapiList collectionName='students' query={[
             {
                 title: "All",
-                query: "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment&sort[0]=createdAt"
+                query: "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment&sort[0]=createdAt:desc"
             },
             {
-                title: "Latest",
-                query: "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment&sort[0]=createdAt:desc"
-            }
+                title: "Hired",
+                query: "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment&sort[0]=createdAt:desc&filters[Status][$eq]=Hired"
+            },
+            {
+                title: "In Probation",
+                query: "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment&sort[0]=createdAt:desc&filters[Status][$eq]=In Probation"
+            },
+            {
+                title: "In Process",
+                query: "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment&sort[0]=createdAt:desc&filters[Status][$eq]=In Process"
+            },
+            {
+                title: "Blacklist",
+                query: "populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference,Payment&sort[0]=createdAt:desc&filters[Status][$eq]=Black List"
+            },
         ]} >
             <Stack mb="6">
                 {/* <BreadCrumbComponent /> */}
@@ -53,7 +66,6 @@ const CandidatesList = () => {
                 <CreateButton link="/candidate/create"/>
             </HStack>
             <VStack gap="2" py={2} flexDirection={{base: "column", md: "row"}} alignItems={"flex-start"}>
-                <Tabs/>
                 <SearchBox />
                 <Stack>
                     <Filters fieldSchema={[...personalSchema, ...otherDetailSchema, ...idSchema, ...datesSechema,
@@ -62,6 +74,9 @@ const CandidatesList = () => {
                     </Filters>
                 </Stack>
             </VStack>
+            <Stack mb={2} overflowX={"auto"}>
+                <Tabs/>
+            </Stack>
             <Stack border="1px solid" borderColor="gray.100" rounded="md" overflowX={"scroll"}>
                 <Table whiteSpace={"nowrap"}>
                     <Thead>
@@ -79,7 +94,7 @@ const CandidatesList = () => {
                         </Tr>
                     </Thead>
                     <Card
-                        renderItem={(item) => (
+                        renderItem={(item, deleteDoc = () => {}) => (
                             <Tr>
                                 <Td bg="white">{item?.id}</Td>
                                 <Td>{item?.attributes?.FirstName}{" "}{item?.attributes?.LastName}</Td>
@@ -102,6 +117,7 @@ const CandidatesList = () => {
                                     <ButtonGroup size="sm" variant="solid">
                                         <Button as={Link} to={`/candidate/${item.id}`} >Edit</Button>
                                         <Button as={Link} to={`/student/preview/${item.id}`} >View</Button>
+                                        <DeleteButton onClick={() => {deleteDoc(item?.id)}} />
                                     </ButtonGroup>
                                 </Td>
                             </Tr>

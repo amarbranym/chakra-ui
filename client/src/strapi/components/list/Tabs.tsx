@@ -8,7 +8,7 @@ export default function Tabs() {
 
   return (
     <>
-    {Array.isArray(query) ? <ButtonGroup size="sm" variant={"ghost"} colorScheme="gray">
+    {Array.isArray(query) ? <ButtonGroup w="fit-content" size="sm" variant={"ghost"} colorScheme="gray">
       {query.map((item:any, index:number) => <Button variant={currentQuery === item?.query ? "solid" : "ghost"} onClick={() => {
         setQuery(item.query)
       }} key={index}>{item.title}</Button>)}

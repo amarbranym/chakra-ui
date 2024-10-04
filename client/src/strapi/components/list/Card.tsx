@@ -4,11 +4,11 @@ import { useStrapiListContext } from '../../providers/StrapiListProvider';
 
 interface CardProps {
     className?: string;
-    renderItem: (item: any) => React.ReactNode;
+    renderItem: (item: any, deleteDocument?: ((id: string) => void) | undefined) => React.ReactNode;
 }
 
 const Card: React.FC<CardProps> = ({ renderItem }) => {
-    const { data } = useStrapiListContext();
+    const { data, deleteDocument } = useStrapiListContext();
     if (!data || data.length === 0) {
         return null; // Or return a fallback UI if necessary
     }
@@ -17,7 +17,7 @@ const Card: React.FC<CardProps> = ({ renderItem }) => {
         <>
         { data && data?.map((item, index) => (
             <React.Fragment key={item.id || index}>
-                {renderItem(item)}
+                {renderItem(item, deleteDocument)}
             </React.Fragment>
         ))}
         </>

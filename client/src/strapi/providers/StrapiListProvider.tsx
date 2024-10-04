@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useStrapiContext } from './StrapiAdmin';
 import { apiFetch } from '../utils/service';
+import toast from 'react-hot-toast';
 
 interface StrapiListContextProps {
     data: any[];
@@ -19,7 +20,8 @@ interface StrapiListContextProps {
     searchQuery?: string,
     setQuery?:React.Dispatch<React.SetStateAction<string>>;
     query?: string;
-    currentQuery?:string
+    currentQuery?:string,
+    deleteDocument?: (id: string) => void;
 }
 const StrapiListContext = createContext<StrapiListContextProps | undefined>(undefined);
 
@@ -47,7 +49,7 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
     }, [])
 
     useEffect(() => {
-        // alert(currentQuery)
+        setData([])
     }, [currentQuery])
 
     const handleGetDocument = async () => {
@@ -97,12 +99,34 @@ export const StrapiListProvider: React.FC<{ children: ReactNode, collectionName?
         }
     };
 
+    const handleDeleteDocument = async (id:string) => {
+
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`, // Pass the token here
+            },
+            credentials: 'include',
+        }
+
+        await apiFetch(baseURL +
+            `/${collectionName}/${id}`, options
+        );
+
+        toast.success("Deleted")
+
+        console.log(data)
+        setData(data.filter((item:any) => item?.id !== id))
+
+    }
+
     useEffect(() => {
         handleGetDocument()
     }, [currentPage, filterQuery, searchQuery, pageSize, currentQuery])
 
     return (
-        <StrapiListContext.Provider value={{ query, setQuery,currentQuery, data, setData, setFilterQuery, setCurrentPage, currentPage,isLoading, filterQuery, totalPage, setSearchQuery, setPageSize }}>
+        <StrapiListContext.Provider value={{ query,deleteDocument: handleDeleteDocument, setQuery,currentQuery, data, setData, setFilterQuery, setCurrentPage, currentPage,isLoading, filterQuery, totalPage, setSearchQuery, setPageSize }}>
             {children}
         </StrapiListContext.Provider>
     );
