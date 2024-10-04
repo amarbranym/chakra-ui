@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useField, useFormikContext } from 'formik';
 import { apiFetch } from '../../utils/service';
 import { useStrapiContext } from '../../providers/StrapiAdmin';
-import { Badge, Box, HStack, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Text, } from '@chakra-ui/react';
+import { Badge, Box, Card, Center, HStack, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Spinner, Text, } from '@chakra-ui/react';
 import { ChevronDownIcon, SmallCloseIcon } from '@chakra-ui/icons'
 
 
@@ -14,6 +14,7 @@ const StrapiField = ({ ...props }: any) => {
     const [showMenu, setShowMenu] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>("");
     const [values, setValues] = useState<any[]>([]);
+    const [isLoading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         setFieldValue(props.name, props?.multiple ? [] : {});
@@ -28,6 +29,7 @@ const StrapiField = ({ ...props }: any) => {
     }, [props.name, meta.value, props.multiple])
 
     const handleGetDocument = async () => {
+        
         const url = `${props.rules.model}?_q=${searchValue}`;
         const data = await apiFetch(baseURL + `/${url}`);
         if (props?.rules?.model === "users-permissions/roles") {
@@ -48,12 +50,14 @@ const StrapiField = ({ ...props }: any) => {
             })) || [];
             setValues(options);
         }
+        setLoading(false)
     }
 
     useEffect(() => {
-
-        const delay = setTimeout(() => {
-            handleGetDocument()
+        setLoading(true)
+        const delay = setTimeout(async () => {
+            await handleGetDocument()
+            
         }, 300)
 
         return () => clearTimeout(delay)
@@ -170,7 +174,7 @@ const StrapiField = ({ ...props }: any) => {
                     type="text"
                     onChange={handleOnChange}
                     onKeyDown={(e) => {
-                        if (e.key === "Enter") {
+                        if (e.key === "Enter" && isLoading === false) {
                             if (values.length > 0) {
                                 onItemClick(values[0])
                             }
@@ -188,17 +192,22 @@ const StrapiField = ({ ...props }: any) => {
             </InputGroup>
             {
                 showMenu &&
-                <List maxH="20rem" bg="white" rounded="8px" position="absolute" w='full' zIndex={999999} shadow="md" mt="2" overflowX="auto" >
-                    <>
-                        {values?.map((item: any, index: any) => (
-                            <ListItem px={{ base: "3" }} alignItems={"center"} display={"flex"} py={{ base: "2" }} _hover={{ bg: "gray.100" }} bg={isSelected(item) && "gray.200"} key={index + 1} onClick={() => onItemClick(item)}><Text fontSize={"sm"} color="gray.500" mr="4" fontWeight={"700"}>{item.id}</Text>{item.label}</ListItem>
+                <Card mt={2}>
+                    {isLoading ? <Center py={4} >
+                        <Spinner/>
+                    </Center> : 
+                    <List maxH="20rem" position="absolute" w='full' overflowX="auto" shadow="md" bg="white" transform={"scale(1)"} rounded="8px" zIndex={999999}>
+                        <>
+                            {values?.map((item: any, index: any) => (
+                                <ListItem px={{ base: "3" }} alignItems={"center"} display={"flex"} py={{ base: "2" }} _hover={{ bg: "gray.100" }} bg={isSelected(item) && "gray.200"} key={index + 1} onClick={() => onItemClick(item)}><Text fontSize={"sm"} color="gray.500" mr="4" fontWeight={"700"}>{item.id}</Text>{item.label}</ListItem>
 
-                        ))}
-                        {(searchValue && (values.filter((value:any) => value.label === searchValue).length === 0)) && <ListItem px={{ base: "3" }} alignItems={"center"} display={"flex"} py={{ base: "2" }} _hover={{ bg: "gray.100" }} onClick={handleSave}  >
-                            <Text fontSize={"sm"} color="gray.500" mr="4" fontWeight={"700"}>{">"}</Text><Text>Add <b>{searchValue}</b></Text>
-                        </ListItem>}
-                    </>
-                </List>
+                            ))}
+                            {(searchValue && (values.filter((value:any) => value.label === searchValue).length === 0)) && <ListItem px={{ base: "3" }} alignItems={"center"} display={"flex"} py={{ base: "2" }} _hover={{ bg: "gray.100" }} onClick={handleSave}  >
+                                <Text fontSize={"sm"} color="gray.500" mr="4" fontWeight={"700"}>{">"}</Text><Text>Add <b>{searchValue}</b></Text>
+                            </ListItem>}
+                        </>
+                    </List>}
+                </Card>
             }
 
 

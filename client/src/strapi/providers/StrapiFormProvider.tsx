@@ -5,6 +5,7 @@ import { useStrapiContext } from './StrapiAdmin';
 import { apiFetch, populateData } from '../utils/service';
 import { FormData } from '../../config/schema/formTypes';
 import toast from 'react-hot-toast';
+import { sanitizer } from '../utils/sanitizer';
 
 interface StrapiFormContextProps {
   data: any;
@@ -104,12 +105,14 @@ export const StrapiFormProvider: React.FC<{
   const handleSubmit = async () => {
     setIsLoading(true)
     let isValid: boolean = false
+
     const transformData = (schema: FormData[], name: string, data: any) => {
       const obj: any = {}
       for (let index = 0; index < schema.length; index++) {
         const field: FormData = schema[index];
 
-        if (field.required) {
+
+        if (Object.hasOwn(data || {}, field?.name) && field.required) {
           if (!data[field?.name] || data[field?.name] === undefined || data[field?.name] === null || data[field?.name] === '') {
             isValid = true
           }
@@ -168,7 +171,7 @@ export const StrapiFormProvider: React.FC<{
         headers: {
           'Content-Type': 'application/json',
         },
-        body: collectionName === "users" ? JSON.stringify(submissionData) : JSON.stringify({ data: submissionData }),
+        body: collectionName === "users" ? JSON.stringify(sanitizer(submissionData)) : JSON.stringify({ data: sanitizer(submissionData) }),
         credentials: 'include',
       };
       const url = slug ? `${collectionName}/${slug}` : `${collectionName}`
