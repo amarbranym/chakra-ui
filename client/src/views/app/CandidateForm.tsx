@@ -17,15 +17,15 @@ import { formatDateDD_MM_YYYY } from '../../strapi/utils/service'
 import { AddIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 
 const Payments = () => {
-    
-    const {Payments} = useFormData()
+
+    const { Payments } = useFormData()
 
     return <VStack>
-        {Payments?.data?.map((payment:any) => <Flex w="full" p={3} borderWidth={1} rounded={"md"} as={Link} to={`/payment/${payment.id}`} gap={2} _hover={{bg: "gray.100"}}>
-                <Badge colorScheme={payment?.attributes?.Status === "Pending" ? "yellow" : "green"}>{payment?.attributes?.Status}</Badge>
-                <Heading size="xs" textTransform={"uppercase"}>Rs. {payment?.attributes?.Amount}/-</Heading>
-                <Badge ml="auto">on {formatDateDD_MM_YYYY(payment?.attributes?.CollectionDate)}</Badge>
-                <ExternalLinkIcon/>
+        {Payments?.data?.map((payment: any, index: number) => <Flex key={index} w="full" p={3} borderWidth={1} rounded={"md"} as={Link} to={`/payment/${payment.id}`} gap={2} _hover={{ bg: "gray.100" }}>
+            <Badge colorScheme={payment?.attributes?.Status === "Pending" ? "yellow" : "green"}>{payment?.attributes?.Status}</Badge>
+            <Heading size="xs" textTransform={"uppercase"}>Rs. {payment?.attributes?.Amount}/-</Heading>
+            <Badge ml="auto">on {formatDateDD_MM_YYYY(payment?.attributes?.CollectionDate)}</Badge>
+            <ExternalLinkIcon />
         </Flex>)}
         {Payments?.data?.length === 0 && <Center py={6}>
             <Heading color={"gray.300"}>No Payments</Heading>
@@ -37,14 +37,14 @@ const CandidateForm = () => {
     const context = useOutletContext<any>();
     const { id } = useParams()
     return (
-        <Container maxW='container.xl' px={[0,0,4]} mb="20" >
+        <Container maxW='container.xl' px={[0, 0, 4]} mb="20" >
             <StrapiFormProvider
                 collectionName="students"
                 slug={id}
                 query="populate=experience.Company.Contact,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,IndustriesPreference,Company,Payments,Designation,Interviews,Interviews.Company,Payments.Amount"
             >
                 {({ submit, isLoading, hasAllErrors, values }) => (
-                     <>
+                    <>
                         <HStack my={2} py={2} bg="white" zIndex={100} justify="space-between" alignItems="center" position={"sticky"} top={0}>
                             {/* <>{console.log("Values", values)}</> */}
                             <Heading as='h2' size="md" noOfLines={1}>
@@ -54,7 +54,7 @@ const CandidateForm = () => {
                             <Button isDisabled={false} isLoading={isLoading} loadingText="loading" variant="outline" colorScheme='gray' size="md" leftIcon={<BiSave />} onClick={submit} >Save</Button>
                         </HStack>
                         <Grid templateColumns="repeat(6, 1fr)" gap="6" >
-                            <GridItem order={{base: 2, lg: 1}} colSpan={{ base: 6, lg: id ? 4 : 6 }}>
+                            <GridItem order={{ base: 2, lg: 1 }} colSpan={{ base: 6, lg: id ? 4 : 6 }}>
                                 <Tabs >
                                     {id && <TabList>
                                         <Tab>Basic Details</Tab>
@@ -73,7 +73,7 @@ const CandidateForm = () => {
                                                 <BorderCard>
                                                     <RepeatableForm render={(values: any) => {
                                                         return (<Text textTransform={"capitalize"}>
-                                                        {values?.CountryCode} {values?.Number}
+                                                            {values?.CountryCode} {values?.Number}
                                                         </Text>)
                                                     }} fieldsSchema={phoneNumberSchema} name="Contacts" />
                                                 </BorderCard>
@@ -100,11 +100,11 @@ const CandidateForm = () => {
                                             <Stack gap="4">
                                                 <BorderCard>
                                                     <RepeatableForm render={(values: any) => {
-                                                            return (<Flex gap={2} flexDirection={{base: "column", sm: "row"}} alignItems={{base: "flex-start", sm: "center"}} textTransform="capitalize">
-                                                                <Badge>{values.Result}</Badge> 
-                                                                <Text>Interview with {values?.Company?.label} on {formatDateDD_MM_YYYY(values?.DateOfInterview)}</Text>
-                                                                <>{console.log(values)}</>
-                                                            </Flex>)
+                                                        return (<Flex gap={2} flexDirection={{ base: "column", sm: "row" }} alignItems={{ base: "flex-start", sm: "center" }} textTransform="capitalize">
+                                                            <Badge>{values.Result}</Badge>
+                                                            <Text>Interview with {values?.Company?.label} on {formatDateDD_MM_YYYY(values?.DateOfInterview)}</Text>
+                                                            <>{console.log(values)}</>
+                                                        </Flex>)
                                                     }} fieldsSchema={interviewSchema} name="Interviews" />
                                                 </BorderCard>
                                                 <BorderCard>
@@ -113,16 +113,16 @@ const CandidateForm = () => {
                                             </Stack>
                                         </TabPanel>
                                         <TabPanel px={0}>
-                                            <Payments/>
+                                            <Payments />
                                             <Center py={3}>
-                                                <Button leftIcon={<AddIcon/>}>Create New Payment</Button>
+                                                <Button leftIcon={<AddIcon />}>Create New Payment</Button>
                                             </Center>
                                         </TabPanel>
                                     </TabPanels>
                                 </Tabs>
                             </GridItem>
                             {
-                                id && <GridItem order={{base: 1, lg: 2}} colSpan={{ base: 6, lg: 2 }} >
+                                id && <GridItem order={{ base: 1, lg: 2 }} colSpan={{ base: 6, lg: 2 }} >
                                     <VStack gap="4">
                                         <CandidateInfo />
                                         <ViewPlugin studentId={id} route="student/preview" />
@@ -132,7 +132,7 @@ const CandidateForm = () => {
                             }
 
                         </Grid>
-                     </>
+                    </>
                 )}
             </StrapiFormProvider>
 

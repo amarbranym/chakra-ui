@@ -18,21 +18,28 @@ function convertObjectToArray(obj) {
 export const sanitizer = (data) => {
 
 	var arr = []
-  
-  Object.entries(data).map(([key, val]) => {
-  	if(val === "") return 0
-    else if(val?.connect?.length === 0) return 0
-    else if(Array.isArray(val?.connect) && typeof val?.connect[0].id === "undefined") return 0
-    else if(val?.length === 0) return 0
-    else if(typeof val === "object"){
-    	return arr.push([key, sanitizer(val)])
-    }
-    else{
-    	return arr.push([key, val])
-    }
-  })
-  
 
-	return convertObjectToArray(Object.fromEntries(arr))
+  if(data){
+    Object.entries(data).map(([key, val]) => {
+      if(val === "") return 0
+      else if(val?.connect?.length === 0) return 0
+      else if(Array.isArray(val?.connect) && typeof val?.connect[0].id === "undefined") return 0
+      else if(val?.length === 0) return 0
+      else if(typeof val === "object"){
+        const sData =  sanitizer(val)
+        if(sData) return arr.push([key, sData])
+        else return 0
+      }
+      else{
+        return arr.push([key, val])
+      }
+    })
+    return convertObjectToArray(Object.fromEntries(arr))
+  }
+  else{
+    return null
+  }
+
+	
 
 }
