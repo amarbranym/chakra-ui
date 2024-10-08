@@ -46,7 +46,7 @@ const StudentPreview = () => {
                     <Button colorScheme='gray' variant={"outline"} onClick={onCopy} >{hasCopied ? "Copied!" : "Copy Link"}</Button>
                 </ButtonGroup>
             </Center>
-            <Container maxW='container.xl' pb="20" h="100vh" w="100vw" position={"relative"} overflow={"scroll"}>
+            <Container maxW='container.xl' pb="20" h="100vh" w="100vw" position={"relative"} overflow={"scroll"} className='hidden-scrollbar'>
 
             <Box transform={["scale(0.5)", "scale(1)", "scale(1)"]} className='print:!transform-none mx-auto' w="21cm">
             <StrapiDocument slug={id} collectionName='students' query="populate=experience.Company.Contacts,experience.Company.City,experience.Company.Industry,experience.Designation,Skills,qualification.school,qualification.qualification,Contacts,Address,Address.City,Company,IndustriesPreference">
